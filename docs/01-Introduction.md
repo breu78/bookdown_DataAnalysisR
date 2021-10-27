@@ -1,0 +1,9 @@
+# Introducción
+
+<style> body {text-align: justify} </style> <!-- Justify text. -->
+
+El curso Introducción al análisis de datos utilizando R está dirigido a estudiantes de Biología y de Ingeniería Forestal en sus primeros semestres para familiarizarlos con el uso del lenguaje de programación R.
+
+R es un lenguaje de programación de entorno de software libre para computación estadística y gráfica (R Development Core Team, 2021). En años recientes, R se ha vuelto una herramienta indispensable para el análisis de datos (o ciencia de datos) en muchas áreas de las ciencias básicas y aplicadas (Tippmann, 2015) y en la industria (Gandrud, 2013). En lugar de aprender múltiples herramientas, los estudiantes pueden utilizar un entorno único para una gran diversidad de métodos de análisis de datos. Más que un lenguaje de programación, R ofrece nuevas vías para la enseñanza de la estadística y análisis de datos, debido a que los problemas estadísticos pueden ser desarrollados y analizados de manera transparente y reproducible (Incerti et al., 2019). Esto permite un aprendizaje interactivo y orientado a resolver problemas, combinando la teoría y la práctica. De esta manera, los estudiantes pueden lograr una comprensión más profunda de análisis de datos de forma más sencilla, lo cual les permitirá practicar análisis de datos durante sus estudios utilizando todas las herramientas y posibilidades que les ofrece el lenguaje de programación R. 
+ 
+Este libro y el diseño del curso Introducción al análisis de datos utilizando R son el resultado del proyecto Análisis de datos utilizando el lenguaje de programación R: una experiencia de aprendizaje virtual en el aula invertida, de la convocatoría Iniciativas de innovación didáctica mediante el uso de tecnologías, INNOVA-TIC 2021 de la Vicerrectoría Académica de la Universidad Industrial de Santander, UIS.

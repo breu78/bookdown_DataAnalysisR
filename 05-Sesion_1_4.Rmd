@@ -1,0 +1,864 @@
+# TidyR
+
+En esta sesión vamos a explorar los datos de la sesión pasada de una manera diferente. Para esto vamos a cargar el conjunto de paquetes Tidyverse:
+
+```
+install.packages("tidiverse")
+library(tidyverse)
+```
+
+```{r pressure, warning=FALSE, include=FALSE}
+library(tidyverse)
+```
+
+Los paquetes que ofrece Tidyverse estan orientados en facilitar la manipulacion, importación, exploración y visualización de datos, permitiendo que el proceso sea eficiente y que los scripts puedan ser reproducibles entre usuarios. En esta sesión vamos a trabajar principalmente con dos paquetes, dplyr y ggplot, y algunas generalidades de otros paquetes para trabajar con datos tidy.
+
+Los datos "tidy" se caracterizan por las siguientes tres características:
+
+ * Cada columna es una variable
+ * Cada fila es una observación
+ * Cada elda es un valor único
+
+Estas 3 características las veremos con frecuencia a lo largo de esta sesión.
+
+***
+
+##  Readr        
+
+El paquete Readr es una alternativa para leer datos rectangulares como un ,csv. Las principales ventajas de usar readr para leer un csv son la velocidad con la que se importan los datos y el "parse" realizado sobre los datos. Esto ultimo quiere decir que la funcóon analizará automaticamente el tipo de dato que esta siendo importando y no podruce cambios inesperados. Con frecuencia, la función base de R puede convertir vectores de caracteres a factores. Además, readr lee automaticamente formatos de fechas.
+
+```{r collapse=TRUE, comment="-"}
+setwd("~/r tic/sesion 2")
+dat <- read_csv("Santander_BIO_data.csv") #Leemos los datos y en la salida nos muestra las columnas y el tipo de dato que contiene cada variable
+```
+
+Recordemos que nuestro data frame se trata de información sobre inventarios de la biodiversidad en el marco del proyecto Santander BIO. Nuestro data frame cuenta con información taxonomica (Nombre de la especie, familia, reino, etc) e información sobre los sitios y la altura a la que se encuentran estas especies.
+
+Podemos cambiar el tipo de dato al importarlo, por ejemplo convertir algunas variables en factores
+
+```{r collapse=TRUE, comment="-"}
+setwd("~/r tic/sesion 2")
+dat <- read_csv("Santander_BIO_data.csv", col_types = 
+                  list(
+                    species = col_character(),
+                    locality = col_factor(),
+                    municipio = col_factor(),
+                    kingdom = col_factor(),
+                    phylum = col_character(),
+                    class = col_character(),
+                    order = col_character(),
+                    family = col_character(),
+                    genus = col_character(),
+                    taxonRank = col_character(),
+                    elevation = col_double()
+                  )
+)
+```
+
+***
+
+##  Tibble                                      
+
+Tibble es una forma moderna de data.frame que ha provado ser mas efectiva. Los tibbles no cambian los nombres de las variables o el tipo de dato, y se quejan "mas" que un data.frame convencional.
+
+```{r collapse=TRUE, comment="-"}
+class(dat) #Si miramos que clase de vector son los objetivos cargados con readr, nos damos cuenta que estos son un tipo de tibble. Por esto, no hace sentido convertir un objeto cargado con readr a un tibble, pero si podemos convertir un data.frame convencional en un tibble.
+
+setwd("~/r tic/sesion 2")
+dat_conv <-read.csv("Santander_BIO_data.csv")
+
+class(dat_conv)
+
+dat_tibble <- as_tibble(dat_conv)
+
+class(dat_tibble)
+```
+
+Hay dos diferencias entre un tibble y un data.frame convencional: el método de impresión o print() y la forma de obtener subconjuntos.
+
+```{r collapse=TRUE, comment="-"}
+dat_tibble #Tibble nos muestra hasta 10 observaciones para mantener la consola menos saturada. En caso de necesitar mas de 10 observaciones, puede indicarlo de la siguiente manera
+
+dat_tibble %>% print(n = 20)
+```
+
+Extraer datos de un tibble se hace de una manera mas estricta, ya que estos no realizan coincidencia parcial. Necesitaras escribir el nombre completo de la variable
+
+```{r collapse=TRUE, comment="-"}
+dat_conv$lo[1:5] #De forma convencional, al escribir el nombre incompleto de una variable, este mostrará la variable con el que mejor coincida
+
+dat_tibble$lo #Mientras que en tibble saltara un error
+dat$lo #Lo mismo sucederá con readr
+```
+
+Finalmente, usted puede crear tibbles fila por fila o por columnas
+
+```{r collapse=TRUE, comment="-"}
+tibble(x = 1:5, y = 1, z = x ^ 2 + y) #Por columnas
+
+tribble( #Por fila
+  ~x, ~y,  ~z,
+  "a", 2,  3.6,
+  "b", 1,  8.5
+)
+```
+
+***
+
+## Dplyr                                    
+
+Dplyr es uno de los paquetes más utiles para la manipulación de datos. Dentro de sus funciones más utiles se encuentran:
+
+ + mutate() Añade nuevas variables en función de variables existentes
+ + select() Selecciona variables de acuerdo a su nombre
+ + filter() Selcciona observaciones de acuerdo a sus valores
+ + summarise() Resume cada grupo en menos filas
+ + arrange() Cambia el orden de las observaciones
+
+La forma simple para seleccionar una variable utilizada en la sesión anterior es mediante el símbolo $
+
+```{r collapse=TRUE, comment="-"}
+dat$species
+```
+
+***
+
+### Select
+
+Mediante el paquete dplyr podemos seleccionar variables con la función select()
+?select()
+
+```{r collapse=TRUE, comment="-"}
+select(dat, species) #Mediante select seleccionamos el dataframe y seguido de esto, las variables
+
+select(dat, species, locality, municipio) #Podemos seleccionar mas de una variable
+```
+
+Podemos encadenar varias funciones mediante "pipes" o %>% (se puede generar mediante el atajo control+shift+m). Esto es muy útil ya que nos permite realizar tareas con menos línea de código, lo que nos hace mas eficientes y nos ahorra tiempo
+
+Empezamos cargando primero los datos por fuera de cualquier funcion, seguido de un pipe
+
+```{r collapse=TRUE, comment="-"}
+dat %>% select(species)
+```
+
+Ya que tenemos nuestra variable seleccionada, podemos encadenar funciones que trabajen sobre estos datos. Si la función no requiere parametros adicionales, la función se escribe en su forma básica: funcion()
+
+```{r collapse=TRUE, comment="-"}
+dat %>% select(species) %>% unique() #Nos muestra los valores unicos de esta variable
+```
+
+La estructura básica de este proceso es escoger nuestro set de datos, filtrar y seleccionar las variables que necesitamos y aplicar una funcion. La complejidad del codigo dependera del resultado deseado. A continuacion vamos a realizar una funcion simple en un conjunto de datos especifico de nuestro set de datos.
+
+***
+
+### Filter
+
+?filter()
+
+```{r collapse=TRUE, comment="-"}
+dat %>% filter(municipio == "El Carmen de Chucuri") #Hasta este paso filtramos nuestras observaciones
+
+dat %>% filter(municipio == "El Carmen de Chucuri") %>% select(species) #Seleccionamos las localidades en las cuales se registro la especie Xiphidium caeruleum
+
+dat %>% filter(municipio == "El Carmen de Chucuri") %>% select(species) %>% unique() #Y obtenemos los nombres unicos de las especies que estan presentes en el municipio de El carmen de Chuchuri
+
+El_Carmen <- dat %>% #Esto puede ser guaradado en un vector y separado de una forma mas elegante
+  filter(municipio == "El Carmen de Chucuri") %>% 
+  select(species) %>% 
+  unique() 
+
+length(El_Carmen$species) #En el carmen de chuchiru hay 357 especies unicas
+```
+
+¿Cuántas clases hay en ese mismo municipio?
+
+```{r collapse=TRUE, comment="-"}
+gen_carmen <- dat %>% 
+  filter(municipio == "El Carmen de Chucuri") %>% 
+  select(class) %>% 
+  unique()
+
+length(gen_carmen$class) #En el carmen de chucuri existen 9 clases únicas
+```
+
+***
+
+### Summarise
+
+Podemos realizar resumenes estadísticos sobre nuestros datos y crear un nuevo data frame con los resultados usando summarise()
+
+?summarise()
+
+Vamos a promediar los valores de elevación
+
+```{r collapse=TRUE, comment="-"}
+ele_mean <- dat %>% 
+  summarise(mean = mean(elevation), n = n()) #El argumento n nos muestra el tamaño del grupo y lo indexa en una columna
+```
+
+Explique el resultado y lo que se muestra en cada columna
+
+Podemos agrupar los resultados
+
+```{r collapse=TRUE, comment="-"}
+conteo_clase <- dat %>% 
+  group_by(class) %>% 
+  summarise(n = n()) #Realizamos un conteo de los registros de especies en cada clase
+
+ele_mean_group <- dat %>% 
+  group_by(municipio) %>% 
+  summarise(mean = mean(elevation), n = n())
+```
+
+Es posible realizar mas de una operacion simplemente añadiendo una "," y escribiéndola dentro de summarise. Calcule el valor promedio, mínimo y máximo de la elevación por municipio.
+
+```{r collapse=TRUE, comment="-"}
+ele_mean_group <- dat %>% 
+  group_by(municipio) %>% 
+  summarise(mean = mean(elevation), min(elevation), max(elevation), n = n())
+```
+
+Podemos etiquetar nuestros datos o incluso organizarlos dentro de un mismo data frame
+
+```{r collapse=TRUE, comment="-"}
+#Creamos una etiqueta para cada clase
+
+clase_eqitqueta <- dat %>% 
+  group_by(class) %>% 
+  summarise(cur_group_id()) #Esto podra ser utilizado mas adelante con mutate() y crear una nueva variable en el data frame existente
+```
+
+Utilizamos las funciones cur_ para crear subconjuntos de datos ordenados por grupo. Los nuevos subconjuntos serán una lista de tibbles.
+
+```{r collapse=TRUE, comment="-"}
+clase_grupo <- dat %>% 
+  group_by(class) %>% 
+  summarise(data = list(cur_group()))
+
+clase_datos <- dat %>% 
+  group_by(class) %>% 
+  summarise(data = list(cur_data()))
+
+clase_datos_completo <- dat %>% 
+  group_by(class) %>% 
+  summarise(data = list(cur_data_all()))
+```
+Explique la diferencia entre los 3 data frames
+
+Cree un data frame en el cual agrupe las observaciones por la variable orden y calcule el número de observaciones, valor promedio y mediana de la elevación en cada uno
+
+```{r collapse=TRUE, comment="-"}
+ejercicio <- dat %>% 
+  group_by(order) %>% 
+  summarise(data = list(cur_data_all()), n = n(), mean = mean(elevation), median = median(elevation))
+```
+
+***Ejercicios:***
+```
+1. Utilice summarise y filter para averiguar cual es la familia con mayor registro de especies
+
+2. Averigue cual es la elevacion maxima a la que fue registrada una planta y un animal
+
+3. Realice el ejercico anterior, pero mantentga las demas columnas del data frame para visuales que especies se cuentran a esta altura
+
+Pista: use la funcion mutate, ungroup y filter para mantener todas las columnas
+```
+
+### Mutate
+
+Ahora vamos a ver como se modifican columnas en dplyr mediante la función mutate().
+
+?mutate()
+
+Vamos a crear una nueva varible que etiquete las observaciones de a cuerdo a una variable, en este caso, dependiendo de a que clase pertenecen
+
+```{r collapse=TRUE, comment="-"}
+da <- dat %>% 
+  group_by(class) %>% 
+  mutate(id = cur_group_id())
+```
+
+En mutate, las nuevas variables se crean a partir de las variables existentes.
+
+```{r collapse=TRUE, comment="-"}
+new_var <- dat %>%
+  select(species, elevation) %>% #Nos quedamos con 2 variables
+  mutate(
+    doble_elevacion = elevation * 2, #Creamos una nueva variable a partir de los datos de elevación
+    doble_elevacion_logaritmo = log(doble_elevacion) #Creamos una segunda variable a partir de la variable anterior
+  )
+```
+
+Tambien es posible remover o modificar variables existentes. Vamos a eliminar la variable order, y modificar la variable de elevación 
+
+```{r collapse=TRUE, comment="-"}
+nuevo_dat <- dat %>% 
+  mutate(
+    order = NULL,
+    elevation = elevation/2
+  )
+```
+
+Podemos modificar multiples columnas usando across dentro de mutate
+
+?across
+
+```{r collapse=TRUE, comment="-"}
+across_data <- dat %>% 
+  mutate(across(.cols = everything(), as.factor)) #Convertimos todas las columnas en factores
+```
+
+Ya que la elevación es una variable numérica, debemos evitar tenerla como factor
+
+```{r collapse=TRUE, comment="-"}
+across_data <- dat %>%
+  mutate(across(!elevation, as.factor)) #Con el signo de admiración antes de la variable, estamos indicando que aplique la funcion as.factor a todas las columnas menos a elevation
+```
+
+***Ejercicios:***
+```
+1. Cree dos columnas nuevas, una en donde le sume 1000 a cada observacion de elevación y otra donde le reste 1000. Ademas, mantenga la variable de especies, municipio y de elevación orginal. Agrupe las observacioens por municipio y cree un data frame que contenga los valores promedio de las 3 variables numéricas.
+
+Pista: revise argumento where() y utilicelo dentro de la función across para seleccionar solo las columnas de clase numerica
+
+2. Explore el argumento starts_with() para seleccionar las observaciones que empiezan con una secuencia de caracteres en especifico ej: starts_with("Anolis")
+```
+
+***
+
+### Arrange 
+
+Finalmente con arrange() podemos cambiar el orden de las observaciones o filas
+
+?arrange
+
+Vamos a ordenar nuestra variable numérica de elevación
+
+```{r collapse=TRUE, comment="-"}
+ordenado <- dat %>% arrange(elevation) #Ordena las observaciones de menor a mayor
+```
+
+Ordenelo de mayor a menor usando desc() en la funcion arrange()
+
+```{r collapse=TRUE, comment="-"}
+ordenado <- dat %>% arrange(desc(elevation))
+```
+
+Tambien es posible ordenarlo por categorias de una variable. Intente crear un data frame ordenado por su género
+
+En nuestro set de datos, no existe una columna para el genero. Vamos a intentar crearla mas adelante a partir de la variable species, la cual contiene el epíteto genérico y crear una nueva variable con estos caracteres.
+
+***
+
+### separate()
+
+Podemos separar characteres con separate()
+
+?separate()
+
+```{r collapse=TRUE, comment="-"}
+separado <- dat %>% separate(species, c("specie", "genus"))
+```
+
+Separate se encargara de separar caracteres cuando encuentre un valor diferente a una letra o numero, como el espacio. En este caso, separara los caracteres en dos columnas llamadas "specie" y "genus". Vemos que luego de ejecutar, obtenemos una advertencia con las posiciones de filas en las que encontro problemas. Revisamos las posiciones en el data.frame original
+
+```{r collapse=TRUE, comment="-"}
+dat$species[c(226, 720, 950)] #Vemos que el epíteto de especie esta acompañado de otra palabra separado con -. ¿Qué pasa si añadimos una tercera columna?
+
+separado <- dat %>% separate(species, c("specie", "genus", "otro"))
+```
+
+Si usamos NA en vez del nombre de la nueva columna omitiremos esa columna
+
+```{r collapse=TRUE, comment="-"}
+separado <- dat %>% separate(species, c(NA, "genus"))
+```
+
+O podemos especificar el comportamiento de la separación
+
+```{r collapse=TRUE, comment="-"}
+separado <- dat %>% 
+  separate(species, c("specie", "genus"), " ", extra = "merge")#Le indicamos a la función que solo debe separar los caracteres cuando encuntre un espacio " ", y lo que queda sera único o se hará un "merge".
+```
+
+Revisamos la observacion 226
+
+```{r collapse=TRUE, comment="-"}
+separado$genus[226]
+```
+
+También podemos realizar esto mediante expresiones regulares que veremos mas adelante en la sesion
+
+```{r collapse=TRUE, comment="-"}
+separado <- dat %>% 
+  separate(species, c("specie", "genus"), sep = " ")
+```
+
+¡Ahora podemos ordenar nuestras observaciones de acuerdo al genero!
+
+```{r collapse=TRUE, comment="-"}
+ordenado_grupo <- separado %>% arrange(genus)
+```
+
+***
+
+## Aggregate     
+
+```{r collapse=TRUE, comment="-", echo=FALSE}
+setwd("~/r tic/sesion 2")
+dat <- read_csv("Santander_BIO_data.csv") 
+```
+
+Una alternativa clásica en R a la función de summarise() en dplyr es aggregate, aunque es recomendable usar los paquetes de tidiverse, conocer la sintaxis de otras funciones es recomendalbe para desarrolar habilidades en la programación
+
+Al igual que summarise, aggregate() permite calcular resúmenes estadísticos de subconjuntos de datos
+
+?aggregate
+
+Vamos a promediar la elevación a través de algunos grupos en nuestros datos
+
+```{r collapse=TRUE, comment="-"}
+aggre_prom <- aggregate(elevation ~ class, data = dat, FUN = mean) #Aggregate tiene 3 argumentos básicos usando la formula ~. Primero se escribe el elemento al cual se aplicará la función, en este caso la elevación; seguido el grupo de observaciones que se tomara en cuenta para aplicar la función, que en este caso es la clase; el nombre del vector en el cual se encuentran estos elementos y la función a realizar. La función se lee como: Realice una promedio de la elevación en cada clase de nuestras espcies en el set de datos llamado dat
+```
+
+Esta es la forma que utilizabamos en dplyr para realizar el mismo proceso
+
+```{r collapse=TRUE, comment="-"}
+sum_prom <- dat %>% 
+  group_by(class) %>% 
+  summarise(mean = mean(elevation))
+```
+
+Adicionalmente, podemos obtener resultados que dependan de mas de una variable. Si necesitamos obtener los valores promedio de elevación por clase y al mismo tiempo por municipio, agregamos el signo "+" de la siguiente manera:
+
+```{r collapse=TRUE, comment="-"}
+aggre_prom <- aggregate(elevation ~ class+municipio, data = dat, FUN = mean) #De esta forma, obtener el valor promedio de elvación de los registros en cada clase y en cada municipio
+
+sum_prom <- dat %>% 
+  group_by(class, municipio) %>% 
+  summarise(mean = mean(elevation)) #Esto funciona de igual forma en summarise añadiendo otra variable en group_by
+```
+
+***Ejercicios:***
+```
+#1. ¿Qué pasa al cambiar el orden de las variables en aggregate y en summarise?, son los resultados iguales?. Explique
+
+2. Utilice la función aggregate para calcular el número de observaciones de especies por orden utilizando la funcion length. Realice el mismo proceso usando el paquete dplyr
+
+3. Calcule la desviacion estándar, el valor mínimo y máximo de la elevación para cada familia, phylum y municipio con aggregate y dplyr.
+```
+
+***
+
+##  Stringr                                    
+
+El paquete stringr brinda herramientas útiles para trabajar con expresiones regulares y caracteres. Las expresiones regulares son un lenguaje que describen patrones de texto. Esto es de gran ayuda cuando necesitamos preparar y limpiar nuestros datos. Ejecute las siguientes funciones y describa lo que esta pasando.
+
+```{r collapse=TRUE, comment="-"}
+x <- fruit[1:5]
+
+str_detect(x, "aeiou")
+
+str_detect(x, "[aeiou]")
+
+str_count(x, "[aeiou]")
+
+str_subset(x, "[aeiou]")
+
+str_locate(x, "[aeiou]")
+
+str_extract(x, "[aeiou]")
+
+str_match(x, "(.)[aeiou](.)")
+
+str_replace(x, "[aeiou]", "?")
+
+str_split(c("a,b", "c,d,e"), ",")
+```
+
+Todas las funciones de stringr comienzan con str_, y las funciones anteriores son las 7 principales del paquete.
+
+Aplicando estas funciones a nuestro set de datos, podemos realizar busquedas de caracteres de nuestros registros
+
+```{r collapse=TRUE, comment="-"}
+which(str_detect(dat$species, "Clusia hammeliana")=="TRUE") #Buscamos la posición de una especie en particular
+```
+
+Sin embargo, si no estamos seguro, podemos hacer una busqueda con algunos caracteres que recordemos
+
+```{r collapse=TRUE, comment="-"}
+which(str_detect(dat$species, "sia hamm")=="TRUE")
+```
+
+También podemos contar el numero de registros por localidad o municipio
+
+```{r collapse=TRUE, comment="-"}
+sum(str_count(dat$municipio, "Cimitarra"))
+```
+
+En stringr podemos hacer busquedas mas generalizadas que no veremos en esta sesión, pero esto es un ejemplo de lo que podemos hacer conociendo algunas clases de caracteres
+
+```{r collapse=TRUE, comment="-"}
+str_subset(dat$species, "[:space:][aeiou]") #Extraemos todas las especies en la que su epíteto específico comienza con una vocal. Observe que [:space:] es una clase de caracter que se utiliza para indicar que antes de las vocales debe haber un espacio, de otra manera se obtendrían todos los registros que tuviesen alguna vocal en cualquier posición.
+```
+
+¿Cómo podemos averiguar si hay un número en los nombres de especies?
+
+```{r collapse=TRUE, comment="-"}
+which(str_detect(dat$species, "123456789"))
+which(str_detect(dat$species, "[:digit:]")) #La clase de caracter para encontrar cualquier número es [:digit:]
+str_detect(dat$elevation, "[:digit:]")
+```
+
+Explore las clases de caratceres pre-creadas
+
+ * [:punct:]: Puntuación
+ * [:alpha:]: Letras
+ * [:lower:]: Letras minúsculas
+ * [:upper:]: Letras mayúsculas
+ * [:digit:]: Dígitos
+ * [:xdigit:]: Dígitos hexadecimales
+ * [:alnum:]: Letras y núeros
+ * [:cntrl:]: Caracteres de control
+ * [:graph:]: Letras, números y puntuación
+ * [:print:]: Letras, números, puntuación y espacio en blanco
+ * [:space:]: Caracter de espacio
+ * [:blank:]: Espacio y tabulador
+
+***
+
+##  Graficar con ggplot2                    
+
+```{r collapse=TRUE, comment="-", echo=FALSE}
+setwd("~/r tic/sesion 2")
+dat <- read_csv("Santander_BIO_data.csv") 
+```
+
+El paquete ggplot2 ofrece herramientas que ayudan a visualizar datos tidy en data frames de forma organizada y sencilla, basado en la gramática de las gráficas. En la grámatica de las gráficas, la idea es que puedas construir gráficas a partir de los mismos componentes: un set de datos; un sistema de coordenadas ("x" y "y") y aspectos del grafico; y formas o elementos geométricos que representan a los datos (puntos, lineas circulos, etc)
+
+En ggplot, cada componente es un capa que se van añadiendo una tras otra usando el símbolo "+"
+
+```{r collapse=TRUE, comment="-"}
+ggplot(data = dat) #La  primera capa de un ggplot es el conjunto de datos que provienen de un data frame
+```
+
+```{r collapse=TRUE, comment="-"}
+ggplot(data = dat) +
+  aes(x = class) #Luego se añade el sistema de coordenas o relación entre las variables
+```
+
+```{r collapse=TRUE, comment="-"}
+ggplot(data = dat) +
+  aes(x = class) +
+  geom_bar() #Y añadimos un geom_ para representar geometricamente nuestros datos. Hay que tener precaucion ya que no todos los geom funcionan bien los el aes establezcamos. ggplot realiza algunas graficas de manera predeterminada, si solo dejamos en aes() una unica variable, este graficará el número de observaciones por cada clase que exista en esa variable (geom_bar(stat="count")), ya que convierte en factores las variables para graficarlas
+```
+
+Estos son los 3 componentes principales para crear una gráfica en ggplot. Es posible seguir añadiendo capas para mejorar nuestra grafica y personalizarla de muchas maneras, sin embargo si no se especifican, ggplot los establece por defecto
+
+Al hacer parte del mundo de tidiverse, es posible encadenar la funcion de ggplot con las funciones vistas anteriormente y asi crear un grafico de forma difecta. Vamos a crear una grafica que nos muestre el numero de especies unicas por municipio
+
+```{r collapse=TRUE, comment="-"}
+dat %>% 
+  group_by(municipio) %>% 
+  summarise(unicos = unique(species)) %>% 
+  ggplot(aes(x = municipio)) +
+  geom_bar()
+```
+
+ggplot también establece colores y leyenda por defecto a partir de los factores en el elemento aes con el argumento fill
+
+```{r collapse=TRUE, comment="-"}
+dat %>% 
+  group_by(municipio) %>% 
+  summarise(unicos = unique(species)) %>% 
+  ggplot(aes(x = municipio, fill = municipio)) +
+  geom_bar()
+```
+
+Podemos cambiar el orden de las barras cambiando el eje x a eje y. Si deseamos usar colores específicos para cada barra lo hacemos en el geom_:
+
+```{r collapse=TRUE, comment="-"}
+dat %>% 
+  group_by(municipio) %>% 
+  summarise(unicos = unique(species)) %>% 
+  ggplot(aes(y = municipio)) +
+  geom_bar(fill = c("blue", "yellow", "brown"), col = c("blue", "yellow", "brown")) # ¿Cuál es la diferencia entre fill y col?
+```
+
+Realice una grafica con ggplot de los registros de mamiferos por cada localidad
+
+```{r collapse=TRUE, comment="-"}
+dat %>% 
+  filter(class == "Mammalia") %>% 
+  ggplot(aes(x = locality)) + 
+  geom_bar()
+```
+
+Grafique los registros del orden coleoptera en las diferentes localidades de cada municipio. Para diferenciar a que municipio pertenece cada localidad, usel el argumento fill de aes()
+
+```{r collapse=TRUE, comment="-"}
+dat %>% 
+  filter(order == "Coleoptera") %>% 
+  group_by(locality) %>% 
+  ggplot(aes(x = locality, fill = municipio)) + 
+  geom_bar()
+```
+
+Podemos agruparlos las barras
+
+```{r collapse=TRUE, comment="-"}
+dat %>% 
+  filter(order == "Coleoptera") %>% 
+  group_by(locality) %>% 
+  ggplot(aes(x = municipio, fill = locality)) + 
+  geom_bar(position =  "stack")
+```
+
+También podemos hacer graficos de cajas e histogramas cambiando de geom_
+
+?geom_boxplot
+
+```{r collapse=TRUE, comment="-"}
+dat %>% 
+  ggplot(aes(x = municipio, y = elevation)) + #Grafico de cajas de la elevacion por cada municipio
+  geom_boxplot()
+```
+
+***Ejercicios:***
+```
+1. Realice un gráfico de cajas sobre la distribucion de las alturas a la que fueron registradas las aves en cada localidad utilizando las funciones tidy
+
+2. ¿Cómo es la distribución de elevacion de las familias del orden Polypodiales?
+
+3. Realice un histograma de la elevación total y la elevación ambos reinos
+```
+
+Experimente graficando la elevacion de diferentes grupos (reinos, clase, familia etc) utilizando las funcioens tidy
+
+### Theme
+
+Al igual que en la funcion basica de plot(), en ggplot podemos tener mas de una gráfica y personalizar cada elemento mediante theme()
+
+Ggplot cuenta con temas predeterminados que podemos cargar mediante theme_
+
+?theme()
+
+```{r collapse=TRUE, comment="-"}
+dat %>% mutate(aleatorios = runif(1255, min = 0, max = 3600)) %>% 
+  ggplot(aes(x=elevation, y=aleatorios)) + #establecemos los datos y las variables "x" y "y"
+  theme_minimal() #tema del grafico para personalizar color de fondo, bordes, cuadrícula, etc.
+```
+
+Dentro de theme() modificamos elementos como líneas, colores, ejes, entre otros
+
+```{r collapse=TRUE, comment="-"}
+dat %>% mutate(aleatorios = runif(1255, min = 0, max = 3600)) %>% 
+  ggplot(aes(x=elevation, y=aleatorios)) +
+  theme_minimal() + theme(panel.border = element_blank(),
+                          panel.grid.major = element_blank(), 
+                          panel.grid.minor = element_blank(), 
+                          axis.line = element_line(colour = "white")) +#definimos fondo y bordes
+  labs(title = "Elevacion vs numeros aleatorios", #título
+       subtitle = "Data: SantanderBIO") + #subtítulo
+  labs(x = "Elevacion", y = "Numeros aleatorios")#nombre de los ejes
+```
+
+Añadimos un geom_ de puntos
+
+```{r collapse=TRUE, comment="-"}
+dat %>% mutate(aleatorios = runif(1255, min = 0, max = 3600)) %>% 
+  ggplot(aes(x=elevation, y=aleatorios)) + #Grafico base 
+  geom_point() + # geometria que corresponde a los puntos
+  theme_bw() + theme(panel.border = element_blank(),
+                     panel.grid.major = element_blank(), 
+                     panel.grid.minor = element_blank(), 
+                     axis.line = element_line(colour = "white")) +
+  labs(title = "Elevacion vs numeros aleatorios", 
+       subtitle = "Data: SantanderBIO") + 
+  labs(x = "Elevacion", y = "Numeros aleatorios")
+```
+
+Coloreamos los puntos y modificamos el título de la leyenda generada
+
+```{r collapse=TRUE, comment="-"}
+dat %>% mutate(aleatorios = runif(1255, min = 0, max = 3600)) %>% 
+  ggplot(aes(x=elevation, y=aleatorios, color = municipio)) + #Gráfico base con color para cada punto
+  geom_point(shape=5) +  # geometria que corresponde a los puntos y shape para modificar la forma del punto
+  theme_bw() + theme(panel.border = element_blank(), 
+                     panel.grid.major = element_blank(), 
+                     panel.grid.minor = element_blank(), 
+                     axis.line = element_line(colour = "white"))+#definimos fondo y bordes
+  scale_colour_discrete(name = "Municipios") + #Establecemos el título de la leyenda
+  labs(title = "Elevacion vs numeros aleatorios", 
+       subtitle = "Data: SantanderBIO") + 
+  labs(x = "Elevacion", y = "Numeros aleatorios")
+```
+
+Podemos incluir en la gráfica algunos métodos estadísticos como la relación lineal entre los puntos
+
+?geom_smooth
+
+```{r collapse=TRUE, comment="-"}
+dat %>% mutate(aleatorios = runif(1255, min = 0, max = 3600)) %>% 
+  ggplot(aes(x=elevation, y=aleatorios)) + 
+  geom_point(shape=5) +  
+  geom_smooth(method = "lm", se = TRUE) + #método lm e intervalo de confianza
+  theme_bw() + theme(panel.border = element_blank(), 
+                     panel.grid.major = element_blank(), 
+                     panel.grid.minor = element_blank(), 
+                     axis.line = element_line(colour = "white")) +
+  scale_colour_discrete(name = "Municipios") + 
+  labs(title = "Elevacion vs numeros aleatorios", 
+       subtitle = "Data: SantanderBIO") + 
+  labs(x = "Elevacion", y = "Numeros aleatorios")
+```
+
+Y por cada grupo
+
+```{r collapse=TRUE, comment="-"}
+dat %>% mutate(aleatorios = runif(1255, min = 0, max = 3600)) %>% 
+  ggplot(aes(x=elevation, y=aleatorios, color = municipio)) + 
+  geom_point(shape=5) +  
+  geom_smooth(method = "lm", se = TRUE) +
+  theme_bw() + theme(panel.border = element_blank(), 
+                     panel.grid.major = element_blank(), 
+                     panel.grid.minor = element_blank(), 
+                     axis.line = element_line(colour = "white")) +
+  scale_colour_discrete(name = "Municipios") + 
+  labs(title = "Elevacion vs numeros aleatorios", 
+       subtitle = "Data: SantanderBIO") + 
+  labs(x = "Elevacion", y = "Numeros aleatorios")
+```
+
+Podemos graficar una variable por cada grupo con colores que se sobreponen
+
+```{r collapse=TRUE, comment="-"}
+ggplot(data = dat) + 
+  geom_histogram(aes(x = elevation, fill = municipio), 
+                 bins = 12, position = "identity", alpha = 0.4) + # alpha para ver las barras que se sobreponen
+  theme_bw() + theme(panel.border = element_blank(), 
+                     panel.grid.major = element_blank(), 
+                     panel.grid.minor = element_blank(), 
+                     axis.line = element_line(colour = "white")) +
+  labs(title = "Elevacion por municipio", 
+       subtitle = "Data: SantanderBIO") + 
+  labs(x = "Elevacion", y = "Conteo")
+```
+
+Para poder mostrar mas de una gráfica en el mismo plot se utiliza face_wrap. Revise la función y realice el histograma anterior pero realice en un mismo plot 3 gráficas para cada municipio
+
+?facet_wrap
+
+```{r collapse=TRUE, comment="-"}
+ggplot(data = dat) + 
+  geom_histogram(aes(x = elevation, fill = municipio), bins = 12) + 
+  facet_wrap(~municipio, ncol = 1)+ #para cada especie, haga tres histogramas en una columna
+  theme_bw() + theme(panel.border = element_blank(), 
+                     panel.grid.major = element_blank(), 
+                     panel.grid.minor = element_blank(), 
+                     axis.line = element_line(colour = "white")) +
+  labs(title = "Elevacion por municipio", 
+       subtitle = "Data: SantanderBIO") + 
+  labs(x = "Elevacion", y = "Conteo")
+```
+
+Todas las características de un tema pueden ser guardadas en un vector para evitar escribir el tema cada vez que se grafique
+
+```{r collapse=TRUE, comment="-"}
+mitema <- theme(panel.grid.major = element_line(colour = "green"), 
+                panel.grid.minor = element_line(colour = "pink"),
+                panel.background = element_rect(fill = "blue"),
+                panel.border = element_blank(),axis.line = element_line(size = 0.9, linetype = "solid", colour = "black"))
+
+ggplot(data = dat, aes(x = elevation, y = elevation)) +
+  mitema
+```
+
+***Ejercicios:***
+```
+1.Contruye tu propio tema personalizado
+
+2. Cree una grafica de barras de el numero de individuos por cada clase, utilice color para las diferentes barras. Adicionalmente, utilice su propio tema
+
+3.Realice el grafico anterior pero genere una grafica separada para clada clase en el mismo plot
+
+4. Convierta la grafica de barras del punto 2 en una grafica de torta meidante coord_polar()
+```
+
+Finalmente, con el sistema de coordenadas "x" y "y" es posible hacer increíbles mapas mediante ggplot 
+
+```{r collapse=TRUE, comment="-"}
+nz <- map_data("nz") #Cargamos un set de datos que contienede coordenadas longitud y latitud, y columnas que indican a que región corresponden esas coordenadas
+
+ggplot(nz, aes(long, lat, group = group)) +
+  geom_polygon(fill = "white", colour = "black")
+```
+
+## Forcats                             
+
+El paquete forcats tiene como objetivo brindar herramientas de ayuda para manejar variables categóricas.
+
+Convirtamos una variable en un factor
+
+```{r collapse=TRUE, comment="-"}
+dat$class <- as.factor(dat$class)
+
+levels(dat$class) #Revisamos los categorias
+
+dat %>% 
+  ggplot(aes(x = class)) + 
+  geom_bar() + 
+  coord_flip()
+```
+
+Vemos que se grafica un conteo de la variable "class" por cada factor, ahora vamos a ordenar esta gráfica con forcats
+
+```{r collapse=TRUE, comment="-"}
+dat %>% 
+  mutate(class = fct_infreq(class)) %>% 
+  ggplot(aes(x = class)) + 
+  geom_bar() + 
+  coord_flip()
+#Ahora tenemos los cada categoria ordenada por su frecuencia
+```
+
+Podemos ordenar un factor por otra variable
+
+```{r collapse=TRUE, comment="-"}
+
+dat %>% 
+  ggplot(aes(x = class, y = elevation)) + 
+  geom_boxplot() 
+#Bloxplot de la distribución del a altura por cada clase
+
+dat %>% 
+  mutate(class = fct_reorder(class, elevation)) %>% 
+  ggplot(aes(x = class, y = elevation)) + 
+  geom_boxplot()
+#En este caso ordenamos las clases por la mediana de sus elevaciones
+```
+
+Si tenemos clases con pocas o muchas observaciones podemos agruparlos en un nuevo grupo llamado "other". Explique la diferencia entre las dos gráficas
+
+```{r collapse=TRUE, comment="-"}
+dat %>% 
+  mutate(class = fct_lump(class, n = 5)) %>% 
+  ggplot(aes(x = class)) + 
+  geom_bar() + 
+  coord_flip()
+
+dat %>% 
+  mutate(class = fct_lump(class, n = -5)) %>% 
+  ggplot(aes(x = class)) + 
+  geom_bar() + 
+  coord_flip()
+```
+
+forcats tambien nos permite ordenar las categorias a mano
+
+```{r collapse=TRUE, comment="-"}
+f <- as.factor(dat$phylum)
+levels(f)
+fct_relevel(f, "Tracheophyta", "Arthropoda", "Chordata")
+```
