@@ -2,8 +2,59 @@
 
 <style> body {text-align: justify} </style> <!-- Justify text. -->
 
-El curso Introducción al análisis de datos utilizando R está dirigido a estudiantes de Biología y de Ingeniería Forestal en sus primeros semestres para familiarizarlos con el uso del lenguaje de programación R.
+El curso Introducción al análisis de datos utilizando R está dirigido a estudiantes de Biología y de Ingeniería Forestal en sus primeros semestres para familiarizar los en el uso del lenguaje de programación R.
 
-R es un lenguaje de programación de entorno de software libre para computación estadística y gráfica (R Development Core Team, 2021). En años recientes, R se ha vuelto una herramienta indispensable para el análisis de datos (o ciencia de datos) en muchas áreas de las ciencias básicas y aplicadas (Tippmann, 2015) y en la industria (Gandrud, 2013). En lugar de aprender múltiples herramientas, los estudiantes pueden utilizar un entorno único para una gran diversidad de métodos de análisis de datos. Más que un lenguaje de programación, R ofrece nuevas vías para la enseñanza de la estadística y análisis de datos, debido a que los problemas estadísticos pueden ser desarrollados y analizados de manera transparente y reproducible (Incerti et al., 2019). Esto permite un aprendizaje interactivo y orientado a resolver problemas, combinando la teoría y la práctica. De esta manera, los estudiantes pueden lograr una comprensión más profunda de análisis de datos de forma más sencilla, lo cual les permitirá practicar análisis de datos durante sus estudios utilizando todas las herramientas y posibilidades que les ofrece el lenguaje de programación R. 
- 
-Este libro y el diseño del curso Introducción al análisis de datos utilizando R son el resultado del proyecto Análisis de datos utilizando el lenguaje de programación R: una experiencia de aprendizaje virtual en el aula invertida, de la convocatoría Iniciativas de innovación didáctica mediante el uso de tecnologías, INNOVA-TIC 2021 de la Vicerrectoría Académica de la Universidad Industrial de Santander, UIS.
+R es un lenguaje de programación de entorno de software libre para computación estadística y gráfica (R Development Core Team, 2021). En años recientes, R se ha vuelto una herramienta indispensable para el análisis de datos (o ciencia de datos) en muchas áreas de las ciencias básicas y aplicadas (Tippmann, 2015) y en la industria (Gandrud, 2013). En lugar de aprender múltiples herramientas, los estudiantes pueden utilizar un entorno único para una gran diversidad de métodos de análisis de datos. Más que un lenguaje de programación, R ofrece nuevas vías para la enseñanza de la estadística y análisis de datos, debido a que los problemas estadísticos pueden ser desarrollados y analizados de manera transparente y reproducible, p.ej. usando R Markdown (Incerti et al., 2019). Esto permite un aprendizaje interactivo y orientado a resolver problemas, combinando la teoría y la práctica. De esta manera, los estudiantes pueden lograr una comprensión más profunda de análisis de datos de forma más sencilla, lo cual les permitirá practicar análisis de datos durante sus estudios utilizando todas las herramientas y posibilidades que les ofrece el lenguaje de programación R. 
+
+## ¿Cómo funciona este curso?
+
+Este curso está diseñado bajo el concepto de aula invertida (flipped classroom) que promueve el autoaprendizaje en los estudiantes y puede ser dictada en modalidad presencial, virtual o mixto (p.ej en presencialidad remota, o híbrida). Esto significa que hay un cambio de rol por parte del estudiante, el cual de manera autodidacta, adquiere conocimiento previo a la clase sincrónica mediante vídeos y scripts de programación en R disponibles a través de la plataforma Moodle. Durante la clase sincrónica se profundizan estos conocimientos a través de ejercicios prácticos que buscan resolver problemas reales en el análisis de datos bajo la orientación de un profesor.
+
+Este curso está estructurado en 3 unidades, cada una compuesta de 5 sesiones, la última dedicada a la evaluación. En la primera Unidad, se da inicio con una introducción a la programación y generación de gráficos en R, teniendo en cuenta los diferentes tipos de datos. En la segunda unidad se profundiza en métodos más avanzados y eficientes en la selección, el cálculo y visualización de datos usando la colección de paquetes tidyverse y se dan los fundamentos para generar flujos de trabajo transparentes y reproducibles usando R Markdown. En la tercera Unidad se explorarán los conceptos básicos de la estadística univariada a través de dos tipos de análisis ampliamente utilizados en el análisis de datos, análisis de varianza y regresión lineal simple. 
+
+Cada Unidad terminará con una sesión de ejercicios en donde se profundiza el aspecto de análisis de datos con R. La idea de este curso es centrarse en algunas técnicas que sirven como modelo para generalizar y entender mejor una gama más amplia de técnicas para el análisis de datos. Por ejemplo, los modelos lineales en R permiten la comprensión de los análisis de regresión, ANOVA, o análisis de regresión múltiple de una manera consistente. Estos conceptos fortalecerán las competencias de los estudiantes en el análisis de los datos. Las clases están enfocadas a maximizar el trabajo independiente y reducir la introducción teórica al mínimo necesario, con el fin de fortalecer las capacidades de análisis de datos en los estudiantes.
+
+El tiempo de dedicación a este curso son 8 horas semanales; 4 horas semanales de trabajo del estudiante con interacción con el profesor (sincrónicas y asincrónicas), y 4 horas de trabajo independiente del estudiante para repasar el contenido y resolver ejercicios de profundización. La dinámica del curso está diseñado de la siguiente manera: 
+
+(1) Previo a la reunión sincrónica con el profesor los estudiantes deben revisar el material teórico e introductorio que estará disponible en moodle. Con esta introducción, el estudiante trabajará de manera independiente en un script de R que está disponible en la plataforma moodle antes de la clase. Durante este trabajo el estudiante puede anotar sus inquietudes y preguntas. El estudiante terminará esta primera fase de trabajo independiente con un quizz sencillo de preguntas de selección múltiple disponible en la plataforma moodle.
+
+(2) Durante la clase sincrónica (i.e. en presencialidad o a través de una plataforma, p.ej. Zoom) se trabajará de manera interactiva en R sobre el script (i.e. cada participante un su computador y compartiendo pantalla cuando sea necesario) y se resuelven las preguntas de los estudiantes de manera interactiva. Además, durante la clase sincrónica los estudiantes practicarán individualmente o en equipos en resolver los problemas de los ejercicios bajo la orientación del profesor. 
+
+(3) Terminando la clase el profesor facilitará e introducirá algunos retos, los cuales deben ser trabajado como tarea de trabajo independiente y que se resolverán durante la próxima clase.    
+
+El curso se evalúa a través de quizes y ejercicios (parcial), los cuales evalúan las competencias adquiridas en cada sesión. Los quizes sobre los conceptos y técnicas de cada sesión serán considerados para la nota final del curso (en total 40% de la nota final). Además, al final de cada una de las tres Unidades del curso, los estudiantes desarrollarán ejercicios de análisis de datos que valdrán como parciales (cada uno 20% de la nota final).
+
+Tabla 1 demuestra el contenido y las actividades de cada una de las 15 sesiones. Además se especifican las competencias que los estudiantes adquieren en cada una de las sesiones. De este manera se establecen los competencias conceptuales, procedimentales y actitudinales a desarrollar en este curso de la siguiente manera:
+
+__Conceptuales__
+
+* Conocer la sintaxis básica del lenguaje R, incluyendo la colección de paquetes Tidyverse y R Markdown.
+* Conocer los tipos de estructura de datos y funciones básicas que se utilizan para el análisis de datos en R
+* Conocer las funciones que se utilizan para la manipulación, análisis y visualización de datos en R
+* Entender los conceptos de analizar y graficar datos y presentar informes en R
+
+__Procedimentales__
+
+* Programar y graficar en R.
+* Manipular las distintas estructuras de datos (i.e. vectores, matrices, data.frame).
+* Indexar estructuras de datos y extraer elementos o subconjuntos.
+* Aplicar métodos básicos en el análisis de datos en R
+* Graficar los resultados del análisis de datos acorde con lineamientos básicos 
+
+__Actitudinales__
+
+*Utilizar R como herramienta principal en la gestión, análisis y visualización de datos.
+*Valorar la utilidad de manejar R para la gestión, análisis y visualización de datos.
+*Valorar las estrategias que permitan la transparencia y reproducibilidad durante el proceso de análisis de datos. 
+*Valorar la importancia de la competencia en análisis de datos en el desempeño como profesional.
+*Valorar la utilidad de software libre y la flexibilidad de R 
+
+
+## ¿Cómo empezar?
+
+Todo el material que acompaña el curso Introducción al análisis de datos utilizando R está disponible en la plataforma Moodle de la Universidad; si no tienes acceso debes ponerte en contacto con el coordinador de tu programa. Asimismo la comunicación con el profesor, con los demás participantes, e incluso las actividades evaluativas se realizarán a través de la plataforma Moodle; es decir debes siempre estar atento y consultarlo con frecuencia. 
+Durante el curso trabajamos con el lenguaje de programación libre R y el interfaz gráfico RStudio. Se requiere instalar las dos, ayuda como instalar y descargarlos puedes encontrar aquí:
+
+__R:__ https://www.r-project.org/ -> [Download](https://cran.r-project.org/mirrors.html)
+__RStudio:__ https://www.rstudio.com/  -> [Download](https://www.rstudio.com/products/rstudio/download/#download)
+

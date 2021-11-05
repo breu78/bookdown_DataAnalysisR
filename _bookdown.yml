@@ -2,6 +2,6 @@ book_filename: "bookdown-start"
 chapter_name: "Capítulo "
 repo: https://github.com/seankross/bookdown-start
 output_dir: docs
-rmd_files: ["index.Rmd", "01-Introduction.Rmd", "02-Sesion_1.Rmd", "03-Sesion_2.Rmd", "04-Sesion_3.Rmd", "05-Sesion_4.Rmd", "07-Sesion_2_1.Rmd"]
+rmd_files: ["index.Rmd", "01-Introduction.Rmd", "02-Sesion_1.Rmd", "03-Sesion_2.Rmd"]
 clean: [packages.bib, bookdown.bbl]
 new_session: yes

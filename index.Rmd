@@ -14,4 +14,4 @@ description: "Everything you need (and nothing more) to start a bookdown book."
 
 # Preface {-}
 
-This is the very first part of the book.
+El curso _Introducción al análisis de datos utilizando R_ de lo cual es parte este libro son el resultado del proyecto _Análisis de datos utilizando el lenguaje de programación R: una experiencia de aprendizaje virtual en el aula invertida_, de la convocatoría Iniciativas de innovación didáctica mediante el uso de tecnologías, INNOVA-TIC 2021 de la Vicerrectoría Académica de la Universidad Industrial de Santander, UIS.
