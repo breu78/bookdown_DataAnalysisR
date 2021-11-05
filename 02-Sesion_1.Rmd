@@ -77,10 +77,15 @@ Estructura de la función:
  + Objeto: "x"
  + Argumento ('arg'): "na.rm=FALSE"
 
-**Ejercicios:**
-```
+<div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
+<span>
+<p style='margin-top:1em; text-align:center'>
+<b>📝 Ejercicios</b></p>
+<p style='margin-left:1em;'>
+
 1. Explique brevemente la función "order". ¿Qué hace y que significan los argumentos? 
-```
+</p>
+</div>
 
 ***
 
@@ -165,15 +170,21 @@ d = -3
 ?Syntax
 ```
 
-**Ejercicios**
-```
+
+<div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
+<span>
+<p style='margin-top:1em; text-align:center'>
+<b>📝 Ejercicios</b></p>
+<p style='margin-left:1em;'>
+
 1. Compruebe las siguientes afirmaciones lógicas:
 
 a. c mayor que d
 b. c menor o igual que d
 c. c igual a d
+</p>
+</div>
 
-```
 ***
 
 ### R como calculadora - Operadores y funciones.

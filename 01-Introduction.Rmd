@@ -43,11 +43,11 @@ __Procedimentales__
 
 __Actitudinales__
 
-*Utilizar R como herramienta principal en la gestión, análisis y visualización de datos.
-*Valorar la utilidad de manejar R para la gestión, análisis y visualización de datos.
-*Valorar las estrategias que permitan la transparencia y reproducibilidad durante el proceso de análisis de datos. 
-*Valorar la importancia de la competencia en análisis de datos en el desempeño como profesional.
-*Valorar la utilidad de software libre y la flexibilidad de R 
+* Utilizar R como herramienta principal en la gestión, análisis y visualización de datos.
+* Valorar la utilidad de manejar R para la gestión, análisis y visualización de datos.
+* Valorar las estrategias que permitan la transparencia y reproducibilidad durante el proceso de análisis de datos. 
+* Valorar la importancia de la competencia en análisis de datos en el desempeño como profesional.
+* Valorar la utilidad de software libre y la flexibilidad de R 
 
 
 ## ¿Cómo empezar?
@@ -56,5 +56,18 @@ Todo el material que acompaña el curso Introducción al análisis de datos util
 Durante el curso trabajamos con el lenguaje de programación libre R y el interfaz gráfico RStudio. Se requiere instalar las dos, ayuda como instalar y descargarlos puedes encontrar aquí:
 
 __R:__ https://www.r-project.org/ -> [Download](https://cran.r-project.org/mirrors.html)
+
 __RStudio:__ https://www.rstudio.com/  -> [Download](https://www.rstudio.com/products/rstudio/download/#download)
 
+## Datos
+
+* __SantanderBIO__
+
+El proyecto SantanderBio consistió en expediciones biológicas para documentar la biodiversidad del departamento de Santander en Colombia. SantanderBio se llevó a cabo por medio de expediciones en tres ecosistemas estratégicos del departamento, siendo estos las inmediaciones del Páramo de Almorzadero en el municipio de Santa Bárbara, la Serranía de los Yariguíes en el municipio El Carmen de Chucurí y la cuenca media del río Magdalena en el municipio de Cimitarra.
+
+Como resultado las expediciones realizaron un aporte considerable al inventario de la biodiversidad en grupos biológicos como Plantas, Insectos, Peces, Anfibios, Reptiles, Aves y Mamíferos, con un rango de altura desde 74 hasta 3603 metros. Los datos estań estructurado como se puede acceder a través del _Global Biodiversity Information Facility (GBIF)_.
+
+
+* __ColTree__
+
+* __ Páramos__
