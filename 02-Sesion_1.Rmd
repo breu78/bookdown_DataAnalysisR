@@ -532,5 +532,3 @@ mat
 ```
 
 ***
-
-**!Felicitaciones, ahora has aprendido sobre el funcionamiento básico de R y Rstudio!**
