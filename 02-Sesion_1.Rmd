@@ -79,11 +79,11 @@ Estructura de la función:
 
 <div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
 <span>
-<p style='margin-top:1em; text-align:center'>
-<b>📝 Ejercicios</b></p>
+<p style='margin-top:1em; text-align:left'>
+<b>📝 Ejercicio</b></p>
 <p style='margin-left:1em;'>
 
-1. Explique brevemente la función "order". ¿Qué hace y que significan los argumentos? 
+Explique brevemente la función "order". ¿Qué hace y que significan los argumentos? 
 </p>
 </div>
 
@@ -173,11 +173,11 @@ d = -3
 
 <div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
 <span>
-<p style='margin-top:1em; text-align:center'>
-<b>📝 Ejercicios</b></p>
+<p style='margin-top:1em; text-align:left'>
+<b>📝 Ejercicio</b></p>
 <p style='margin-left:1em;'>
 
-1. Compruebe las siguientes afirmaciones lógicas:
+Compruebe las siguientes afirmaciones lógicas:
 
 a. c mayor que d
 b. c menor o igual que d
@@ -251,11 +251,15 @@ Crear un vector vacío:
 b <- numeric(20)
 b
 ```
+<div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
+<span>
+<p style='margin-top:1em; text-align:left'>
+<b>📝 Ejercicio</b></p>
+<p style='margin-left:1em;'>
 
-**Ejercicio:**
-```
-1. Cree un vector con nombre "vec" que contenga los números de 1 a 10.
-```
+Cree un vector con nombre "vec" que contenga los números de 1 a 10.
+</p>
+</div>
 
 Un vector también puede contener diferentes tipos de variables. Usted puede realizar cálculos con vectores que contengan solo elementos "numeric"
 
@@ -348,8 +352,12 @@ head (x)
 tail (x)
 ```
 
-**Ejercicios:**
-```
+<div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
+<span>
+<p style='margin-top:1em; text-align:left'>
+<b>📝 Ejercicio</b></p>
+<p style='margin-left:1em;'>
+
 1. Sumar los números enteros de 1 hasta 5
 
 2. Crear un variable v1 que contenga una letra
@@ -361,7 +369,8 @@ tail (x)
 5. Cree un vector de longitud 20 con el tipo de datos que usted quiera y muestre las primeras nueve entradas.
 
 6. Cree un vector que contenga los seis primeras letras del abecedario.
-```
+</p>
+</div>
 
 ***
 
@@ -419,29 +428,26 @@ x[c (1, 9, 2)]
 x[-c (1, 9, 2)]
 ```
 
-**Ejercicios:**
-```
+
+<div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
+<span>
+<p style='margin-top:1em; text-align:left'>
+<b>📝 Ejercicio</b></p>
+<p style='margin-left:1em;'>
+
 1. Cree un vector con los números de 1 a 100
-x <- (1:100)
 
 2. Extraiga del vector el elemento numero 87
 
 3. Extraiga todos los elementos excepto el 87 para crear un nuevo vector "z"
 
-4. Verifique la longitud del nuevo vector
+4. Extraiga cada segundo elemento del vector
 
-PLUS: Extraiga cada segundo elemento del vector
+5. Verifique la longitud del nuevo vector
 
-5. Cree un vector vacío de longitud 10 y asigne a su tercer elemento el valor que tiene la suma de x
-
-```
-
-**Ejercicios:**
-```
-1. Cree un vector vacío de cuatro elementos
-
-2. En el vector vacío indexe para cada posición la primera inicial de sus nombres y apellidos. (Si tiene un solo nombre indexe NA)
-```
+6. Cree un vector vacío de longitud 10 y asigne a su tercer elemento el valor que tiene la suma de x
+</p>
+</div>
 
 ***
 
@@ -492,12 +498,17 @@ class(mat2[,1])
 class(mat2[2,1])
 ```
 
-**Ejercicios:**
-```
+<div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
+<span>
+<p style='margin-top:1em; text-align:left'>
+<b>📝 Ejercicio</b></p>
+<p style='margin-left:1em;'>
+
 1. Realice una matriz con 11 columnas y 11 filas.
 
 2. Incluya en la matriz el número 8 en cada esquina y en la mitad de la matriz
-```
+</p>
+</div>
 
 cbind y rbind
 
