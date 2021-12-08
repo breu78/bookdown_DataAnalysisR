@@ -1,0 +1,18 @@
+--- 
+title: "Introducción al análisis de datos utilizando R"
+author: "Björn Reu, Yovanny Duran, Zarith Villamizar, Silvia Ardila y Sergio Bolivar"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: book.bib
+biblio-style: apalike
+link-citations: yes
+github-repo: seankross/bookdown-start
+url: http\://seankross.com/bookdown-start/
+description: Everything you need (and nothing more) to start a bookdown book.
+---
+
+# Preface {-}
+
+El curso ‘Introducción al análisis de datos utilizando R’ originó como electiva en el programa de Biología de la Universidad Industrial de Santander a partir del año 2016. Su consolidación y evolución didáctica ha sido posible a través del proyecto Análisis de datos utilizando el lenguaje de programación R: una experiencia de aprendizaje virtual en el aula invertida, de la convocatoría Iniciativas de innovación didáctica mediante el uso de tecnologías, INNOVA-TIC 2021 de la Vicerrectoría Académica de la Universidad Industrial de Santander, UIS.
+

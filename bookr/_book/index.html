@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Introducción al análisis de datos utilizando R</title>
+  <meta name="description" content="Everything you need (and nothing more) to start a bookdown book." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Introducción al análisis de datos utilizando R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://seankross.com/bookdown-start/" />
+  
+  <meta property="og:description" content="Everything you need (and nothing more) to start a bookdown book." />
+  <meta name="github-repo" content="seankross/bookdown-start" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Introducción al análisis de datos utilizando R" />
+  
+  <meta name="twitter:description" content="Everything you need (and nothing more) to start a bookdown book." />
+  
+
+<meta name="author" content="Björn Reu, Yovanny Duran, Zarith Villamizar, Silvia Ardila y Sergio Bolivar" />
+
+
+<meta name="date" content="2021-12-06" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+<link rel="next" href="introducción.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introducción.html"><a href="introducción.html#sobre-este-curso"><i class="fa fa-check"></i><b>1.1</b> Sobre este curso</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html"><i class="fa fa-check"></i><b>2</b> Introducción a la programación con R</a>
+<ul>
+<li class="chapter" data-level="2.0.1" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#la-línea-de-comandos-terminal"><i class="fa fa-check"></i><b>2.0.1</b> La línea de comandos (Terminal)</a></li>
+<li class="chapter" data-level="2.0.2" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#función-ayuda"><i class="fa fa-check"></i><b>2.0.2</b> Función ayuda</a></li>
+<li class="chapter" data-level="2.0.3" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#creando-nuevas-variables"><i class="fa fa-check"></i><b>2.0.3</b> Creando nuevas variables:</a></li>
+<li class="chapter" data-level="2.0.4" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#el-área-de-trabajo-o-memoria---ventana-arriba-a-la-derecha-environment"><i class="fa fa-check"></i><b>2.0.4</b> El área de trabajo o memoria - Ventana arriba a la derecha ‘Environment’</a></li>
+<li class="chapter" data-level="2.0.5" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#vamos-a-practicar"><i class="fa fa-check"></i><b>2.0.5</b> Vamos a practicar</a></li>
+<li class="chapter" data-level="2.0.6" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#r-como-calculadora---operadores-y-funciones."><i class="fa fa-check"></i><b>2.0.6</b> R como calculadora - Operadores y funciones.</a></li>
+<li class="chapter" data-level="2.0.7" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#tipos-de-datos-y-objetos"><i class="fa fa-check"></i><b>2.0.7</b> Tipos de Datos y Objetos</a></li>
+<li class="chapter" data-level="2.0.8" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#vectores-i-vectores-sencillos"><i class="fa fa-check"></i><b>2.0.8</b> Vectores I: Vectores sencillos</a></li>
+<li class="chapter" data-level="2.0.9" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#vectores-ii-vectores-más-complejos"><i class="fa fa-check"></i><b>2.0.9</b> Vectores II: Vectores más complejos</a></li>
+<li class="chapter" data-level="2.0.10" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#indexar"><i class="fa fa-check"></i><b>2.0.10</b> Indexar</a></li>
+<li class="chapter" data-level="2.0.11" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#nas"><i class="fa fa-check"></i><b>2.0.11</b> NA´s</a></li>
+<li class="chapter" data-level="2.0.12" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#matrices"><i class="fa fa-check"></i><b>2.0.12</b> Matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html"><i class="fa fa-check"></i><b>3</b> Visualización de datos en R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#gráficos-y-diagrama-de-dispersión-simple"><i class="fa fa-check"></i><b>3.1</b> Gráficos y diagrama de dispersión simple</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#diagrama-de-dispersión-función-plot"><i class="fa fa-check"></i><b>3.1.1</b> Diagrama de dispersión: función plot()</a></li>
+<li class="chapter" data-level="3.1.2" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#etiquetas-de-la-gráfica-xlab-ylab-main"><i class="fa fa-check"></i><b>3.1.2</b> Etiquetas de la gráfica: xlab, ylab, main</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#demostración-de-la-versatilidad-de-la-gráfica"><i class="fa fa-check"></i><b>3.2</b> Demostración de la versatilidad de la gráfica</a></li>
+<li class="chapter" data-level="3.3" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#barras-cajas-e-histogramas"><i class="fa fa-check"></i><b>3.3</b> Barras, cajas e histogramas</a></li>
+<li class="chapter" data-level="3.4" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#función-par"><i class="fa fa-check"></i><b>3.4</b> Función par()</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#gráficos-compuestos"><i class="fa fa-check"></i><b>3.4.1</b> Gráficos compuestos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html"><i class="fa fa-check"></i><b>4</b> Leyendo y manejando datos en R</a>
+<ul>
+<li class="chapter" data-level="" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#estableciendo-el-directorio-de-trabajo-para-poder-leer-datos-desde-un-archivo"><i class="fa fa-check"></i>Estableciendo el directorio de trabajo para poder leer datos desde un archivo</a></li>
+<li class="chapter" data-level="4.1" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#data-frame"><i class="fa fa-check"></i><b>4.1</b> Data frame</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#leer-archivo-desde-carpeta-de-trabajo"><i class="fa fa-check"></i><b>4.1.1</b> Leer archivo desde carpeta de trabajo</a></li>
+<li class="chapter" data-level="4.1.2" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#evaluar-la-estructura-del-data-frame"><i class="fa fa-check"></i><b>4.1.2</b> Evaluar la estructura del data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#acceder-variables-dentro-del-data-frame"><i class="fa fa-check"></i><b>4.2</b> Acceder variables dentro del data frame</a></li>
+<li class="chapter" data-level="4.3" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#acceder-observaciones-mas-complejos"><i class="fa fa-check"></i><b>4.3</b> Acceder observaciones mas complejos</a></li>
+<li class="chapter" data-level="4.4" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#agregar-columnas-al-data-frame-para-apoyar-el-análisis"><i class="fa fa-check"></i><b>4.4</b> Agregar columnas al data frame para apoyar el análisis</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#crear-rangos-en-una-variable-continua"><i class="fa fa-check"></i><b>4.4.1</b> crear rangos en una variable continua:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#indexar-y-reemplazar"><i class="fa fa-check"></i><b>4.5</b> Indexar y reemplazar</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html"><i class="fa fa-check"></i><b>5</b> Manejando datos utilizando tidyverse</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#readr"><i class="fa fa-check"></i><b>5.1</b> Readr</a></li>
+<li class="chapter" data-level="5.2" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#tibble"><i class="fa fa-check"></i><b>5.2</b> Tibble</a></li>
+<li class="chapter" data-level="5.3" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#dplyr"><i class="fa fa-check"></i><b>5.3</b> Dplyr</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#select"><i class="fa fa-check"></i><b>5.3.1</b> Select</a></li>
+<li class="chapter" data-level="5.3.2" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#filter"><i class="fa fa-check"></i><b>5.3.2</b> Filter</a></li>
+<li class="chapter" data-level="5.3.3" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#summarise"><i class="fa fa-check"></i><b>5.3.3</b> Summarise</a></li>
+<li class="chapter" data-level="5.3.4" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#mutate"><i class="fa fa-check"></i><b>5.3.4</b> Mutate</a></li>
+<li class="chapter" data-level="5.3.5" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#arrange"><i class="fa fa-check"></i><b>5.3.5</b> Arrange</a></li>
+<li class="chapter" data-level="5.3.6" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#separate"><i class="fa fa-check"></i><b>5.3.6</b> Separate()</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#aggregate"><i class="fa fa-check"></i><b>5.4</b> Aggregate</a></li>
+<li class="chapter" data-level="5.5" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#stringr"><i class="fa fa-check"></i><b>5.5</b> Stringr</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="visualización-de-datos-utilizando-ggplot2.html"><a href="visualización-de-datos-utilizando-ggplot2.html"><i class="fa fa-check"></i><b>6</b> Visualización de datos utilizando ggplot2</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="visualización-de-datos-utilizando-ggplot2.html"><a href="visualización-de-datos-utilizando-ggplot2.html#theme"><i class="fa fa-check"></i><b>6.1</b> Theme</a></li>
+<li class="chapter" data-level="6.2" data-path="visualización-de-datos-utilizando-ggplot2.html"><a href="visualización-de-datos-utilizando-ggplot2.html#forcats"><i class="fa fa-check"></i><b>6.2</b> Forcats</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html"><i class="fa fa-check"></i><b>7</b> Introducción a Rmarkdown</a>
+<ul>
+<li class="chapter" data-level="7.0.1" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html#sintaxis-de-texto-plano"><i class="fa fa-check"></i><b>7.0.1</b> Sintaxis de texto plano:</a></li>
+<li class="chapter" data-level="7.0.2" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html#sintaxis-de-código"><i class="fa fa-check"></i><b>7.0.2</b> Sintaxis de código:</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html"><i class="fa fa-check"></i><b>8</b> De números aleatorios, distribuciones y probabilidades</a>
+<ul>
+<li class="chapter" data-level="8.0.1" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html#distribución-uniforme"><i class="fa fa-check"></i><b>8.0.1</b> Distribución uniforme</a></li>
+<li class="chapter" data-level="8.0.2" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html#distribución-normal"><i class="fa fa-check"></i><b>8.0.2</b> Distribución normal</a></li>
+<li class="chapter" data-level="8.0.3" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html#tidy"><i class="fa fa-check"></i><b>8.0.3</b> Tidy</a></li>
+<li class="chapter" data-level="8.0.4" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html#probabilidad-en-la-distribución-normal"><i class="fa fa-check"></i><b>8.0.4</b> Probabilidad en la distribución normal</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html"><i class="fa fa-check"></i><b>9</b> Análisis de varianza - ANOVA</a>
+<ul>
+<li class="chapter" data-level="9.0.1" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html#anova-a-mano"><i class="fa fa-check"></i><b>9.0.1</b> Anova a mano</a></li>
+<li class="chapter" data-level="9.0.2" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html#estadístico-f"><i class="fa fa-check"></i><b>9.0.2</b> Estadístico F</a></li>
+<li class="chapter" data-level="9.0.3" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html#anova-con-funciones-de-r"><i class="fa fa-check"></i><b>9.0.3</b> Anova con funciones de R</a></li>
+<li class="chapter" data-level="9.0.4" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html#anova-con-datos-reales"><i class="fa fa-check"></i><b>9.0.4</b> Anova con datos reales</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html"><i class="fa fa-check"></i><b>10</b> Regresión lineal simple</a>
+<ul>
+<li class="chapter" data-level="10.0.1" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#regresión-lineal"><i class="fa fa-check"></i><b>10.0.1</b> Regresión lineal</a></li>
+<li class="chapter" data-level="10.0.2" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#regresión-a-mano"><i class="fa fa-check"></i><b>10.0.2</b> Regresión a mano</a></li>
+<li class="chapter" data-level="10.0.3" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#indices-de-diversidad-y-regresión-lineal"><i class="fa fa-check"></i><b>10.0.3</b> Indices de diversidad y regresión lineal</a></li>
+<li class="chapter" data-level="10.0.4" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#paquete-vegan"><i class="fa fa-check"></i><b>10.0.4</b> Paquete vegan</a></li>
+<li class="chapter" data-level="10.0.5" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#supuestos-de-la-regresión-lineal"><i class="fa fa-check"></i><b>10.0.5</b> Supuestos de la regresión lineal</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="regresión-lineal-múltiple.html"><a href="regresión-lineal-múltiple.html"><i class="fa fa-check"></i><b>11</b> Regresión lineal múltiple</a>
+<ul>
+<li class="chapter" data-level="11.0.1" data-path="regresión-lineal-múltiple.html"><a href="regresión-lineal-múltiple.html#regresión-lineal-múltiple-1"><i class="fa fa-check"></i><b>11.0.1</b> Regresión lineal múltiple</a></li>
+<li class="chapter" data-level="11.0.2" data-path="regresión-lineal-múltiple.html"><a href="regresión-lineal-múltiple.html#colinealidad"><i class="fa fa-check"></i><b>11.0.2</b> Colinealidad</a></li>
+<li class="chapter" data-level="11.0.3" data-path="regresión-lineal-múltiple.html"><a href="regresión-lineal-múltiple.html#selección-de-modelos"><i class="fa fa-check"></i><b>11.0.3</b> Selección de modelos</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introducción al análisis de datos utilizando R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Introducción al análisis de datos utilizando R</h1>
+<p class="author"><em>Björn Reu, Yovanny Duran, Zarith Villamizar, Silvia Ardila y Sergio Bolivar</em></p>
+<p class="date"><em>2021-12-06</em></p>
+</div>
+<div id="preface" class="section level1 unnumbered">
+<h1>Preface</h1>
+<p>El curso ‘Introducción al análisis de datos utilizando R’ originó como electiva en el programa de Biología de la Universidad Industrial de Santander a partir del año 2016. Su consolidación y evolución didáctica ha sido posible a través del proyecto Análisis de datos utilizando el lenguaje de programación R: una experiencia de aprendizaje virtual en el aula invertida, de la convocatoría Iniciativas de innovación didáctica mediante el uso de tecnologías, INNOVA-TIC 2021 de la Vicerrectoría Académica de la Universidad Industrial de Santander, UIS.</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="introducción.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/index.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

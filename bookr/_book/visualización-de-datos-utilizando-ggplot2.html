@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Visualización de datos utilizando ggplot2 | Introducción al análisis de datos utilizando R</title>
+  <meta name="description" content="Everything you need (and nothing more) to start a bookdown book." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Visualización de datos utilizando ggplot2 | Introducción al análisis de datos utilizando R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://seankross.com/bookdown-start/" />
+  
+  <meta property="og:description" content="Everything you need (and nothing more) to start a bookdown book." />
+  <meta name="github-repo" content="seankross/bookdown-start" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Visualización de datos utilizando ggplot2 | Introducción al análisis de datos utilizando R" />
+  
+  <meta name="twitter:description" content="Everything you need (and nothing more) to start a bookdown book." />
+  
+
+<meta name="author" content="Björn Reu, Yovanny Duran, Zarith Villamizar, Silvia Ardila y Sergio Bolivar" />
+
+
+<meta name="date" content="2021-12-06" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="manejando-datos-utilizando-tidyverse.html"/>
+<link rel="next" href="introducción-a-rmarkdown.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introducción.html"><a href="introducción.html#sobre-este-curso"><i class="fa fa-check"></i><b>1.1</b> Sobre este curso</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html"><i class="fa fa-check"></i><b>2</b> Introducción a la programación con R</a>
+<ul>
+<li class="chapter" data-level="2.0.1" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#la-línea-de-comandos-terminal"><i class="fa fa-check"></i><b>2.0.1</b> La línea de comandos (Terminal)</a></li>
+<li class="chapter" data-level="2.0.2" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#función-ayuda"><i class="fa fa-check"></i><b>2.0.2</b> Función ayuda</a></li>
+<li class="chapter" data-level="2.0.3" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#creando-nuevas-variables"><i class="fa fa-check"></i><b>2.0.3</b> Creando nuevas variables:</a></li>
+<li class="chapter" data-level="2.0.4" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#el-área-de-trabajo-o-memoria---ventana-arriba-a-la-derecha-environment"><i class="fa fa-check"></i><b>2.0.4</b> El área de trabajo o memoria - Ventana arriba a la derecha ‘Environment’</a></li>
+<li class="chapter" data-level="2.0.5" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#vamos-a-practicar"><i class="fa fa-check"></i><b>2.0.5</b> Vamos a practicar</a></li>
+<li class="chapter" data-level="2.0.6" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#r-como-calculadora---operadores-y-funciones."><i class="fa fa-check"></i><b>2.0.6</b> R como calculadora - Operadores y funciones.</a></li>
+<li class="chapter" data-level="2.0.7" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#tipos-de-datos-y-objetos"><i class="fa fa-check"></i><b>2.0.7</b> Tipos de Datos y Objetos</a></li>
+<li class="chapter" data-level="2.0.8" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#vectores-i-vectores-sencillos"><i class="fa fa-check"></i><b>2.0.8</b> Vectores I: Vectores sencillos</a></li>
+<li class="chapter" data-level="2.0.9" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#vectores-ii-vectores-más-complejos"><i class="fa fa-check"></i><b>2.0.9</b> Vectores II: Vectores más complejos</a></li>
+<li class="chapter" data-level="2.0.10" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#indexar"><i class="fa fa-check"></i><b>2.0.10</b> Indexar</a></li>
+<li class="chapter" data-level="2.0.11" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#nas"><i class="fa fa-check"></i><b>2.0.11</b> NA´s</a></li>
+<li class="chapter" data-level="2.0.12" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#matrices"><i class="fa fa-check"></i><b>2.0.12</b> Matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html"><i class="fa fa-check"></i><b>3</b> Visualización de datos en R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#gráficos-y-diagrama-de-dispersión-simple"><i class="fa fa-check"></i><b>3.1</b> Gráficos y diagrama de dispersión simple</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#diagrama-de-dispersión-función-plot"><i class="fa fa-check"></i><b>3.1.1</b> Diagrama de dispersión: función plot()</a></li>
+<li class="chapter" data-level="3.1.2" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#etiquetas-de-la-gráfica-xlab-ylab-main"><i class="fa fa-check"></i><b>3.1.2</b> Etiquetas de la gráfica: xlab, ylab, main</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#demostración-de-la-versatilidad-de-la-gráfica"><i class="fa fa-check"></i><b>3.2</b> Demostración de la versatilidad de la gráfica</a></li>
+<li class="chapter" data-level="3.3" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#barras-cajas-e-histogramas"><i class="fa fa-check"></i><b>3.3</b> Barras, cajas e histogramas</a></li>
+<li class="chapter" data-level="3.4" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#función-par"><i class="fa fa-check"></i><b>3.4</b> Función par()</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#gráficos-compuestos"><i class="fa fa-check"></i><b>3.4.1</b> Gráficos compuestos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html"><i class="fa fa-check"></i><b>4</b> Leyendo y manejando datos en R</a>
+<ul>
+<li class="chapter" data-level="" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#estableciendo-el-directorio-de-trabajo-para-poder-leer-datos-desde-un-archivo"><i class="fa fa-check"></i>Estableciendo el directorio de trabajo para poder leer datos desde un archivo</a></li>
+<li class="chapter" data-level="4.1" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#data-frame"><i class="fa fa-check"></i><b>4.1</b> Data frame</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#leer-archivo-desde-carpeta-de-trabajo"><i class="fa fa-check"></i><b>4.1.1</b> Leer archivo desde carpeta de trabajo</a></li>
+<li class="chapter" data-level="4.1.2" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#evaluar-la-estructura-del-data-frame"><i class="fa fa-check"></i><b>4.1.2</b> Evaluar la estructura del data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#acceder-variables-dentro-del-data-frame"><i class="fa fa-check"></i><b>4.2</b> Acceder variables dentro del data frame</a></li>
+<li class="chapter" data-level="4.3" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#acceder-observaciones-mas-complejos"><i class="fa fa-check"></i><b>4.3</b> Acceder observaciones mas complejos</a></li>
+<li class="chapter" data-level="4.4" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#agregar-columnas-al-data-frame-para-apoyar-el-análisis"><i class="fa fa-check"></i><b>4.4</b> Agregar columnas al data frame para apoyar el análisis</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#crear-rangos-en-una-variable-continua"><i class="fa fa-check"></i><b>4.4.1</b> crear rangos en una variable continua:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#indexar-y-reemplazar"><i class="fa fa-check"></i><b>4.5</b> Indexar y reemplazar</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html"><i class="fa fa-check"></i><b>5</b> Manejando datos utilizando tidyverse</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#readr"><i class="fa fa-check"></i><b>5.1</b> Readr</a></li>
+<li class="chapter" data-level="5.2" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#tibble"><i class="fa fa-check"></i><b>5.2</b> Tibble</a></li>
+<li class="chapter" data-level="5.3" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#dplyr"><i class="fa fa-check"></i><b>5.3</b> Dplyr</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#select"><i class="fa fa-check"></i><b>5.3.1</b> Select</a></li>
+<li class="chapter" data-level="5.3.2" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#filter"><i class="fa fa-check"></i><b>5.3.2</b> Filter</a></li>
+<li class="chapter" data-level="5.3.3" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#summarise"><i class="fa fa-check"></i><b>5.3.3</b> Summarise</a></li>
+<li class="chapter" data-level="5.3.4" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#mutate"><i class="fa fa-check"></i><b>5.3.4</b> Mutate</a></li>
+<li class="chapter" data-level="5.3.5" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#arrange"><i class="fa fa-check"></i><b>5.3.5</b> Arrange</a></li>
+<li class="chapter" data-level="5.3.6" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#separate"><i class="fa fa-check"></i><b>5.3.6</b> Separate()</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#aggregate"><i class="fa fa-check"></i><b>5.4</b> Aggregate</a></li>
+<li class="chapter" data-level="5.5" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#stringr"><i class="fa fa-check"></i><b>5.5</b> Stringr</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="visualización-de-datos-utilizando-ggplot2.html"><a href="visualización-de-datos-utilizando-ggplot2.html"><i class="fa fa-check"></i><b>6</b> Visualización de datos utilizando ggplot2</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="visualización-de-datos-utilizando-ggplot2.html"><a href="visualización-de-datos-utilizando-ggplot2.html#theme"><i class="fa fa-check"></i><b>6.1</b> Theme</a></li>
+<li class="chapter" data-level="6.2" data-path="visualización-de-datos-utilizando-ggplot2.html"><a href="visualización-de-datos-utilizando-ggplot2.html#forcats"><i class="fa fa-check"></i><b>6.2</b> Forcats</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html"><i class="fa fa-check"></i><b>7</b> Introducción a Rmarkdown</a>
+<ul>
+<li class="chapter" data-level="7.0.1" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html#sintaxis-de-texto-plano"><i class="fa fa-check"></i><b>7.0.1</b> Sintaxis de texto plano:</a></li>
+<li class="chapter" data-level="7.1" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html#título-2"><i class="fa fa-check"></i><b>7.1</b> Título 2</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html#título-3"><i class="fa fa-check"></i><b>7.1.1</b> Título 3</a></li>
+<li class="chapter" data-level="7.1.2" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html#sintaxis-de-código"><i class="fa fa-check"></i><b>7.1.2</b> Sintaxis de código:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html"><i class="fa fa-check"></i><b>8</b> De números aleatorios, distribuciones y probabilidades</a>
+<ul>
+<li class="chapter" data-level="8.0.1" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html#distribución-uniforme"><i class="fa fa-check"></i><b>8.0.1</b> Distribución uniforme</a></li>
+<li class="chapter" data-level="8.0.2" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html#distribución-normal"><i class="fa fa-check"></i><b>8.0.2</b> Distribución normal</a></li>
+<li class="chapter" data-level="8.0.3" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html#tidy"><i class="fa fa-check"></i><b>8.0.3</b> Tidy</a></li>
+<li class="chapter" data-level="8.0.4" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html#probabilidad-en-la-distribución-normal"><i class="fa fa-check"></i><b>8.0.4</b> Probabilidad en la distribución normal</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html"><i class="fa fa-check"></i><b>9</b> Análisis de varianza - ANOVA</a>
+<ul>
+<li class="chapter" data-level="9.0.1" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html#anova-a-mano"><i class="fa fa-check"></i><b>9.0.1</b> Anova a mano</a></li>
+<li class="chapter" data-level="9.0.2" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html#estadístico-f"><i class="fa fa-check"></i><b>9.0.2</b> Estadístico F</a></li>
+<li class="chapter" data-level="9.0.3" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html#anova-con-funciones-de-r"><i class="fa fa-check"></i><b>9.0.3</b> Anova con funciones de R</a></li>
+<li class="chapter" data-level="9.0.4" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html#anova-con-datos-reales"><i class="fa fa-check"></i><b>9.0.4</b> Anova con datos reales</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html"><i class="fa fa-check"></i><b>10</b> Regresión lineal simple</a>
+<ul>
+<li class="chapter" data-level="10.0.1" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#regresión-lineal"><i class="fa fa-check"></i><b>10.0.1</b> Regresión lineal</a></li>
+<li class="chapter" data-level="10.0.2" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#regresión-a-mano"><i class="fa fa-check"></i><b>10.0.2</b> Regresión a mano</a></li>
+<li class="chapter" data-level="10.0.3" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#indices-de-diversidad-y-regresión-lineal"><i class="fa fa-check"></i><b>10.0.3</b> Indices de diversidad y regresión lineal</a></li>
+<li class="chapter" data-level="10.0.4" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#paquete-vegan"><i class="fa fa-check"></i><b>10.0.4</b> Paquete vegan</a></li>
+<li class="chapter" data-level="10.0.5" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#supuestos-de-la-regresión-lineal"><i class="fa fa-check"></i><b>10.0.5</b> Supuestos de la regresión lineal</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="regresión-lineal-múltiple.html"><a href="regresión-lineal-múltiple.html"><i class="fa fa-check"></i><b>11</b> Regresión lineal múltiple</a>
+<ul>
+<li class="chapter" data-level="11.0.1" data-path="regresión-lineal-múltiple.html"><a href="regresión-lineal-múltiple.html#regresión-lineal-múltiple-1"><i class="fa fa-check"></i><b>11.0.1</b> Regresión lineal múltiple</a></li>
+<li class="chapter" data-level="11.0.2" data-path="regresión-lineal-múltiple.html"><a href="regresión-lineal-múltiple.html#colinealidad"><i class="fa fa-check"></i><b>11.0.2</b> Colinealidad</a></li>
+<li class="chapter" data-level="11.0.3" data-path="regresión-lineal-múltiple.html"><a href="regresión-lineal-múltiple.html#selección-de-modelos"><i class="fa fa-check"></i><b>11.0.3</b> Selección de modelos</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introducción al análisis de datos utilizando R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="visualización-de-datos-utilizando-ggplot2" class="section level1" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Visualización de datos utilizando ggplot2</h1>
+<p>l paquete ggplot2 ofrece herramientas que ayudan a visualizar datos tidy en data frames</p>
+<pre><code>- Warning: package &#39;ggplot2&#39; was built under R version 4.0.5
+- Warning: package &#39;tidyverse&#39; was built under R version 4.0.5
+- -- Attaching packages --------------------------------------- tidyverse 1.3.1 --
+- v tibble  3.1.4     v dplyr   1.0.7
+- v tidyr   1.1.3     v stringr 1.4.0
+- v readr   2.0.1     v forcats 0.5.1
+- v purrr   0.3.4
+- Warning: package &#39;tibble&#39; was built under R version 4.0.5
+- Warning: package &#39;tidyr&#39; was built under R version 4.0.5
+- Warning: package &#39;readr&#39; was built under R version 4.0.5
+- Warning: package &#39;dplyr&#39; was built under R version 4.0.5
+- Warning: package &#39;forcats&#39; was built under R version 4.0.5
+- -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+- x dplyr::filter() masks stats::filter()
+- x dplyr::lag()    masks stats::lag()</code></pre>
+<pre><code>- Rows: 1255 Columns: 10
+- -- Column specification --------------------------------------------------------
+- Delimiter: &quot;,&quot;
+- chr (9): species, locality, municipality, kingdom, phylum, class, order, fam...
+- dbl (1): elevation
+- 
+- i Use `spec()` to retrieve the full column specification for this data.
+- i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p>El paquete ggplot2 ofrece herramientas que ayudan a visualizar datos tidy en data frames de forma organizada y sencilla, basado en la gramática de las gráficas. En la grámatica de las gráficas, la idea es que puedas construir gráficas a partir de los mismos componentes: un set de datos; un sistema de coordenadas (“X” y “Y”) y aspectos del gráfico; y formas o elementos geométricos que representan a los datos (puntos, lineas circulos, etc)</p>
+<p>En ggplot, cada componente es un capa que se va añadiendo una tras otra usando el símbolo “+”</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat) <span class="co">#La  primera capa de un ggplot es el conjunto de datos que provienen de un data frame</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat) <span class="sc">+</span></span>
+<span id="cb4-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> class) <span class="co">#Luego se añade el sistema de coordenas o relación entre las variables</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> class) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="co">#Y añadimos un geom_ para representar geometricamente nuestros datos. Hay que tener precaución ya que no todos las representaciones gráficas funcionan bien para la relación entre las variables que establezcamos. Ggplot realiza algunas gráficas de manera predeterminada, si solo dejamos en aes() una unica variable, este graficará el número de observaciones por cada clase que exista en esa variable (geom_bar(stat=&quot;count&quot;)), ya que convierte las variables en factores para graficarlas</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Estos son los 3 componentes principales para elaborar una gráfica en ggplot. Es posible seguir añadiendo capas para mejorar nuestra grafica y personalizarla de muchas maneras, sin embargo, si no se especifican, ggplot las establecerá por defecto</p>
+<p>Al hacer parte del mundo de tidyverse, es posible encadenar la función de ggplot con las funciones vistas anteriormente y así crear un gráfico de forma directa. Vamos a crear una gráfico que nos muestre el número de especies únicas por municipio</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb6-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(municipality) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">unicos =</span> <span class="fu">unique</span>(species)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-4"><a href="visualización-de-datos-utilizando-ggplot2.html#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> municipality)) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="visualización-de-datos-utilizando-ggplot2.html#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span>
+<span id="cb6-6"><a href="visualización-de-datos-utilizando-ggplot2.html#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="st">`</span><span class="at">summarise()</span><span class="st">`</span> has grouped output by <span class="st">&#39;municipality&#39;</span>. You can override using the <span class="st">`</span><span class="at">.groups</span><span class="st">`</span> argument.</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Ggplot también establece colores y leyenda por defecto a partir de los factores en el elemento aes() con el argumento fill</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb7-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(municipality) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">unicos =</span> <span class="fu">unique</span>(species)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href="visualización-de-datos-utilizando-ggplot2.html#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> municipality, <span class="at">fill =</span> municipality)) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="visualización-de-datos-utilizando-ggplot2.html#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span>
+<span id="cb7-6"><a href="visualización-de-datos-utilizando-ggplot2.html#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="st">`</span><span class="at">summarise()</span><span class="st">`</span> has grouped output by <span class="st">&#39;municipality&#39;</span>. You can override using the <span class="st">`</span><span class="at">.groups</span><span class="st">`</span> argument.</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Podemos cambiar el orden de las barras cambiando el eje x a eje y. Si deseamos usar colores específicos para cada barra lo hacemos en el geom_:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb8-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(municipality) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">unicos =</span> <span class="fu">unique</span>(species)) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a href="visualización-de-datos-utilizando-ggplot2.html#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> municipality)) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="visualización-de-datos-utilizando-ggplot2.html#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;yellow&quot;</span>, <span class="st">&quot;brown&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;yellow&quot;</span>, <span class="st">&quot;brown&quot;</span>)) <span class="co"># ¿Cuál es la diferencia entre fill y col?</span></span>
+<span id="cb8-6"><a href="visualización-de-datos-utilizando-ggplot2.html#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="st">`</span><span class="at">summarise()</span><span class="st">`</span> has grouped output by <span class="st">&#39;municipality&#39;</span>. You can override using the <span class="st">`</span><span class="at">.groups</span><span class="st">`</span> argument.</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><em>Ejercicio:</em> Realice una grafica con ggplot de los registros de mamiferos por cada localidad</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb9-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(class <span class="sc">==</span> <span class="st">&quot;Mammalia&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> locality)) <span class="sc">+</span> </span>
+<span id="cb9-4"><a href="visualización-de-datos-utilizando-ggplot2.html#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><em>Ejercicio:</em> Grafique los registros del orden coleoptera en las diferentes localidades de cada municipio. Para diferenciar a que municipio pertenece cada localidad, usel el argumento fill de aes()</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb10-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(order <span class="sc">==</span> <span class="st">&quot;Coleoptera&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(locality) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-4"><a href="visualización-de-datos-utilizando-ggplot2.html#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> locality, <span class="at">fill =</span> municipality)) <span class="sc">+</span> </span>
+<span id="cb10-5"><a href="visualización-de-datos-utilizando-ggplot2.html#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>Podemos agrupar las barras</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb11-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(order <span class="sc">==</span> <span class="st">&quot;Coleoptera&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(locality) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-4"><a href="visualización-de-datos-utilizando-ggplot2.html#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> municipality, <span class="at">fill =</span> locality)) <span class="sc">+</span> </span>
+<span id="cb11-5"><a href="visualización-de-datos-utilizando-ggplot2.html#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span>  <span class="st">&quot;stack&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>También podemos hacer graficos de cajas e histogramas cambiando de geom_</p>
+<p>?geom_boxplot</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb12-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> municipality, <span class="at">y =</span> elevation)) <span class="sc">+</span> <span class="co">#Grafico de cajas de la elevacion por cada municipio</span></span>
+<span id="cb12-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
+<span>
+<p style="margin-top:1em; text-align:center">
+<b>Ejercicio 1</b>
+</p>
+<ol style="list-style-type: decimal">
+<li>Realice un gráfico de cajas sobre la distribución de las alturas a la que fueron registradas las aves en cada localidad utilizando las funciones tidy</li>
+<li>¿Cómo es la distribución de elevacion de las familias del orden Polypodiales?</li>
+<li>Realice un histograma de la elevación total y la elevación de ambos reinos</li>
+</ol>
+<p style='margin-left:1em;'>
+</div>
+<p><em>Experimente graficando la elevacion de diferentes grupos (reinos, clase, familia etc) utilizando las funcioens tidy</em></p>
+<div id="theme" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Theme</h2>
+<p>Igual que en la función básica de plot(), en ggplot podemos tener mas de una gráfica y personalizar cada elemento mediante theme()</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb13-1" aria-hidden="true" tabindex="-1"></a>as <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">elevation_2 =</span> elevation<span class="sc">+</span><span class="dv">10</span>)</span></code></pre></div>
+<p>Ggplot cuenta con temas predeterminados que podemos cargar mediante theme_</p>
+<p>?theme()</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb14-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">aleatorios =</span> <span class="fu">runif</span>(<span class="dv">1255</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">3600</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>elevation, <span class="at">y=</span>aleatorios)) <span class="sc">+</span> <span class="co">#establecemos los datos y las variables &quot;x&quot; y &quot;y&quot;</span></span>
+<span id="cb14-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="co">#tema del grafico para personalizar color de fondo, bordes, cuadrícula, etc.</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>Dentro de theme() modificamos elementos como líneas, colores, ejes, entre otros</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb15-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">aleatorios =</span> <span class="fu">runif</span>(<span class="dv">1255</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">3600</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>elevation, <span class="at">y=</span>aleatorios)) <span class="sc">+</span></span>
+<span id="cb15-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-4"><a href="visualización-de-datos-utilizando-ggplot2.html#cb15-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb15-5"><a href="visualización-de-datos-utilizando-ggplot2.html#cb15-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb15-6"><a href="visualización-de-datos-utilizando-ggplot2.html#cb15-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">&quot;white&quot;</span>)) <span class="sc">+</span><span class="co">#definimos fondo y bordes</span></span>
+<span id="cb15-7"><a href="visualización-de-datos-utilizando-ggplot2.html#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Elevación vs números aleatorios&quot;</span>, <span class="co">#título</span></span>
+<span id="cb15-8"><a href="visualización-de-datos-utilizando-ggplot2.html#cb15-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Data: SantanderBIO&quot;</span>) <span class="sc">+</span> <span class="co">#subtítulo</span></span>
+<span id="cb15-9"><a href="visualización-de-datos-utilizando-ggplot2.html#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Elevación&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Némeros aleatorios&quot;</span>)<span class="co">#nombres de los ejes</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>Añadimos un geom_ de puntos</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb16-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">aleatorios =</span> <span class="fu">runif</span>(<span class="dv">1255</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">3600</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>elevation, <span class="at">y=</span>aleatorios)) <span class="sc">+</span> <span class="co">#Grafico base </span></span>
+<span id="cb16-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="co"># geometria que corresponde a los puntos</span></span>
+<span id="cb16-4"><a href="visualización-de-datos-utilizando-ggplot2.html#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb16-5"><a href="visualización-de-datos-utilizando-ggplot2.html#cb16-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb16-6"><a href="visualización-de-datos-utilizando-ggplot2.html#cb16-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb16-7"><a href="visualización-de-datos-utilizando-ggplot2.html#cb16-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">&quot;white&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb16-8"><a href="visualización-de-datos-utilizando-ggplot2.html#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Elevación vs números aleatorios&quot;</span>,</span>
+<span id="cb16-9"><a href="visualización-de-datos-utilizando-ggplot2.html#cb16-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Data: SantanderBIO&quot;</span>) <span class="sc">+</span></span>
+<span id="cb16-10"><a href="visualización-de-datos-utilizando-ggplot2.html#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Elevación&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Némeros aleatorios&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>Coloreamos los puntos y modificamos el título de la leyenda generada</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb17-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">aleatorios =</span> <span class="fu">runif</span>(<span class="dv">1255</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">3600</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>elevation, <span class="at">y=</span>aleatorios, <span class="at">color =</span> municipality)) <span class="sc">+</span> <span class="co">#Gráfico base con color para cada punto</span></span>
+<span id="cb17-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">5</span>) <span class="sc">+</span>  <span class="co"># Geom que corresponde a los puntos y shape para modificar la forma del punto</span></span>
+<span id="cb17-4"><a href="visualización-de-datos-utilizando-ggplot2.html#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb17-5"><a href="visualización-de-datos-utilizando-ggplot2.html#cb17-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb17-6"><a href="visualización-de-datos-utilizando-ggplot2.html#cb17-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb17-7"><a href="visualización-de-datos-utilizando-ggplot2.html#cb17-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">&quot;white&quot;</span>))<span class="sc">+</span><span class="co">#definimos fondo y bordes</span></span>
+<span id="cb17-8"><a href="visualización-de-datos-utilizando-ggplot2.html#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Municipios&quot;</span>) <span class="sc">+</span> <span class="co">#Establecemos el título de la leyenda</span></span>
+<span id="cb17-9"><a href="visualización-de-datos-utilizando-ggplot2.html#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Elevación vs números aleatorios&quot;</span>, </span>
+<span id="cb17-10"><a href="visualización-de-datos-utilizando-ggplot2.html#cb17-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Data: SantanderBIO&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb17-11"><a href="visualización-de-datos-utilizando-ggplot2.html#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Elevación&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Números aleatorios&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>Podemos incluir en la gráfica algunos métodos estadísticos como la relación lineal entre los puntos</p>
+<p>?geom_smooth</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb18-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">aleatorios =</span> <span class="fu">runif</span>(<span class="dv">1255</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">3600</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>elevation, <span class="at">y=</span>aleatorios)) <span class="sc">+</span> </span>
+<span id="cb18-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">5</span>) <span class="sc">+</span>  </span>
+<span id="cb18-4"><a href="visualización-de-datos-utilizando-ggplot2.html#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="co">#método lm e intervalo de confianza</span></span>
+<span id="cb18-5"><a href="visualización-de-datos-utilizando-ggplot2.html#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb18-6"><a href="visualización-de-datos-utilizando-ggplot2.html#cb18-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb18-7"><a href="visualización-de-datos-utilizando-ggplot2.html#cb18-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb18-8"><a href="visualización-de-datos-utilizando-ggplot2.html#cb18-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">&quot;white&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb18-9"><a href="visualización-de-datos-utilizando-ggplot2.html#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Municipios&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb18-10"><a href="visualización-de-datos-utilizando-ggplot2.html#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Elevación vs números aleatorios&quot;</span>, </span>
+<span id="cb18-11"><a href="visualización-de-datos-utilizando-ggplot2.html#cb18-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Data: SantanderBIO&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb18-12"><a href="visualización-de-datos-utilizando-ggplot2.html#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Elevación&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Números aleatorios&quot;</span>)</span>
+<span id="cb18-13"><a href="visualización-de-datos-utilizando-ggplot2.html#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="st">`</span><span class="at">geom_smooth()</span><span class="st">`</span> using formula <span class="st">&#39;y ~ x&#39;</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>Y por cada grupo</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb19-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">aleatorios =</span> <span class="fu">runif</span>(<span class="dv">1255</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">3600</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>elevation, <span class="at">y=</span>aleatorios, <span class="at">color =</span> municipality)) <span class="sc">+</span> </span>
+<span id="cb19-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">5</span>) <span class="sc">+</span>  </span>
+<span id="cb19-4"><a href="visualización-de-datos-utilizando-ggplot2.html#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb19-5"><a href="visualización-de-datos-utilizando-ggplot2.html#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb19-6"><a href="visualización-de-datos-utilizando-ggplot2.html#cb19-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb19-7"><a href="visualización-de-datos-utilizando-ggplot2.html#cb19-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb19-8"><a href="visualización-de-datos-utilizando-ggplot2.html#cb19-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">&quot;white&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb19-9"><a href="visualización-de-datos-utilizando-ggplot2.html#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Municipios&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb19-10"><a href="visualización-de-datos-utilizando-ggplot2.html#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Elevación vs números aleatorios&quot;</span>, </span>
+<span id="cb19-11"><a href="visualización-de-datos-utilizando-ggplot2.html#cb19-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Data: SantanderBIO&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb19-12"><a href="visualización-de-datos-utilizando-ggplot2.html#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Elevación&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Números aleatorios&quot;</span>)</span>
+<span id="cb19-13"><a href="visualización-de-datos-utilizando-ggplot2.html#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="st">`</span><span class="at">geom_smooth()</span><span class="st">`</span> using formula <span class="st">&#39;y ~ x&#39;</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>Para poder mostrar mas de una gráfica en el mismo plot se utiliza face_wrap. Revise la función y realice el histograma anterior pero ubique en un mismo plot 3 gráficas para cada municipio</p>
+<p>?facet_wrap</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat) <span class="sc">+</span> </span>
+<span id="cb20-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> elevation, <span class="at">fill =</span> municipality), <span class="at">bins =</span> <span class="dv">12</span>) <span class="sc">+</span> </span>
+<span id="cb20-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>municipality, <span class="at">ncol =</span> <span class="dv">1</span>)<span class="sc">+</span> <span class="co">#para cada especie, realice tres histogramas en una columna</span></span>
+<span id="cb20-4"><a href="visualización-de-datos-utilizando-ggplot2.html#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb20-5"><a href="visualización-de-datos-utilizando-ggplot2.html#cb20-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb20-6"><a href="visualización-de-datos-utilizando-ggplot2.html#cb20-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb20-7"><a href="visualización-de-datos-utilizando-ggplot2.html#cb20-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">&quot;white&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb20-8"><a href="visualización-de-datos-utilizando-ggplot2.html#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Elevación por municipio&quot;</span>, </span>
+<span id="cb20-9"><a href="visualización-de-datos-utilizando-ggplot2.html#cb20-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Data: SantanderBIO&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb20-10"><a href="visualización-de-datos-utilizando-ggplot2.html#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Elevación&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Conteo&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>Todas las características de un tema pueden ser guardadas en un vector para evitar escribir el tema cada vez que se grafique</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb21-1" aria-hidden="true" tabindex="-1"></a>mitema <span class="ot">&lt;-</span> <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">&quot;green&quot;</span>), </span>
+<span id="cb21-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb21-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">&quot;pink&quot;</span>),</span>
+<span id="cb21-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb21-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>),</span>
+<span id="cb21-4"><a href="visualización-de-datos-utilizando-ggplot2.html#cb21-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),<span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">size =</span> <span class="fl">0.9</span>, <span class="at">linetype =</span> <span class="st">&quot;solid&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>))</span>
+<span id="cb21-5"><a href="visualización-de-datos-utilizando-ggplot2.html#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="visualización-de-datos-utilizando-ggplot2.html#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat, <span class="fu">aes</span>(<span class="at">x =</span> elevation, <span class="at">y =</span> elevation))<span class="sc">+</span></span>
+<span id="cb21-7"><a href="visualización-de-datos-utilizando-ggplot2.html#cb21-7" aria-hidden="true" tabindex="-1"></a>  mitema</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<div class="warning" style="padding:0.1em; background-color:#D6EAF8; color:#21618C">
+<span>
+<p style="margin-top:1em; text-align:center">
+<b>Ejercicio 2</b>
+</p>
+<p style="margin-left:1em;">
+1.Contruir un tema personalizado
+2. Crear una gráfica de barras de el número de individuos por cada clase, utilizando un color diferente para cada barra y el tema creado anteriomente.
+3.Realizar el gráfico anterior pero generando una gráfica separada para cada clase en el mismo plot
+4. Conviertir la gráfica de barras del punto 2 en una gráfica de torta mediante coord_polar()
+</p>
+</div>
+<hr />
+<p>Finalmente, con el sistema de coordenadas “x” y “y” es posible hacer increíbles mapas mediante ggplot</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb22-1" aria-hidden="true" tabindex="-1"></a>nz <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">&quot;nz&quot;</span>) <span class="co">#Cargamos un set de datos que contienede coordenadas longitud y latitud, y columnas que indican a que región corresponden esas coordenadas</span></span>
+<span id="cb22-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nz, <span class="fu">aes</span>(long, lat, <span class="at">group =</span> group)) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="visualización-de-datos-utilizando-ggplot2.html#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_polygon</span>(<span class="at">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+</div>
+<div id="forcats" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Forcats</h2>
+<p>El paquete forcats tiene como objetivo brindar herramientas de ayuda para manejar variables categóricas.</p>
+<p>Convirtamos una variable en un factor</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb23-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>class <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(dat<span class="sc">$</span>class)</span>
+<span id="cb23-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(dat<span class="sc">$</span>class) <span class="co">#Revisamos las categorías</span></span>
+<span id="cb23-4"><a href="visualización-de-datos-utilizando-ggplot2.html#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">1</span>] <span class="st">&quot;Actinopterygii&quot;</span> <span class="st">&quot;Amphibia&quot;</span>       <span class="st">&quot;Aves&quot;</span>           <span class="st">&quot;Cycadopsida&quot;</span>   </span>
+<span id="cb23-5"><a href="visualización-de-datos-utilizando-ggplot2.html#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">5</span>] <span class="st">&quot;Elasmobranchii&quot;</span> <span class="st">&quot;Insecta&quot;</span>        <span class="st">&quot;Liliopsida&quot;</span>     <span class="st">&quot;Lycopodiopsida&quot;</span></span>
+<span id="cb23-6"><a href="visualización-de-datos-utilizando-ggplot2.html#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">9</span>] <span class="st">&quot;Magnoliopsida&quot;</span>  <span class="st">&quot;Mammalia&quot;</span>       <span class="st">&quot;Pinopsida&quot;</span>      <span class="st">&quot;Polypodiopsida&quot;</span></span>
+<span id="cb23-7"><a href="visualización-de-datos-utilizando-ggplot2.html#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">13</span>] <span class="st">&quot;Reptilia&quot;</span></span>
+<span id="cb23-8"><a href="visualización-de-datos-utilizando-ggplot2.html#cb23-8" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb23-9"><a href="visualización-de-datos-utilizando-ggplot2.html#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> class)) <span class="sc">+</span> </span>
+<span id="cb23-10"><a href="visualización-de-datos-utilizando-ggplot2.html#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span> </span>
+<span id="cb23-11"><a href="visualización-de-datos-utilizando-ggplot2.html#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>Vemos que se grafica un conteo de la variable “class” por cada factor, ahora vamos a ordenar esta gráfica con forcats</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb24-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">fct_infreq</span>(class)) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> class)) <span class="sc">+</span> </span>
+<span id="cb24-4"><a href="visualización-de-datos-utilizando-ggplot2.html#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span> </span>
+<span id="cb24-5"><a href="visualización-de-datos-utilizando-ggplot2.html#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Ahora tenemos los cada categoria ordenada por su frecuencia</span></span></code></pre></div>
+<p>Podemos ordenar un factor por otra variable</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb26-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> class, <span class="at">y =</span> elevation)) <span class="sc">+</span> </span>
+<span id="cb26-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Bloxplot de la distribución del a altura por cada clase</span></span>
+<span id="cb27-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb27-3" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb27-4"><a href="visualización-de-datos-utilizando-ggplot2.html#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">fct_reorder</span>(class, elevation)) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-5"><a href="visualización-de-datos-utilizando-ggplot2.html#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> class, <span class="at">y =</span> elevation)) <span class="sc">+</span> </span>
+<span id="cb27-6"><a href="visualización-de-datos-utilizando-ggplot2.html#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-25-2.png" width="672" /></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#En este caso ordenamos las clases por la mediana de sus elevaciones</span></span></code></pre></div>
+<p>Si tenemos clases con pocas o muchas observaciones podemos agruparlos en un nuevo grupo llamado “other.” Explique la diferencia entre las dos gráficas</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb29-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">fct_lump</span>(class, <span class="at">n =</span> <span class="dv">5</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> class)) <span class="sc">+</span> </span>
+<span id="cb29-4"><a href="visualización-de-datos-utilizando-ggplot2.html#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span> </span>
+<span id="cb29-5"><a href="visualización-de-datos-utilizando-ggplot2.html#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb30-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb30-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">fct_lump</span>(class, <span class="at">n =</span> <span class="sc">-</span><span class="dv">5</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> class)) <span class="sc">+</span> </span>
+<span id="cb30-4"><a href="visualización-de-datos-utilizando-ggplot2.html#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span> </span>
+<span id="cb30-5"><a href="visualización-de-datos-utilizando-ggplot2.html#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-26-2.png" width="672" /></p>
+<p>forcats tambien nos permite ordenar las categorias a mano</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(dat<span class="sc">$</span>phylum)</span>
+<span id="cb31-2"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(f)</span>
+<span id="cb31-3"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="st">&quot;Arthropoda&quot;</span>   <span class="st">&quot;Chordata&quot;</span>     <span class="st">&quot;Tracheophyta&quot;</span></span>
+<span id="cb31-4"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">fct_relevel</span>(f, <span class="st">&quot;Tracheophyta&quot;</span>, <span class="st">&quot;Arthropoda&quot;</span>, <span class="st">&quot;Chordata&quot;</span>)</span>
+<span id="cb31-5"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>    [<span class="dv">1</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-6"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>    [<span class="dv">6</span>] Tracheophyta Tracheophyta Chordata     Tracheophyta Chordata    </span>
+<span id="cb31-7"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   [<span class="dv">11</span>] Tracheophyta Tracheophyta Chordata     Chordata     Tracheophyta</span>
+<span id="cb31-8"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   [<span class="dv">16</span>] Chordata     Chordata     Tracheophyta Chordata     Chordata    </span>
+<span id="cb31-9"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   [<span class="dv">21</span>] Chordata     Chordata     Chordata     Tracheophyta Arthropoda  </span>
+<span id="cb31-10"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   [<span class="dv">26</span>] Arthropoda   Arthropoda   Arthropoda   Arthropoda   Arthropoda  </span>
+<span id="cb31-11"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   [<span class="dv">31</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-12"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   [<span class="dv">36</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Arthropoda  </span>
+<span id="cb31-13"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   [<span class="dv">41</span>] Tracheophyta Tracheophyta Tracheophyta Chordata     Chordata    </span>
+<span id="cb31-14"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   [<span class="dv">46</span>] Tracheophyta Tracheophyta Tracheophyta Chordata     Arthropoda  </span>
+<span id="cb31-15"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-15" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   [<span class="dv">51</span>] Arthropoda   Arthropoda   Chordata     Tracheophyta Chordata    </span>
+<span id="cb31-16"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-16" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   [<span class="dv">56</span>] Tracheophyta Arthropoda   Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-17"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   [<span class="dv">61</span>] Chordata     Tracheophyta Chordata     Tracheophyta Arthropoda  </span>
+<span id="cb31-18"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-18" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   [<span class="dv">66</span>] Arthropoda   Arthropoda   Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-19"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-19" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   [<span class="dv">71</span>] Tracheophyta Tracheophyta Tracheophyta Chordata     Tracheophyta</span>
+<span id="cb31-20"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-20" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   [<span class="dv">76</span>] Chordata     Chordata     Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-21"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-21" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   [<span class="dv">81</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-22"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-22" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   [<span class="dv">86</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-23"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-23" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   [<span class="dv">91</span>] Chordata     Chordata     Tracheophyta Tracheophyta Chordata    </span>
+<span id="cb31-24"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-24" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   [<span class="dv">96</span>] Chordata     Chordata     Chordata     Tracheophyta Tracheophyta</span>
+<span id="cb31-25"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-25" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">101</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-26"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-26" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">106</span>] Tracheophyta Tracheophyta Chordata     Chordata     Chordata    </span>
+<span id="cb31-27"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-27" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">111</span>] Chordata     Chordata     Tracheophyta Chordata     Chordata    </span>
+<span id="cb31-28"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-28" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">116</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-29"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-29" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">121</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-30"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-30" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">126</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-31"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-31" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">131</span>] Tracheophyta Arthropoda   Arthropoda   Arthropoda   Arthropoda  </span>
+<span id="cb31-32"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-32" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">136</span>] Arthropoda   Arthropoda   Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-33"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-33" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">141</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-34"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-34" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">146</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-35"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-35" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">151</span>] Arthropoda   Tracheophyta Chordata     Tracheophyta Tracheophyta</span>
+<span id="cb31-36"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-36" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">156</span>] Tracheophyta Chordata     Chordata     Tracheophyta Chordata    </span>
+<span id="cb31-37"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-37" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">161</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-38"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-38" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">166</span>] Tracheophyta Chordata     Chordata     Chordata     Chordata    </span>
+<span id="cb31-39"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-39" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">171</span>] Chordata     Tracheophyta Tracheophyta Tracheophyta Chordata    </span>
+<span id="cb31-40"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-40" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">176</span>] Chordata     Tracheophyta Tracheophyta Tracheophyta Chordata    </span>
+<span id="cb31-41"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-41" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">181</span>] Chordata     Chordata     Chordata     Tracheophyta Tracheophyta</span>
+<span id="cb31-42"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-42" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">186</span>] Tracheophyta Tracheophyta Chordata     Tracheophyta Tracheophyta</span>
+<span id="cb31-43"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-43" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">191</span>] Tracheophyta Chordata     Chordata     Tracheophyta Arthropoda  </span>
+<span id="cb31-44"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-44" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">196</span>] Chordata     Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-45"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-45" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">201</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-46"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-46" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">206</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-47"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-47" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">211</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-48"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-48" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">216</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-49"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-49" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">221</span>] Tracheophyta Chordata     Chordata     Chordata     Chordata    </span>
+<span id="cb31-50"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-50" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">226</span>] Tracheophyta Chordata     Chordata     Tracheophyta Tracheophyta</span>
+<span id="cb31-51"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-51" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">231</span>] Chordata     Chordata     Chordata     Chordata     Chordata    </span>
+<span id="cb31-52"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-52" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">236</span>] Tracheophyta Chordata     Tracheophyta Tracheophyta Chordata    </span>
+<span id="cb31-53"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-53" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">241</span>] Chordata     Chordata     Tracheophyta Arthropoda   Chordata    </span>
+<span id="cb31-54"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-54" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">246</span>] Tracheophyta Tracheophyta Tracheophyta Chordata     Chordata    </span>
+<span id="cb31-55"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-55" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">251</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Chordata    </span>
+<span id="cb31-56"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-56" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">256</span>] Tracheophyta Chordata     Arthropoda   Tracheophyta Tracheophyta</span>
+<span id="cb31-57"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-57" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">261</span>] Chordata     Chordata     Chordata     Chordata     Chordata    </span>
+<span id="cb31-58"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-58" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">266</span>] Chordata     Chordata     Chordata     Chordata     Tracheophyta</span>
+<span id="cb31-59"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-59" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">271</span>] Chordata     Tracheophyta Arthropoda   Chordata     Tracheophyta</span>
+<span id="cb31-60"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-60" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">276</span>] Tracheophyta Chordata     Chordata     Chordata     Tracheophyta</span>
+<span id="cb31-61"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-61" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">281</span>] Arthropoda   Arthropoda   Arthropoda   Tracheophyta Chordata    </span>
+<span id="cb31-62"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-62" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">286</span>] Tracheophyta Chordata     Chordata     Chordata     Chordata    </span>
+<span id="cb31-63"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-63" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">291</span>] Chordata     Tracheophyta Tracheophyta Chordata     Tracheophyta</span>
+<span id="cb31-64"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-64" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">296</span>] Tracheophyta Chordata     Chordata     Tracheophyta Tracheophyta</span>
+<span id="cb31-65"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-65" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">301</span>] Tracheophyta Chordata     Chordata     Chordata     Chordata    </span>
+<span id="cb31-66"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-66" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">306</span>] Chordata     Chordata     Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-67"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-67" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">311</span>] Tracheophyta Chordata     Chordata     Chordata     Chordata    </span>
+<span id="cb31-68"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-68" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">316</span>] Chordata     Chordata     Chordata     Tracheophyta Tracheophyta</span>
+<span id="cb31-69"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-69" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">321</span>] Chordata     Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-70"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-70" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">326</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Chordata    </span>
+<span id="cb31-71"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-71" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">331</span>] Tracheophyta Chordata     Tracheophyta Chordata     Chordata    </span>
+<span id="cb31-72"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-72" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">336</span>] Tracheophyta Chordata     Arthropoda   Arthropoda   Tracheophyta</span>
+<span id="cb31-73"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-73" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">341</span>] Arthropoda   Tracheophyta Tracheophyta Tracheophyta Chordata    </span>
+<span id="cb31-74"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-74" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">346</span>] Chordata     Chordata     Arthropoda   Chordata     Chordata    </span>
+<span id="cb31-75"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-75" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">351</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Chordata    </span>
+<span id="cb31-76"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-76" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">356</span>] Tracheophyta Chordata     Chordata     Tracheophyta Chordata    </span>
+<span id="cb31-77"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-77" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">361</span>] Chordata     Chordata     Tracheophyta Chordata     Chordata    </span>
+<span id="cb31-78"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-78" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">366</span>] Chordata     Chordata     Chordata     Chordata     Tracheophyta</span>
+<span id="cb31-79"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-79" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">371</span>] Tracheophyta Chordata     Tracheophyta Tracheophyta Chordata    </span>
+<span id="cb31-80"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-80" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">376</span>] Tracheophyta Chordata     Chordata     Chordata     Tracheophyta</span>
+<span id="cb31-81"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-81" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">381</span>] Arthropoda   Tracheophyta Arthropoda   Chordata     Tracheophyta</span>
+<span id="cb31-82"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-82" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">386</span>] Tracheophyta Tracheophyta Tracheophyta Chordata     Chordata    </span>
+<span id="cb31-83"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-83" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">391</span>] Tracheophyta Tracheophyta Arthropoda   Chordata     Tracheophyta</span>
+<span id="cb31-84"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-84" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">396</span>] Chordata     Tracheophyta Tracheophyta Chordata     Tracheophyta</span>
+<span id="cb31-85"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-85" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">401</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-86"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-86" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">406</span>] Tracheophyta Arthropoda   Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-87"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-87" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">411</span>] Tracheophyta Chordata     Chordata     Chordata     Tracheophyta</span>
+<span id="cb31-88"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-88" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">416</span>] Chordata     Tracheophyta Tracheophyta Tracheophyta Chordata    </span>
+<span id="cb31-89"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-89" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">421</span>] Arthropoda   Chordata     Chordata     Chordata     Chordata    </span>
+<span id="cb31-90"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-90" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">426</span>] Tracheophyta Chordata     Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-91"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-91" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">431</span>] Tracheophyta Tracheophyta Arthropoda   Tracheophyta Tracheophyta</span>
+<span id="cb31-92"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-92" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">436</span>] Tracheophyta Tracheophyta Arthropoda   Arthropoda   Chordata    </span>
+<span id="cb31-93"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-93" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">441</span>] Arthropoda   Chordata     Chordata     Tracheophyta Tracheophyta</span>
+<span id="cb31-94"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-94" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">446</span>] Chordata     Tracheophyta Tracheophyta Chordata     Chordata    </span>
+<span id="cb31-95"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-95" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">451</span>] Tracheophyta Chordata     Tracheophyta Chordata     Arthropoda  </span>
+<span id="cb31-96"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-96" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">456</span>] Chordata     Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-97"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-97" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">461</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-98"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-98" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">466</span>] Arthropoda   Chordata     Tracheophyta Tracheophyta Chordata    </span>
+<span id="cb31-99"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-99" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">471</span>] Chordata     Chordata     Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-100"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-100" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">476</span>] Chordata     Tracheophyta Chordata     Tracheophyta Tracheophyta</span>
+<span id="cb31-101"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-101" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">481</span>] Arthropoda   Arthropoda   Arthropoda   Arthropoda   Arthropoda  </span>
+<span id="cb31-102"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-102" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">486</span>] Arthropoda   Arthropoda   Tracheophyta Chordata     Arthropoda  </span>
+<span id="cb31-103"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-103" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">491</span>] Chordata     Chordata     Chordata     Tracheophyta Chordata    </span>
+<span id="cb31-104"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-104" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">496</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-105"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-105" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">501</span>] Tracheophyta Arthropoda   Chordata     Chordata     Tracheophyta</span>
+<span id="cb31-106"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-106" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">506</span>] Tracheophyta Chordata     Tracheophyta Chordata     Arthropoda  </span>
+<span id="cb31-107"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-107" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">511</span>] Chordata     Arthropoda   Tracheophyta Chordata     Tracheophyta</span>
+<span id="cb31-108"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-108" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">516</span>] Chordata     Chordata     Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-109"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-109" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">521</span>] Chordata     Chordata     Chordata     Tracheophyta Tracheophyta</span>
+<span id="cb31-110"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-110" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">526</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-111"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-111" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">531</span>] Arthropoda   Chordata     Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-112"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-112" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">536</span>] Tracheophyta Chordata     Chordata     Chordata     Tracheophyta</span>
+<span id="cb31-113"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-113" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">541</span>] Tracheophyta Chordata     Arthropoda   Chordata     Tracheophyta</span>
+<span id="cb31-114"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-114" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">546</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-115"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-115" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">551</span>] Tracheophyta Chordata     Tracheophyta Arthropoda   Arthropoda  </span>
+<span id="cb31-116"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-116" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">556</span>] Chordata     Tracheophyta Chordata     Chordata     Chordata    </span>
+<span id="cb31-117"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-117" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">561</span>] Chordata     Chordata     Tracheophyta Chordata     Tracheophyta</span>
+<span id="cb31-118"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-118" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">566</span>] Chordata     Tracheophyta Tracheophyta Tracheophyta Chordata    </span>
+<span id="cb31-119"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-119" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">571</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-120"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-120" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">576</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-121"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-121" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">581</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-122"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-122" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">586</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-123"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-123" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">591</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-124"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-124" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">596</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-125"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-125" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">601</span>] Tracheophyta Tracheophyta Chordata     Chordata     Chordata    </span>
+<span id="cb31-126"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-126" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">606</span>] Tracheophyta Tracheophyta Chordata     Chordata     Tracheophyta</span>
+<span id="cb31-127"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-127" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">611</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-128"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-128" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">616</span>] Tracheophyta Chordata     Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-129"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-129" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">621</span>] Tracheophyta Arthropoda   Chordata     Tracheophyta Tracheophyta</span>
+<span id="cb31-130"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-130" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">626</span>] Tracheophyta Tracheophyta Chordata     Arthropoda   Arthropoda  </span>
+<span id="cb31-131"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-131" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">631</span>] Tracheophyta Tracheophyta Arthropoda   Tracheophyta Chordata    </span>
+<span id="cb31-132"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-132" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">636</span>] Chordata     Chordata     Chordata     Arthropoda   Arthropoda  </span>
+<span id="cb31-133"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-133" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">641</span>] Chordata     Tracheophyta Chordata     Chordata     Tracheophyta</span>
+<span id="cb31-134"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-134" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">646</span>] Tracheophyta Tracheophyta Chordata     Tracheophyta Chordata    </span>
+<span id="cb31-135"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-135" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">651</span>] Tracheophyta Chordata     Arthropoda   Tracheophyta Chordata    </span>
+<span id="cb31-136"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-136" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">656</span>] Tracheophyta Tracheophyta Chordata     Chordata     Tracheophyta</span>
+<span id="cb31-137"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-137" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">661</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-138"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-138" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">666</span>] Tracheophyta Tracheophyta Tracheophyta Chordata     Chordata    </span>
+<span id="cb31-139"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-139" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">671</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-140"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-140" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">676</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-141"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-141" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">681</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Chordata    </span>
+<span id="cb31-142"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-142" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">686</span>] Tracheophyta Tracheophyta Arthropoda   Tracheophyta Tracheophyta</span>
+<span id="cb31-143"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-143" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">691</span>] Tracheophyta Chordata     Chordata     Tracheophyta Tracheophyta</span>
+<span id="cb31-144"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-144" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">696</span>] Chordata     Chordata     Chordata     Tracheophyta Tracheophyta</span>
+<span id="cb31-145"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-145" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">701</span>] Tracheophyta Tracheophyta Chordata     Chordata     Chordata    </span>
+<span id="cb31-146"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-146" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">706</span>] Arthropoda   Chordata     Chordata     Tracheophyta Tracheophyta</span>
+<span id="cb31-147"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-147" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">711</span>] Chordata     Tracheophyta Tracheophyta Tracheophyta Chordata    </span>
+<span id="cb31-148"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-148" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">716</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-149"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-149" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">721</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-150"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-150" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">726</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-151"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-151" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">731</span>] Tracheophyta Arthropoda   Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-152"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-152" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">736</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-153"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-153" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">741</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-154"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-154" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">746</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-155"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-155" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">751</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-156"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-156" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">756</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-157"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-157" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">761</span>] Arthropoda   Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-158"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-158" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">766</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-159"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-159" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">771</span>] Tracheophyta Arthropoda   Arthropoda   Tracheophyta Tracheophyta</span>
+<span id="cb31-160"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-160" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">776</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-161"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-161" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">781</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-162"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-162" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">786</span>] Chordata     Chordata     Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-163"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-163" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">791</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-164"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-164" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">796</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-165"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-165" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">801</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-166"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-166" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">806</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-167"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-167" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">811</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-168"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-168" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">816</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-169"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-169" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">821</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-170"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-170" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">826</span>] Tracheophyta Tracheophyta Chordata     Tracheophyta Tracheophyta</span>
+<span id="cb31-171"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-171" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">831</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-172"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-172" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">836</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-173"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-173" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">841</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-174"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-174" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">846</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-175"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-175" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">851</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-176"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-176" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">856</span>] Chordata     Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-177"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-177" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">861</span>] Chordata     Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-178"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-178" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">866</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-179"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-179" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">871</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-180"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-180" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">876</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-181"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-181" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">881</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-182"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-182" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">886</span>] Tracheophyta Chordata     Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-183"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-183" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">891</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-184"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-184" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">896</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-185"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-185" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">901</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-186"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-186" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">906</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-187"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-187" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">911</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-188"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-188" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">916</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-189"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-189" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">921</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-190"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-190" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">926</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-191"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-191" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">931</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-192"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-192" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">936</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-193"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-193" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">941</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-194"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-194" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">946</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-195"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-195" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">951</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-196"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-196" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">956</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-197"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-197" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">961</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-198"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-198" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">966</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-199"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-199" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">971</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-200"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-200" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">976</span>] Tracheophyta Chordata     Chordata     Chordata     Chordata    </span>
+<span id="cb31-201"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-201" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">981</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-202"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-202" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">986</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-203"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-203" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">991</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-204"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-204" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">996</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-205"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-205" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1001</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-206"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-206" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1006</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-207"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-207" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1011</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-208"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-208" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1016</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-209"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-209" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1021</span>] Tracheophyta Chordata     Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-210"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-210" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1026</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-211"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-211" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1031</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-212"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-212" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1036</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-213"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-213" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1041</span>] Tracheophyta Chordata     Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-214"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-214" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1046</span>] Tracheophyta Chordata     Chordata     Tracheophyta Tracheophyta</span>
+<span id="cb31-215"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-215" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1051</span>] Tracheophyta Tracheophyta Tracheophyta Chordata     Tracheophyta</span>
+<span id="cb31-216"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-216" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1056</span>] Tracheophyta Tracheophyta Chordata     Tracheophyta Tracheophyta</span>
+<span id="cb31-217"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-217" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1061</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Chordata    </span>
+<span id="cb31-218"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-218" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1066</span>] Chordata     Tracheophyta Tracheophyta Tracheophyta Chordata    </span>
+<span id="cb31-219"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-219" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1071</span>] Tracheophyta Tracheophyta Chordata     Chordata     Tracheophyta</span>
+<span id="cb31-220"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-220" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1076</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Chordata    </span>
+<span id="cb31-221"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-221" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1081</span>] Chordata     Chordata     Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-222"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-222" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1086</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-223"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-223" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1091</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Chordata    </span>
+<span id="cb31-224"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-224" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1096</span>] Chordata     Tracheophyta Chordata     Tracheophyta Tracheophyta</span>
+<span id="cb31-225"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-225" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1101</span>] Tracheophyta Chordata     Chordata     Chordata     Tracheophyta</span>
+<span id="cb31-226"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-226" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1106</span>] Tracheophyta Tracheophyta Tracheophyta Chordata     Tracheophyta</span>
+<span id="cb31-227"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-227" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1111</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-228"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-228" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1116</span>] Tracheophyta Tracheophyta Tracheophyta Chordata     Tracheophyta</span>
+<span id="cb31-229"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-229" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1121</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Tracheophyta</span>
+<span id="cb31-230"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-230" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1126</span>] Chordata     Tracheophyta Chordata     Chordata     Chordata    </span>
+<span id="cb31-231"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-231" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1131</span>] Arthropoda   Arthropoda   Arthropoda   Arthropoda   Chordata    </span>
+<span id="cb31-232"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-232" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1136</span>] Tracheophyta Tracheophyta Tracheophyta Tracheophyta Arthropoda  </span>
+<span id="cb31-233"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-233" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1141</span>] Chordata     Chordata     Chordata     Chordata     Arthropoda  </span>
+<span id="cb31-234"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-234" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1146</span>] Chordata     Chordata     Arthropoda   Arthropoda   Arthropoda  </span>
+<span id="cb31-235"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-235" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1151</span>] Arthropoda   Arthropoda   Arthropoda   Tracheophyta Chordata    </span>
+<span id="cb31-236"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-236" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1156</span>] Tracheophyta Chordata     Chordata     Tracheophyta Chordata    </span>
+<span id="cb31-237"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-237" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1161</span>] Chordata     Chordata     Chordata     Tracheophyta Chordata    </span>
+<span id="cb31-238"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-238" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1166</span>] Tracheophyta Chordata     Arthropoda   Arthropoda   Arthropoda  </span>
+<span id="cb31-239"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-239" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1171</span>] Arthropoda   Arthropoda   Chordata     Chordata     Chordata    </span>
+<span id="cb31-240"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-240" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1176</span>] Chordata     Tracheophyta Chordata     Chordata     Chordata    </span>
+<span id="cb31-241"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-241" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1181</span>] Tracheophyta Chordata     Chordata     Chordata     Chordata    </span>
+<span id="cb31-242"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-242" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1186</span>] Arthropoda   Chordata     Chordata     Chordata     Chordata    </span>
+<span id="cb31-243"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-243" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1191</span>] Chordata     Arthropoda   Arthropoda   Chordata     Chordata    </span>
+<span id="cb31-244"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-244" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1196</span>] Chordata     Chordata     Chordata     Chordata     Arthropoda  </span>
+<span id="cb31-245"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-245" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1201</span>] Chordata     Chordata     Chordata     Chordata     Chordata    </span>
+<span id="cb31-246"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-246" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1206</span>] Chordata     Arthropoda   Arthropoda   Chordata     Chordata    </span>
+<span id="cb31-247"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-247" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1211</span>] Chordata     Arthropoda   Arthropoda   Chordata     Chordata    </span>
+<span id="cb31-248"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-248" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1216</span>] Chordata     Chordata     Chordata     Chordata     Chordata    </span>
+<span id="cb31-249"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-249" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1221</span>] Chordata     Arthropoda   Chordata     Chordata     Chordata    </span>
+<span id="cb31-250"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-250" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1226</span>] Chordata     Chordata     Chordata     Chordata     Chordata    </span>
+<span id="cb31-251"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-251" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1231</span>] Chordata     Chordata     Arthropoda   Chordata     Chordata    </span>
+<span id="cb31-252"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-252" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1236</span>] Chordata     Chordata     Chordata     Arthropoda   Arthropoda  </span>
+<span id="cb31-253"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-253" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1241</span>] Chordata     Chordata     Chordata     Chordata     Chordata    </span>
+<span id="cb31-254"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-254" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1246</span>] Chordata     Chordata     Chordata     Chordata     Chordata    </span>
+<span id="cb31-255"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-255" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1251</span>] Chordata     Arthropoda   Arthropoda   Chordata     Chordata    </span>
+<span id="cb31-256"><a href="visualización-de-datos-utilizando-ggplot2.html#cb31-256" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Levels<span class="sc">:</span> Tracheophyta Arthropoda Chordata</span></code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="manejando-datos-utilizando-tidyverse.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introducción-a-rmarkdown.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/06_sesion_5.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

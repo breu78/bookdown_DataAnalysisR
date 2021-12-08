@@ -1,0 +1,274 @@
+# Leyendo y manejando datos en R
+
+### Estableciendo el directorio de trabajo para poder leer datos desde un archivo {-}
+
+Antes de empezar, debemos crear nuestro sitio de trabajo mediante la función setwd(), en el cual debemos poner entre comillas la dirección de la carpeta en la que tenemos guardado este script y el archivo con los datos del proyecto Santander BIO "Santander_BIO_data.csv"
+
+```
+setwd("~/r tic/sesion 2") # Note que empieza con ~ ya que esto nos dirige automáticamente a la carpeta mis documentos que R establece por defecto. Las carpetas se separan con /
+```
+
+En RStudio se recomienda utilizar: Session -> Set Working Directory
+
+***
+
+## Data frame                                
+
+Al igual que una matriz, los data frames son un conjunto de elementos ordenados en dos dimensiones. Filas (observaciones) y columnas (variables). Sin embargo, en un data frame se pueden almacenar diferentes tipos de datos en diferentes columnas.
+
+Una de las formas más comunes en la que vamos a encontrar datos, es en formato Excel o .csv. Estos son datos tabulados que constan de dos dimensiones, filas y columnas, que pueden almacenar datos numéricos y caracteres.
+
+***
+
+### Leer archivo desde carpeta de trabajo
+
+Para leer con facilidad en R los archivos .csv (coma seperated values), es posible importarlos de la siguiente forma:
+
+```{r collapse=TRUE, comment="-"}
+dat <-read.csv("SantanderBIO.csv") # Note que los nombres de los documentos van entre comillas y con la extensión del documento
+```
+
+Ya hemos cargado nuestros datos en un data frame, el cual se trata de información sobre inventarios de la biodiversidad en el marco del proyecto Santander BIO. Nuestro data frame cuenta con información taxonómica (Nombre de la especie, familia, reino, etc.) e información sobre los sitios y la altura a la que se encuentran estas especies.
+
+***
+
+### Evaluar la estructura del data frame
+
+Ahora vamos a explorar nuestros datos aprendiendo paso a paso algunas funciones importantes
+
+```{r collapse=TRUE, comment="-"}
+dim(dat) # Dimensiones de los datos: 1255 filas (observaciones) y 11 columnas (variables)
+
+colnames(dat) #Nombre de las columnas
+
+str(dat) #Estructura de los datos
+```
+
+Tambien es posible preguntar por otras condiciones en nuestro data frame que no sean necesariamente numéricas o que su resultado no sea una posición. Por ejemplo, un resultado tipo lógico, mediante la función is.numeric/character()
+
+```{r collapse=TRUE, comment="-"}
+is.numeric(dat$species) 
+is.character(dat$species) 
+
+is.numeric(dat$elevation) 
+is.character(dat$elevation) 
+```
+
+***
+
+## Acceder variables dentro del data frame           
+
+Para seleccionar una variable o columna del data frame utilizaremos el caracter "$" seguido del nombre asignado asignado a nuestros datos, después colocaremos el nombre de la variable deseada o podremos desplegar todas las opciones con tabulador
+
+```{r collapse=TRUE, comment="-"}
+
+ele <- dat$elevation
+head(ele)#La función head devuelve por defecto los seis primeros valores de un vector
+tail(ele)#En contraste, la función tail devuelve los seis últimos valores
+
+min(dat$elevation) #Con min obtenemos el valor mínimo de una variable deseada (en este caso altura de la observación)
+
+max(dat$elevation) #Y con max el valor máximo.
+```
+
+*Ejercicio:* Explorar con las funciones mean() y sd().
+
+Sabemos que hay distintos lugares en donde se colecto la información y que cada lugar puede aparecer más de una vez porque es probable que cuente con más de una especie colectada, también es probable que una especie se repita debido a que se puede encontrar en más de un lugar. Entonces, vamos a averiguar el número de especies registradas en total.
+
+```{r collapse=TRUE, comment="-"}
+head(dat$species)
+length(dat$species)# Con la longitud del vector podemos obtener el número total de registros
+
+species <- unique(dat$species) #Con la función "unique" obtendremos los nombres de las especies sin que se repitan
+
+length(species) #Hay 1000 especies en total
+```
+
+Ahora averiguaremos cuantas especie únicas puede haber en un municipio aleatorio. Para esto, vamos a crear un vector que contenga solo los datos del municipio deseado, aunque esto no es obligatorio, puede ser una forma ordenada de escribir nuestro código.
+
+```{r collapse=TRUE, comment="-"}
+unique(dat$municipio) #Nombres de los municipios de colecta
+
+m_Cimitarra <- dat[dat$municipality=="Cimitarra",] #Usamos los corchetes [] para seleccionar las filas que contengan datos únicamente del municipio de Cimitarra. Después de la "," se deja vacío para que extraiga todas las columnas asociadas a las filas que seleccionamos
+
+sp_unicas_cimitarra <- unique(m_Cimitarra$species)
+
+length(sp_unicas_cimitarra) #En el municipio de Cimitarra se registraron 397 especies 
+```
+
+<div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
+<span>
+<p style='margin-top:1em; text-align:center'>
+<b>Ejercicio 1</b></p>
+<p style='margin-left:1em;'>
+1. Extraer la siguiente información del municipio de Cimitarra:
+
+  - Elevacion máxima y mínima de los registros en SantanderBIO
+  - Elevación máxima y mínima de los registros de aves
+  - Número de localidades únicas
+
+2. Extraer la altura máxima y mínima de la que se tiene registro en cada reino (Plantae, Animalia) por localidad (Vereda El Aguila, Vereda Guineales, Vereda Locacion, Vereda Riveras de San Juan)
+
+3. Calcular el promedio de la altura por municipio
+</p>
+</div>
+
+
+## Acceder observaciones mas complejos           
+
+Podemos especificar más de una condición para crear un set de datos más pequeño
+
+```{r collapse=TRUE, comment="-"}
+or_operador <- dat[dat$municipality=="Cimitarra" | dat$municipality=="Santa Barbara",] # Utilizamos el simbolo "|" o "or" para extraer una condición u otra. Si ambas condiciones son verdaderas en nuestro set de datos, se extraerán ambas.
+
+or_operador <- dat[dat$municipality=="Cimitarra" | dat$municipality=="Santa",] # En este caso solo  se extraerán las observaciones de Cimitarra ya que no existe un municipio llamado "Santa" dentro de nuestros datos
+
+#Si queremos elegir todas las observaciones menos una en particular, usamos el operador lógico "!"
+
+plantas_no <- dat[!dat$kingdom=="Plantae",] # Seleccionamos solo observaciones con registros del reino Animalia
+```
+
+Para seleccionar varias condiciones usamos "&"
+
+```{r collapse=TRUE, comment="-"}
+alt_0_100 <- dat[dat$elevation > 0 & dat$elevation < 100,] # Seleccionar alturas entre 0 y 100 metros
+
+length(alt_0_100[,1]) # Existen 16 observaciones registradas en el rango de altura de 0 a 100 metros, todos en Cimitarra
+```
+
+¿Cómo podemos verificar que obtuvimos los datos deseados?
+
+```{r collapse=TRUE, comment="-"}
+min(alt_0_100$elevation)
+
+max(alt_0_100$elevation)
+```
+
+¿Cómo podemos averiguar el número de observaciones de anfibios por municipio?
+
+```{r collapse=TRUE, comment="-"}
+amphi_cimitarra <- dat[dat$municipality=="Cimitarra" & dat$class=="Amphibia",]
+length(amphi_cimitarra[,1])
+```
+
+*Ejericio:* Calcular también para El carmen de Chucurí y Santa Barbara.
+
+***
+
+## Agregar columnas al data frame para apoyar el análisis  
+
+En el ejercicio anterior observamos una diferencia en el número de registros de anfibios en cada municipio. Vamos a ver el número de registros totales en cada municipio
+
+```{r collapse=TRUE, comment="-"}
+dat$conteo <- 1 #Podemos añadir una nueva columna que tenga el número 1 en cada observación y así hacer una suma de filas 
+
+sum(dat[dat$municipality=="Cimitarra", "conteo"]) #En Cimitarra existen 551 registros
+
+sum(dat[dat$municipality=="El Carmen de Chucuri", "conteo"]) #En el Carmen de Chucuri existen 372 registros totales
+
+sum(dat[dat$municipality=="Santa Barbara", "conteo"]) #En Santa Barbara existen 332 registros
+```
+
+Finalmente, podemos eliminar la columna de conteo
+
+```{r collapse=TRUE, comment="-"}
+dat <- dat[,-11]
+```
+
+***
+
+### crear rangos en una variable continua:
+
+¿Cuál es el rango de altura en la que registraron los anfibios del ejercicio anterior? 
+
+Para esto usaremos la función cut()
+
+?cut
+
+```{r collapse=TRUE, comment="-"}
+dat$cut <- cut(dat$elevation, 4)
+
+dat$cut <- cut(dat$elevation, 4, labels = c("a", "b", "c", "d"))
+```
+
+Explique que sucede en las líneas de código anterior, luego defina 4 rangos de altura que empiece desde 0 y termine en 4000 metros y colóqueles una etiqueta. Finalmente responda la pregunta anterior.
+
+```{r collapse=TRUE, comment="-"}
+dat$cut <- cut(dat$elevation, breaks = c(0,1000,2000,3000,4000), labels = c("Cero a mil", "Mil a dos mil", "Dos mil a tres mil", "Tres mil a cuatro mil"))
+
+levels(dat$cut)
+```
+
+<div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
+<span>
+<p style='margin-top:1em; text-align:center'>
+<b>Ejercicio 2</b></p>
+<p style='margin-left:1em;'>
+1. Calcular el número de registros por cada rango de altura
+
+  - Elevacion máxima y mínima de los registros en SantanderBIO
+  - Elevación máxima y mínima de los registros de aves
+  - Número de localidades únicas
+
+2. Calcular el número de especies por cada rango de altura
+
+3. Calcular el número de especies de plantas por cada rango de altura
+</p>
+</div>
+
+## Indexar  y reemplazar                  
+
+En R podemos preguntar por una condición en específico y el resultado será la posición de este en el data frame. Esto se hace mediante la función which().
+
+?which
+
+Podemos preguntar por ejemplo por los registros que se encuentren a una altura menor de 80 metros
+
+```{r collapse=TRUE, comment="-"}
+which(dat$elevation<80) #Existen 6 registros que se encuentran a una altura menor de 80 metros
+
+dat[1144,] #El resultado de la fila 1144 corresponde la especie Curimata mivartii registrada a 74 metros de altura
+```
+
+Si guardamos las posiciones del resultado anterior, podemos obtener todos los resultados en un nuevo data frame de manera rápida:
+
+```{r collapse=TRUE, comment="-"}
+posiciones <- which(dat$elevation<80)
+
+nuevo_dat <- dat[posiciones,] #Podemos escribir el nombre del vector que contiene los valores de las posiciones para no escribirlas una por una
+nuevo_dat
+```
+
+Ademas de extraer información de un data frame, podemos editarlo de forma sencilla. Supongamos que encontramos un error asociado a un dato en específico, como el nombre de una familia. En nuestro caso hipotético, supongamos que nuestros datos tienen un error de digitación, y el nombre de la familia Acanthaceae está mal escrito, por lo que necesitamos modificarlo.
+
+```{r collapse=TRUE, comment="-"}
+dat2 <- dat #Copiamos el data frame en un nuevo vector
+
+nombre_incorrecto <- which(dat2$family=="Acanthaceae") #Guardamos la posición de las filas en las que esta el nombre de la familia mal escrito
+
+dat2[nombre_incorrecto, 8] <- "Nombre correcto" #Cambiamos el nombre por el que deseamos
+```
+
+Otra alternativa: Utilice la siguiente función para cambiar el nombre de la familia Viperidae a "Notviperidae" y verifique que el cambio se hizo correctamente
+
+?replace
+
+```{r collapse=TRUE, comment="-"}
+dat2$family <- replace(dat2$family ,c(dat2$family=="Viperidae"), "Notviperidae")
+verificacion <- dat2[dat2$family=="Notviperidae",] #Y finalmente verificamos que el cambio fue realizado
+```
+
+<div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
+<span>
+<p style='margin-top:1em; text-align:center'>
+<b>Ejercicio 3</b></p>
+<p style='margin-left:1em;'>
+1. Realizar un gráfico de barras del número de registros totales por cada municipio
+
+2. Realizar un gráfico del número de registros de insectos en cada localidad
+
+3. Realizar un boxplot de la elevación por clases
+
+4. Realizar un histograma de la elevación
+</p>
+</div>

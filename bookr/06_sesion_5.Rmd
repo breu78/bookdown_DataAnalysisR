@@ -1,0 +1,336 @@
+# Visualización de datos utilizando ggplot2   
+
+l paquete ggplot2 ofrece herramientas que ayudan a visualizar datos tidy en data frames
+
+```{r collapse=TRUE, comment="-", echo=FALSE}
+library(ggplot2)
+library(tidyverse)
+```
+
+```{r collapse=TRUE, comment="-", echo=FALSE}
+dat <- read_csv("SantanderBIO.csv")
+```
+
+El paquete ggplot2 ofrece herramientas que ayudan a visualizar datos tidy en data frames de forma organizada y sencilla, basado en la gramática de las gráficas. En la grámatica de las gráficas, la idea es que puedas construir gráficas a partir de los mismos componentes: un set de datos; un sistema de coordenadas ("X" y "Y") y aspectos del gráfico; y formas o elementos geométricos que representan a los datos (puntos, lineas circulos, etc)
+
+En ggplot, cada componente es un capa que se va añadiendo una tras otra usando el símbolo "+"
+
+```{r collapse=TRUE, comment="-"}
+ggplot(data = dat) #La  primera capa de un ggplot es el conjunto de datos que provienen de un data frame
+```
+
+```{r collapse=TRUE, comment="-"}
+ggplot(data = dat) +
+  aes(x = class) #Luego se añade el sistema de coordenas o relación entre las variables
+```
+
+```{r collapse=TRUE, comment="-"}
+ggplot(data = dat) +
+  aes(x = class) +
+  geom_bar() #Y añadimos un geom_ para representar geometricamente nuestros datos. Hay que tener precaución ya que no todos las representaciones gráficas funcionan bien para la relación entre las variables que establezcamos. Ggplot realiza algunas gráficas de manera predeterminada, si solo dejamos en aes() una unica variable, este graficará el número de observaciones por cada clase que exista en esa variable (geom_bar(stat="count")), ya que convierte las variables en factores para graficarlas
+```
+
+Estos son los 3 componentes principales para elaborar una gráfica en ggplot. Es posible seguir añadiendo capas para mejorar nuestra grafica y personalizarla de muchas maneras, sin embargo, si no se especifican, ggplot las establecerá por defecto
+
+Al hacer parte del mundo de tidyverse, es posible encadenar la función de ggplot con las funciones vistas anteriormente y así crear un gráfico de forma directa. Vamos a crear una gráfico que nos muestre el número de especies únicas por municipio
+
+```{r collapse=TRUE, comment="-"}
+dat %>% 
+  group_by(municipality) %>% 
+  summarise(unicos = unique(species)) %>% 
+  ggplot(aes(x = municipality)) +
+  geom_bar()
+```
+
+Ggplot también establece colores y leyenda por defecto a partir de los factores en el elemento aes() con el argumento fill
+
+```{r collapse=TRUE, comment="-"}
+dat %>% 
+  group_by(municipality) %>% 
+  summarise(unicos = unique(species)) %>% 
+  ggplot(aes(x = municipality, fill = municipality)) +
+  geom_bar()
+```
+
+Podemos cambiar el orden de las barras cambiando el eje x a eje y. Si deseamos usar colores específicos para cada barra lo hacemos en el geom_:
+
+```{r collapse=TRUE, comment="-"}
+dat %>% 
+  group_by(municipality) %>% 
+  summarise(unicos = unique(species)) %>% 
+  ggplot(aes(y = municipality)) +
+  geom_bar(fill = c("blue", "yellow", "brown"), col = c("blue", "yellow", "brown")) # ¿Cuál es la diferencia entre fill y col?
+```
+
+*Ejercicio:* Realice una grafica con ggplot de los registros de mamiferos por cada localidad
+
+```{r collapse=TRUE, comment="-"}
+dat %>% 
+  filter(class == "Mammalia") %>% 
+  ggplot(aes(x = locality)) + 
+  geom_bar()
+```
+
+*Ejercicio:* Grafique los registros del orden coleoptera en las diferentes localidades de cada municipio. Para diferenciar a que municipio pertenece cada localidad, usel el argumento fill de aes()
+
+```{r collapse=TRUE, comment="-"}
+dat %>% 
+  filter(order == "Coleoptera") %>% 
+  group_by(locality) %>% 
+  ggplot(aes(x = locality, fill = municipality)) + 
+  geom_bar()
+```
+
+Podemos agrupar las barras
+
+```{r collapse=TRUE, comment="-"}
+dat %>% 
+  filter(order == "Coleoptera") %>% 
+  group_by(locality) %>% 
+  ggplot(aes(x = municipality, fill = locality)) + 
+  geom_bar(position =  "stack")
+```
+
+También podemos hacer graficos de cajas e histogramas cambiando de geom_
+
+?geom_boxplot
+
+```{r collapse=TRUE, comment="-"}
+dat %>% 
+  ggplot(aes(x = municipality, y = elevation)) + #Grafico de cajas de la elevacion por cada municipio
+  geom_boxplot()
+```
+
+<div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
+<span>
+<p style='margin-top:1em; text-align:center'>
+<b>Ejercicio 1</b></p>
+
+1. Realice un gráfico de cajas sobre la distribución de las alturas a la que fueron registradas las aves en cada localidad utilizando las funciones tidy
+2. ¿Cómo es la distribución de elevacion de las familias del orden Polypodiales?
+3. Realice un histograma de la elevación total y la elevación  de ambos reinos
+
+<p style='margin-left:1em;'>
+</div>
+
+
+*Experimente graficando la elevacion de diferentes grupos (reinos, clase, familia etc) utilizando las funcioens tidy*
+
+
+## Theme
+
+Igual que en la función básica de plot(), en ggplot podemos tener mas de una gráfica y personalizar cada elemento mediante theme()
+
+```{r collapse=TRUE, comment="-"}
+as <- dat %>% mutate(elevation_2 = elevation+10)
+```
+
+Ggplot cuenta con temas predeterminados que podemos cargar mediante theme_
+
+?theme()
+
+```{r collapse=TRUE, comment="-"}
+dat %>% mutate(aleatorios = runif(1255, min = 0, max = 3600)) %>% 
+  ggplot(aes(x=elevation, y=aleatorios)) + #establecemos los datos y las variables "x" y "y"
+  theme_minimal() #tema del grafico para personalizar color de fondo, bordes, cuadrícula, etc.
+```
+
+Dentro de theme() modificamos elementos como líneas, colores, ejes, entre otros
+
+```{r collapse=TRUE, comment="-"}
+dat %>% mutate(aleatorios = runif(1255, min = 0, max = 3600)) %>% 
+  ggplot(aes(x=elevation, y=aleatorios)) +
+  theme_minimal() + theme(panel.border = element_blank(),
+                          panel.grid.major = element_blank(), 
+                          panel.grid.minor = element_blank(), 
+                          axis.line = element_line(colour = "white")) +#definimos fondo y bordes
+  labs(title = "Elevación vs números aleatorios", #título
+       subtitle = "Data: SantanderBIO") + #subtítulo
+  labs(x = "Elevación", y = "Némeros aleatorios")#nombres de los ejes
+```
+
+Añadimos un geom_ de puntos
+
+```{r collapse=TRUE, comment="-"}
+dat %>% mutate(aleatorios = runif(1255, min = 0, max = 3600)) %>% 
+  ggplot(aes(x=elevation, y=aleatorios)) + #Grafico base 
+  geom_point() + # geometria que corresponde a los puntos
+  theme_bw() + theme(panel.border = element_blank(),
+                     panel.grid.major = element_blank(), 
+                     panel.grid.minor = element_blank(), 
+                     axis.line = element_line(colour = "white")) +
+  labs(title = "Elevación vs números aleatorios",
+       subtitle = "Data: SantanderBIO") +
+  labs(x = "Elevación", y = "Némeros aleatorios")
+```
+
+Coloreamos los puntos y modificamos el título de la leyenda generada
+
+```{r collapse=TRUE, comment="-"}
+dat %>% mutate(aleatorios = runif(1255, min = 0, max = 3600)) %>% 
+  ggplot(aes(x=elevation, y=aleatorios, color = municipality)) + #Gráfico base con color para cada punto
+  geom_point(shape=5) +  # Geom que corresponde a los puntos y shape para modificar la forma del punto
+  theme_bw() + theme(panel.border = element_blank(), 
+                     panel.grid.major = element_blank(), 
+                     panel.grid.minor = element_blank(), 
+                     axis.line = element_line(colour = "white"))+#definimos fondo y bordes
+  scale_colour_discrete(name = "Municipios") + #Establecemos el título de la leyenda
+  labs(title = "Elevación vs números aleatorios", 
+       subtitle = "Data: SantanderBIO") + 
+  labs(x = "Elevación", y = "Números aleatorios")
+```
+
+Podemos incluir en la gráfica algunos métodos estadísticos como la relación lineal entre los puntos
+
+?geom_smooth
+
+```{r collapse=TRUE, comment="-"}
+dat %>% mutate(aleatorios = runif(1255, min = 0, max = 3600)) %>% 
+  ggplot(aes(x=elevation, y=aleatorios)) + 
+  geom_point(shape=5) +  
+  geom_smooth(method = "lm", se = TRUE) + #método lm e intervalo de confianza
+  theme_bw() + theme(panel.border = element_blank(), 
+                     panel.grid.major = element_blank(), 
+                     panel.grid.minor = element_blank(), 
+                     axis.line = element_line(colour = "white")) +
+  scale_colour_discrete(name = "Municipios") + 
+  labs(title = "Elevación vs números aleatorios", 
+       subtitle = "Data: SantanderBIO") + 
+  labs(x = "Elevación", y = "Números aleatorios")
+```
+
+Y por cada grupo
+
+```{r collapse=TRUE, comment="-"}
+dat %>% mutate(aleatorios = runif(1255, min = 0, max = 3600)) %>% 
+  ggplot(aes(x=elevation, y=aleatorios, color = municipality)) + 
+  geom_point(shape=5) +  
+  geom_smooth(method = "lm", se = TRUE) +
+  theme_bw() + theme(panel.border = element_blank(), 
+                     panel.grid.major = element_blank(), 
+                     panel.grid.minor = element_blank(), 
+                     axis.line = element_line(colour = "white")) +
+  scale_colour_discrete(name = "Municipios") + 
+  labs(title = "Elevación vs números aleatorios", 
+       subtitle = "Data: SantanderBIO") + 
+  labs(x = "Elevación", y = "Números aleatorios")
+```
+
+Para poder mostrar mas de una gráfica en el mismo plot se utiliza face_wrap. Revise la función y realice el histograma anterior pero ubique en un mismo plot 3 gráficas para cada municipio
+
+?facet_wrap
+
+```{r collapse=TRUE, comment="-"}
+ggplot(data = dat) + 
+  geom_histogram(aes(x = elevation, fill = municipality), bins = 12) + 
+  facet_wrap(~municipality, ncol = 1)+ #para cada especie, realice tres histogramas en una columna
+  theme_bw() + theme(panel.border = element_blank(), 
+                     panel.grid.major = element_blank(), 
+                     panel.grid.minor = element_blank(), 
+                     axis.line = element_line(colour = "white")) +
+  labs(title = "Elevación por municipio", 
+       subtitle = "Data: SantanderBIO") + 
+  labs(x = "Elevación", y = "Conteo")
+```
+
+Todas las características de un tema pueden ser guardadas en un vector para evitar escribir el tema cada vez que se grafique
+
+```{r collapse=TRUE, comment="-"}
+mitema <- theme(panel.grid.major = element_line(colour = "green"), 
+                panel.grid.minor = element_line(colour = "pink"),
+                panel.background = element_rect(fill = "blue"),
+                panel.border = element_blank(),axis.line = element_line(size = 0.9, linetype = "solid", colour = "black"))
+
+ggplot(data = dat, aes(x = elevation, y = elevation))+
+  mitema
+```
+
+<div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
+<span>
+<p style='margin-top:1em; text-align:center'>
+<b>Ejercicio 2</b></p>
+<p style='margin-left:1em;'>
+1.Contruir un tema personalizado
+2. Crear una gráfica de barras de el número de individuos por cada clase, utilizando un color diferente para cada barra y el tema creado anteriomente.
+3.Realizar el gráfico anterior pero generando una gráfica separada para cada clase en el mismo plot
+4. Conviertir la gráfica de barras del punto 2 en una gráfica de torta mediante coord_polar()
+</p>
+</div>
+
+***
+Finalmente, con el sistema de coordenadas "x" y "y" es posible hacer increíbles mapas mediante ggplot 
+
+```{r collapse=TRUE, comment="-"}
+nz <- map_data("nz") #Cargamos un set de datos que contienede coordenadas longitud y latitud, y columnas que indican a que región corresponden esas coordenadas
+
+ggplot(nz, aes(long, lat, group = group)) +
+  geom_polygon(fill = "white", colour = "black")
+```
+
+## Forcats                             
+
+El paquete forcats tiene como objetivo brindar herramientas de ayuda para manejar variables categóricas.
+
+Convirtamos una variable en un factor
+
+```{r collapse=TRUE, comment="-"}
+dat$class <- as.factor(dat$class)
+
+levels(dat$class) #Revisamos las categorías
+
+dat %>% 
+  ggplot(aes(x = class)) + 
+  geom_bar() + 
+  coord_flip()
+```
+
+Vemos que se grafica un conteo de la variable "class" por cada factor, ahora vamos a ordenar esta gráfica con forcats
+
+```{r collapse=TRUE, comment="-"}
+dat %>% 
+  mutate(class = fct_infreq(class)) %>% 
+  ggplot(aes(x = class)) + 
+  geom_bar() + 
+  coord_flip()
+#Ahora tenemos los cada categoria ordenada por su frecuencia
+```
+
+Podemos ordenar un factor por otra variable
+
+```{r collapse=TRUE, comment="-"}
+
+dat %>% 
+  ggplot(aes(x = class, y = elevation)) + 
+  geom_boxplot() 
+#Bloxplot de la distribución del a altura por cada clase
+
+dat %>% 
+  mutate(class = fct_reorder(class, elevation)) %>% 
+  ggplot(aes(x = class, y = elevation)) + 
+  geom_boxplot()
+#En este caso ordenamos las clases por la mediana de sus elevaciones
+```
+
+Si tenemos clases con pocas o muchas observaciones podemos agruparlos en un nuevo grupo llamado "other". Explique la diferencia entre las dos gráficas
+
+```{r collapse=TRUE, comment="-"}
+dat %>% 
+  mutate(class = fct_lump(class, n = 5)) %>% 
+  ggplot(aes(x = class)) + 
+  geom_bar() + 
+  coord_flip()
+
+dat %>% 
+  mutate(class = fct_lump(class, n = -5)) %>% 
+  ggplot(aes(x = class)) + 
+  geom_bar() + 
+  coord_flip()
+```
+
+forcats tambien nos permite ordenar las categorias a mano
+
+```{r collapse=TRUE, comment="-"}
+f <- as.factor(dat$phylum)
+levels(f)
+fct_relevel(f, "Tracheophyta", "Arthropoda", "Chordata")
+```

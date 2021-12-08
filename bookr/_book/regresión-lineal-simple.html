@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 9 Regresión lineal simple | Sesión 9</title>
+  <meta name="description" content="Everything you need (and nothing more) to start a bookdown book." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 9 Regresión lineal simple | Sesión 9" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://seankross.com/bookdown-start/" />
+  
+  <meta property="og:description" content="Everything you need (and nothing more) to start a bookdown book." />
+  <meta name="github-repo" content="seankross/bookdown-start" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 9 Regresión lineal simple | Sesión 9" />
+  
+  <meta name="twitter:description" content="Everything you need (and nothing more) to start a bookdown book." />
+  
+
+<meta name="author" content="Silvia Fernanda Ardila Hurtado" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="análisis-de-varianza---anova.html"/>
+<link rel="next" href="regresión-lineal-múltiple.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introducción.html"><a href="introducción.html#sobre-este-curso"><i class="fa fa-check"></i><b>1.1</b> Sobre este curso</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html"><i class="fa fa-check"></i><b>2</b> Introducción a la programación con R</a>
+<ul>
+<li class="chapter" data-level="2.0.1" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#la-línea-de-comandos-terminal"><i class="fa fa-check"></i><b>2.0.1</b> La línea de comandos (Terminal)</a></li>
+<li class="chapter" data-level="2.0.2" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#función-ayuda"><i class="fa fa-check"></i><b>2.0.2</b> Función ayuda</a></li>
+<li class="chapter" data-level="2.0.3" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#creando-nuevas-variables"><i class="fa fa-check"></i><b>2.0.3</b> Creando nuevas variables:</a></li>
+<li class="chapter" data-level="2.0.4" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#el-área-de-trabajo-o-memoria---ventana-arriba-a-la-derecha-environment"><i class="fa fa-check"></i><b>2.0.4</b> El área de trabajo o memoria - Ventana arriba a la derecha ‘Environment’</a></li>
+<li class="chapter" data-level="2.0.5" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#vamos-a-practicar"><i class="fa fa-check"></i><b>2.0.5</b> Vamos a practicar</a></li>
+<li class="chapter" data-level="2.0.6" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#r-como-calculadora---operadores-y-funciones."><i class="fa fa-check"></i><b>2.0.6</b> R como calculadora - Operadores y funciones.</a></li>
+<li class="chapter" data-level="2.0.7" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#tipos-de-datos-y-objetos"><i class="fa fa-check"></i><b>2.0.7</b> Tipos de Datos y Objetos</a></li>
+<li class="chapter" data-level="2.0.8" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#vectores-i-vectores-sencillos"><i class="fa fa-check"></i><b>2.0.8</b> Vectores I: Vectores sencillos</a></li>
+<li class="chapter" data-level="2.0.9" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#vectores-ii-vectores-más-complejos"><i class="fa fa-check"></i><b>2.0.9</b> Vectores II: Vectores más complejos</a></li>
+<li class="chapter" data-level="2.0.10" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#indexar"><i class="fa fa-check"></i><b>2.0.10</b> Indexar</a></li>
+<li class="chapter" data-level="2.0.11" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#nas"><i class="fa fa-check"></i><b>2.0.11</b> NA´s</a></li>
+<li class="chapter" data-level="2.0.12" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#matrices"><i class="fa fa-check"></i><b>2.0.12</b> Matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html"><i class="fa fa-check"></i><b>3</b> Visualización de datos en R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#gráficos-y-diagrama-de-dispersión-simple"><i class="fa fa-check"></i><b>3.1</b> Gráficos y diagrama de dispersión simple</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#diagrama-de-dispersión-función-plot"><i class="fa fa-check"></i><b>3.1.1</b> Diagrama de dispersión: función plot()</a></li>
+<li class="chapter" data-level="3.1.2" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#etiquetas-de-la-gráfica-xlab-ylab-main"><i class="fa fa-check"></i><b>3.1.2</b> Etiquetas de la gráfica: xlab, ylab, main</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#demostración-de-la-versatilidad-de-la-gráfica"><i class="fa fa-check"></i><b>3.2</b> Demostración de la versatilidad de la gráfica</a></li>
+<li class="chapter" data-level="3.3" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#barras-cajas-e-histogramas"><i class="fa fa-check"></i><b>3.3</b> Barras, cajas e histogramas</a></li>
+<li class="chapter" data-level="3.4" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#función-par"><i class="fa fa-check"></i><b>3.4</b> Función par()</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#gráficos-compuestos"><i class="fa fa-check"></i><b>3.4.1</b> Gráficos compuestos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html"><i class="fa fa-check"></i><b>4</b> Leyendo y manejando datos en R</a>
+<ul>
+<li class="chapter" data-level="" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#estableciendo-el-directorio-de-trabajo-para-poder-leer-datos-desde-un-archivo"><i class="fa fa-check"></i>Estableciendo el directorio de trabajo para poder leer datos desde un archivo</a></li>
+<li class="chapter" data-level="4.1" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#data-frame"><i class="fa fa-check"></i><b>4.1</b> Data frame</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#leer-archivo-desde-carpeta-de-trabajo"><i class="fa fa-check"></i><b>4.1.1</b> Leer archivo desde carpeta de trabajo</a></li>
+<li class="chapter" data-level="4.1.2" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#evaluar-la-estructura-del-data-frame"><i class="fa fa-check"></i><b>4.1.2</b> Evaluar la estructura del data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#acceder-variables-dentro-del-data-frame"><i class="fa fa-check"></i><b>4.2</b> Acceder variables dentro del data frame</a></li>
+<li class="chapter" data-level="4.3" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#acceder-observaciones-mas-complejos"><i class="fa fa-check"></i><b>4.3</b> Acceder observaciones mas complejos</a></li>
+<li class="chapter" data-level="4.4" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#agregar-columnas-al-data-frame-para-apoyar-el-análisis"><i class="fa fa-check"></i><b>4.4</b> Agregar columnas al data frame para apoyar el análisis</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#crear-rangos-en-una-variable-continua"><i class="fa fa-check"></i><b>4.4.1</b> crear rangos en una variable continua:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#indexar-y-reemplazar"><i class="fa fa-check"></i><b>4.5</b> Indexar y reemplazar</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html"><i class="fa fa-check"></i><b>5</b> Manejando datos utilizando tidyverse</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#readr"><i class="fa fa-check"></i><b>5.1</b> Readr</a></li>
+<li class="chapter" data-level="5.2" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#tibble"><i class="fa fa-check"></i><b>5.2</b> Tibble</a></li>
+<li class="chapter" data-level="5.3" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#dplyr"><i class="fa fa-check"></i><b>5.3</b> Dplyr</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#select"><i class="fa fa-check"></i><b>5.3.1</b> Select</a></li>
+<li class="chapter" data-level="5.3.2" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#filter"><i class="fa fa-check"></i><b>5.3.2</b> Filter</a></li>
+<li class="chapter" data-level="5.3.3" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#summarise"><i class="fa fa-check"></i><b>5.3.3</b> Summarise</a></li>
+<li class="chapter" data-level="5.3.4" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#mutate"><i class="fa fa-check"></i><b>5.3.4</b> Mutate</a></li>
+<li class="chapter" data-level="5.3.5" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#arrange"><i class="fa fa-check"></i><b>5.3.5</b> Arrange</a></li>
+<li class="chapter" data-level="5.3.6" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#separate"><i class="fa fa-check"></i><b>5.3.6</b> Separate()</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#aggregate"><i class="fa fa-check"></i><b>5.4</b> Aggregate</a></li>
+<li class="chapter" data-level="5.5" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#stringr"><i class="fa fa-check"></i><b>5.5</b> Stringr</a></li>
+<li class="chapter" data-level="5.6" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#visualización-de-datos-utilizando-ggplot2"><i class="fa fa-check"></i><b>5.6</b> Visualización de datos utilizando ggplot2</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#theme"><i class="fa fa-check"></i><b>5.6.1</b> Theme</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#forcats"><i class="fa fa-check"></i><b>5.7</b> Forcats</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html"><i class="fa fa-check"></i><b>6</b> Introducción a Rmarkdown</a>
+<ul>
+<li class="chapter" data-level="6.0.1" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html#sintaxis-de-texto-plano"><i class="fa fa-check"></i><b>6.0.1</b> Sintaxis de texto plano:</a></li>
+<li class="chapter" data-level="6.1" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html#título-2"><i class="fa fa-check"></i><b>6.1</b> Título 2</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html#título-3"><i class="fa fa-check"></i><b>6.1.1</b> Título 3</a></li>
+<li class="chapter" data-level="6.1.2" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html#sintaxis-de-código"><i class="fa fa-check"></i><b>6.1.2</b> Sintaxis de código:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html"><i class="fa fa-check"></i><b>7</b> De números aleatorios, distribuciones y probabilidades</a>
+<ul>
+<li class="chapter" data-level="7.0.1" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html#distribución-uniforme"><i class="fa fa-check"></i><b>7.0.1</b> Distribución uniforme</a></li>
+<li class="chapter" data-level="7.0.2" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html#distribución-normal"><i class="fa fa-check"></i><b>7.0.2</b> Distribución normal</a></li>
+<li class="chapter" data-level="7.0.3" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html#tidy"><i class="fa fa-check"></i><b>7.0.3</b> Tidy</a></li>
+<li class="chapter" data-level="7.0.4" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html#probabilidad-en-la-distribución-normal"><i class="fa fa-check"></i><b>7.0.4</b> Probabilidad en la distribución normal</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html"><i class="fa fa-check"></i><b>8</b> Análisis de varianza - ANOVA</a>
+<ul>
+<li class="chapter" data-level="8.0.1" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html#anova-a-mano"><i class="fa fa-check"></i><b>8.0.1</b> Anova a mano</a></li>
+<li class="chapter" data-level="8.0.2" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html#estadístico-f"><i class="fa fa-check"></i><b>8.0.2</b> Estadístico F</a></li>
+<li class="chapter" data-level="8.0.3" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html#anova-con-funciones-de-r"><i class="fa fa-check"></i><b>8.0.3</b> Anova con funciones de R</a></li>
+<li class="chapter" data-level="8.0.4" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html#anova-con-datos-reales"><i class="fa fa-check"></i><b>8.0.4</b> Anova con datos reales</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html"><i class="fa fa-check"></i><b>9</b> Regresión lineal simple</a>
+<ul>
+<li class="chapter" data-level="9.0.1" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#regresión-lineal"><i class="fa fa-check"></i><b>9.0.1</b> Regresión lineal</a></li>
+<li class="chapter" data-level="9.0.2" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#regresión-a-mano"><i class="fa fa-check"></i><b>9.0.2</b> Regresión a mano</a></li>
+<li class="chapter" data-level="9.0.3" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#indices-de-diversidad-y-regresión-lineal"><i class="fa fa-check"></i><b>9.0.3</b> Indices de diversidad y regresión lineal</a></li>
+<li class="chapter" data-level="9.0.4" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#paquete-vegan"><i class="fa fa-check"></i><b>9.0.4</b> Paquete vegan</a></li>
+<li class="chapter" data-level="9.0.5" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#supuestos-de-la-regresión-lineal"><i class="fa fa-check"></i><b>9.0.5</b> Supuestos de la regresión lineal</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="regresión-lineal-múltiple.html"><a href="regresión-lineal-múltiple.html"><i class="fa fa-check"></i><b>10</b> Regresión lineal múltiple</a>
+<ul>
+<li class="chapter" data-level="10.0.1" data-path="regresión-lineal-múltiple.html"><a href="regresión-lineal-múltiple.html#regresión-lineal-múltiple-1"><i class="fa fa-check"></i><b>10.0.1</b> Regresión lineal múltiple</a></li>
+<li class="chapter" data-level="10.0.2" data-path="regresión-lineal-múltiple.html"><a href="regresión-lineal-múltiple.html#colinealidad"><i class="fa fa-check"></i><b>10.0.2</b> Colinealidad</a></li>
+<li class="chapter" data-level="10.0.3" data-path="regresión-lineal-múltiple.html"><a href="regresión-lineal-múltiple.html#selección-de-modelos"><i class="fa fa-check"></i><b>10.0.3</b> Selección de modelos</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Sesión 9</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="regresión-lineal-simple" class="section level1" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Regresión lineal simple</h1>
+<p>En esta sesión vamos a conocer los fundamentos básicos para realizar una regresión lineal y como se realiza en R.</p>
+<div id="regresión-lineal" class="section level3" number="9.0.1">
+<h3><span class="header-section-number">9.0.1</span> Regresión lineal</h3>
+<p>Mediante la regresión lineal, podemos predecir el valor de una variable depentiente “y” en función de una variable independiente “x” mediante la ecuación de la recta (yi=α+β*xi+ϵi). Además, la regresión lineal nos sirve como análisis exploratorio para observar si dos o mas variables se relacionan linealmente (si ‘x’ cambia entonces ‘y’ también cambiará en una magnitud similar)</p>
+<p>A diferencia de la Anova, nuestra variable independiente “x” es usualmente una variable contínua y no una variable categórica, pero su notación es la misma:</p>
+<p><em>lm(y ~ x)</em></p>
+<p>Como vimos anteriormente, utilizamos la función lm (linear model)</p>
+<p>Vamos a crear datos para realizar una regesión lineal simple. Para esto, debemos crear 3 componentes: respuesta (y) = parte deterministico (x) + parte estocástico (error).</p>
+<p>Creamos la variable deterministica, es decir, datos definidos los cuales conocemos (30 valores aleatorios entre 15 y 150)</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="regresión-lineal-simple.html#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">30</span>,<span class="dv">15</span>,<span class="dv">150</span>)</span>
+<span id="cb1-2"><a href="regresión-lineal-simple.html#cb1-2" aria-hidden="true" tabindex="-1"></a>x</span>
+<span id="cb1-3"><a href="regresión-lineal-simple.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">1</span>]  <span class="fl">71.97069</span>  <span class="fl">15.94804</span>  <span class="fl">46.29660</span> <span class="fl">119.80951</span>  <span class="fl">20.39606</span> <span class="fl">128.25306</span>  <span class="fl">22.34313</span></span>
+<span id="cb1-4"><a href="regresión-lineal-simple.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">8</span>] <span class="fl">109.36358</span>  <span class="fl">25.24506</span>  <span class="fl">27.15949</span> <span class="fl">144.08505</span> <span class="fl">130.35870</span> <span class="fl">133.14428</span>  <span class="fl">52.89453</span></span>
+<span id="cb1-5"><a href="regresión-lineal-simple.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">15</span>] <span class="fl">105.29167</span>  <span class="fl">35.71132</span>  <span class="fl">69.60025</span>  <span class="fl">83.29168</span>  <span class="fl">15.08388</span> <span class="fl">134.36477</span>  <span class="fl">53.53003</span></span>
+<span id="cb1-6"><a href="regresión-lineal-simple.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">22</span>]  <span class="fl">16.06731</span> <span class="fl">127.06446</span> <span class="fl">136.74516</span>  <span class="fl">93.26180</span>  <span class="fl">50.41654</span>  <span class="fl">95.80811</span>  <span class="fl">80.48248</span></span>
+<span id="cb1-7"><a href="regresión-lineal-simple.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">29</span>]  <span class="fl">16.95275</span>  <span class="fl">52.72714</span></span></code></pre></div>
+<p>Creamos la variable de respuesta (parte deterministica)</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="regresión-lineal-simple.html#cb2-1" aria-hidden="true" tabindex="-1"></a>y.pred <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> x</span>
+<span id="cb2-2"><a href="regresión-lineal-simple.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y.pred, <span class="at">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="regresión-lineal-simple.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(y.pred <span class="sc">~</span> x)) <span class="co"># Obtenemos un R2 de 1 (ajuste perfecto), valor de p significativo (vemos que tiene 3 asteríscos indicando un alto nivel de significancia); es decir podemos predicir y perfectamente a traves de 20 + 2 * x</span></span>
+<span id="cb3-2"><a href="regresión-lineal-simple.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Warning <span class="cf">in</span> <span class="fu">summary.lm</span>(<span class="fu">lm</span>(y.pred <span class="sc">~</span> x))<span class="sc">:</span> essentially perfect fit<span class="sc">:</span> summary may be</span>
+<span id="cb3-3"><a href="regresión-lineal-simple.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> unreliable</span>
+<span id="cb3-4"><a href="regresión-lineal-simple.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb3-5"><a href="regresión-lineal-simple.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Call<span class="sc">:</span></span>
+<span id="cb3-6"><a href="regresión-lineal-simple.html#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="fu">lm</span>(<span class="at">formula =</span> y.pred <span class="sc">~</span> x)</span>
+<span id="cb3-7"><a href="regresión-lineal-simple.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb3-8"><a href="regresión-lineal-simple.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Residuals<span class="sc">:</span></span>
+<span id="cb3-9"><a href="regresión-lineal-simple.html#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>        Min         1Q     Median         3Q        Max </span>
+<span id="cb3-10"><a href="regresión-lineal-simple.html#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="sc">-</span><span class="fl">2.537e-14</span> <span class="sc">-</span><span class="fl">9.631e-15</span> <span class="sc">-</span><span class="fl">2.872e-15</span>  <span class="fl">1.656e-15</span>  <span class="fl">1.195e-13</span> </span>
+<span id="cb3-11"><a href="regresión-lineal-simple.html#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb3-12"><a href="regresión-lineal-simple.html#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Coefficients<span class="sc">:</span></span>
+<span id="cb3-13"><a href="regresión-lineal-simple.html#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>              Estimate Std. Error   t value <span class="fu">Pr</span>(<span class="sc">&gt;</span><span class="er">|</span>t<span class="sc">|</span>)    </span>
+<span id="cb3-14"><a href="regresión-lineal-simple.html#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> (Intercept) <span class="fl">2.000e+01</span>  <span class="fl">8.840e-15</span> <span class="fl">2.262e+15</span>   <span class="sc">&lt;</span><span class="fl">2e-16</span> <span class="sc">**</span><span class="er">*</span></span>
+<span id="cb3-15"><a href="regresión-lineal-simple.html#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> x           <span class="fl">2.000e+00</span>  <span class="fl">1.029e-16</span> <span class="fl">1.943e+16</span>   <span class="sc">&lt;</span><span class="fl">2e-16</span> <span class="sc">**</span><span class="er">*</span></span>
+<span id="cb3-16"><a href="regresión-lineal-simple.html#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="sc">---</span></span>
+<span id="cb3-17"><a href="regresión-lineal-simple.html#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Signif. codes<span class="sc">:</span>  <span class="dv">0</span> <span class="st">&#39;***&#39;</span> <span class="fl">0.001</span> <span class="st">&#39;**&#39;</span> <span class="fl">0.01</span> <span class="st">&#39;*&#39;</span> <span class="fl">0.05</span> <span class="st">&#39;.&#39;</span> <span class="fl">0.1</span> <span class="st">&#39; &#39;</span> <span class="dv">1</span></span>
+<span id="cb3-18"><a href="regresión-lineal-simple.html#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb3-19"><a href="regresión-lineal-simple.html#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Residual standard error<span class="sc">:</span> <span class="fl">2.477e-14</span> on <span class="dv">28</span> degrees of freedom</span>
+<span id="cb3-20"><a href="regresión-lineal-simple.html#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Multiple R<span class="sc">-</span>squared<span class="sc">:</span>      <span class="dv">1</span>,   Adjusted R<span class="sc">-</span>squared<span class="sc">:</span>      <span class="dv">1</span> </span>
+<span id="cb3-21"><a href="regresión-lineal-simple.html#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> F<span class="sc">-</span>statistic<span class="sc">:</span> <span class="fl">3.775e+32</span> on <span class="dv">1</span> and <span class="dv">28</span> DF,  p<span class="sc">-</span>value<span class="sc">:</span> <span class="er">&lt;</span> <span class="fl">2.2e-16</span></span></code></pre></div>
+<p>Cuando trabajamos con datos reales, casi nunca encontramos un ajuste perfecto porque hay un error asociado a los datos que tiene su origin en otras factores que influyen la relación entre y y x (incluso errores en la medicion)</p>
+<p>Ahora añadimos el componente estocástico (el error) a la variable respuesta:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="regresión-lineal-simple.html#cb4-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> y.pred <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">30</span>,<span class="dv">0</span>,<span class="dv">50</span>) <span class="co"># el error viene de una distribucion normal con una media de 0</span></span></code></pre></div>
+<p>Observamos mediante un gráfico como se relacionan ahora nuestras variables</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="regresión-lineal-simple.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y <span class="sc">~</span> x, <span class="at">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="regresión-lineal-simple.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x)) <span class="co"># Ahora el ajuste de la regresión es menor debido al error en y</span></span>
+<span id="cb6-2"><a href="regresión-lineal-simple.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb6-3"><a href="regresión-lineal-simple.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Call<span class="sc">:</span></span>
+<span id="cb6-4"><a href="regresión-lineal-simple.html#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="fu">lm</span>(<span class="at">formula =</span> y <span class="sc">~</span> x)</span>
+<span id="cb6-5"><a href="regresión-lineal-simple.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb6-6"><a href="regresión-lineal-simple.html#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Residuals<span class="sc">:</span></span>
+<span id="cb6-7"><a href="regresión-lineal-simple.html#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>      Min       1Q   Median       3Q      Max </span>
+<span id="cb6-8"><a href="regresión-lineal-simple.html#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="sc">-</span><span class="fl">102.912</span>  <span class="sc">-</span><span class="fl">24.820</span>   <span class="sc">-</span><span class="fl">2.161</span>   <span class="fl">21.795</span>  <span class="fl">108.645</span> </span>
+<span id="cb6-9"><a href="regresión-lineal-simple.html#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb6-10"><a href="regresión-lineal-simple.html#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Coefficients<span class="sc">:</span></span>
+<span id="cb6-11"><a href="regresión-lineal-simple.html#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>             Estimate Std. Error t value <span class="fu">Pr</span>(<span class="sc">&gt;</span><span class="er">|</span>t<span class="sc">|</span>)    </span>
+<span id="cb6-12"><a href="regresión-lineal-simple.html#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> (Intercept)  <span class="fl">29.7265</span>    <span class="fl">14.9390</span>    <span class="fl">1.99</span>   <span class="fl">0.0565</span> .  </span>
+<span id="cb6-13"><a href="regresión-lineal-simple.html#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> x             <span class="fl">1.9570</span>     <span class="fl">0.1739</span>   <span class="fl">11.25</span> <span class="fl">6.72e-12</span> <span class="sc">**</span><span class="er">*</span></span>
+<span id="cb6-14"><a href="regresión-lineal-simple.html#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="sc">---</span></span>
+<span id="cb6-15"><a href="regresión-lineal-simple.html#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Signif. codes<span class="sc">:</span>  <span class="dv">0</span> <span class="st">&#39;***&#39;</span> <span class="fl">0.001</span> <span class="st">&#39;**&#39;</span> <span class="fl">0.01</span> <span class="st">&#39;*&#39;</span> <span class="fl">0.05</span> <span class="st">&#39;.&#39;</span> <span class="fl">0.1</span> <span class="st">&#39; &#39;</span> <span class="dv">1</span></span>
+<span id="cb6-16"><a href="regresión-lineal-simple.html#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb6-17"><a href="regresión-lineal-simple.html#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Residual standard error<span class="sc">:</span> <span class="fl">41.86</span> on <span class="dv">28</span> degrees of freedom</span>
+<span id="cb6-18"><a href="regresión-lineal-simple.html#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Multiple R<span class="sc">-</span>squared<span class="sc">:</span>  <span class="fl">0.8189</span>,  Adjusted R<span class="sc">-</span>squared<span class="sc">:</span>  <span class="fl">0.8124</span> </span>
+<span id="cb6-19"><a href="regresión-lineal-simple.html#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> F<span class="sc">-</span>statistic<span class="sc">:</span> <span class="fl">126.6</span> on <span class="dv">1</span> and <span class="dv">28</span> DF,  p<span class="sc">-</span>value<span class="sc">:</span> <span class="fl">6.718e-12</span></span></code></pre></div>
+</div>
+<div id="regresión-a-mano" class="section level3" number="9.0.2">
+<h3><span class="header-section-number">9.0.2</span> Regresión a mano</h3>
+<p>Igual que en un anova, podemos calcular los parámetros de la regresión a mano mediante el método de la suma de cuadrados y la información del promedio de los datos.</p>
+<p>Recordemos que hacemos uso de la ecuación de la recta = yi=α+β*xi+ϵi, en los que debemos calcular algunos parámetros con el método de la suma de cuadrados. En esta ecuación se nos presentan varios componentes:</p>
+<ul>
+<li><p><em>yi</em> o variable respuesta</p></li>
+<li><p><em>α</em> o intercepto, el cual es el valor de y cuando x = 0</p></li>
+<li><p><em>β</em> o pendiente (el valor de p que obtenemos nos dice si la pendiente es significativa diferente de 0 o no)</p></li>
+<li><p><em>xi</em> o variable predictora</p></li>
+<li><p><em>ϵi</em> o el error. Todos los modelos estadísticos tienen una varianza residual de información observada no tenida en cuenta en nuestros predictores y está direcamente relacionada con la variable respuesta a través de una distribución (típicamente una distribución normal, por lo menos para cumplir los supuestos de la regresión lineal). Para tener un mejor ajuste de nuestro modelo, debemos entender como se genero nuestra variable dependiente. De esta manera, nos aseguramos de escoger una distribución que describa nuestros datos y que capture el error residual correctamente (funcion rnorm())</p></li>
+</ul>
+<p>Vamos a calcular la suma de cuadrados de nuestros datos</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="regresión-lineal-simple.html#cb7-1" aria-hidden="true" tabindex="-1"></a>SSY <span class="ot">&lt;-</span> <span class="fu">sum</span>((y <span class="sc">-</span> <span class="fu">mean</span>(y))<span class="sc">^</span><span class="dv">2</span>) <span class="co"># sumas de cuadrados corregidas en y</span></span>
+<span id="cb7-2"><a href="regresión-lineal-simple.html#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="regresión-lineal-simple.html#cb7-3" aria-hidden="true" tabindex="-1"></a>SSX <span class="ot">&lt;-</span> <span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x))<span class="sc">^</span><span class="dv">2</span>) <span class="co"># sumas de cuadrados corregidas en x</span></span>
+<span id="cb7-4"><a href="regresión-lineal-simple.html#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="regresión-lineal-simple.html#cb7-5" aria-hidden="true" tabindex="-1"></a>SSXY <span class="ot">&lt;-</span> <span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">*</span> (y <span class="sc">-</span> <span class="fu">mean</span>(y))) <span class="co"># suma corregida de productos (covarianza de x e y en la expectativa)</span></span></code></pre></div>
+<p><em>Pendiente:</em></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="regresión-lineal-simple.html#cb8-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> SSXY<span class="sc">/</span>SSX <span class="co"># máxima probabilidad de pendiente b</span></span>
+<span id="cb8-2"><a href="regresión-lineal-simple.html#cb8-2" aria-hidden="true" tabindex="-1"></a>b</span>
+<span id="cb8-3"><a href="regresión-lineal-simple.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="fl">1.956979</span></span></code></pre></div>
+<p><em>Intercepto:</em></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="regresión-lineal-simple.html#cb9-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">mean</span>(y) <span class="sc">-</span> b <span class="sc">*</span> <span class="fu">mean</span>(x) <span class="co"># Usamos la ecuación y valores promedio para calcular el intercepto </span></span>
+<span id="cb9-2"><a href="regresión-lineal-simple.html#cb9-2" aria-hidden="true" tabindex="-1"></a>a</span>
+<span id="cb9-3"><a href="regresión-lineal-simple.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="fl">29.72653</span></span></code></pre></div>
+<p>Comprobamos:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="regresión-lineal-simple.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x))</span>
+<span id="cb10-2"><a href="regresión-lineal-simple.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb10-3"><a href="regresión-lineal-simple.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Call<span class="sc">:</span></span>
+<span id="cb10-4"><a href="regresión-lineal-simple.html#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="fu">lm</span>(<span class="at">formula =</span> y <span class="sc">~</span> x)</span>
+<span id="cb10-5"><a href="regresión-lineal-simple.html#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb10-6"><a href="regresión-lineal-simple.html#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Residuals<span class="sc">:</span></span>
+<span id="cb10-7"><a href="regresión-lineal-simple.html#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>      Min       1Q   Median       3Q      Max </span>
+<span id="cb10-8"><a href="regresión-lineal-simple.html#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="sc">-</span><span class="fl">102.912</span>  <span class="sc">-</span><span class="fl">24.820</span>   <span class="sc">-</span><span class="fl">2.161</span>   <span class="fl">21.795</span>  <span class="fl">108.645</span> </span>
+<span id="cb10-9"><a href="regresión-lineal-simple.html#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb10-10"><a href="regresión-lineal-simple.html#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Coefficients<span class="sc">:</span></span>
+<span id="cb10-11"><a href="regresión-lineal-simple.html#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>             Estimate Std. Error t value <span class="fu">Pr</span>(<span class="sc">&gt;</span><span class="er">|</span>t<span class="sc">|</span>)    </span>
+<span id="cb10-12"><a href="regresión-lineal-simple.html#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> (Intercept)  <span class="fl">29.7265</span>    <span class="fl">14.9390</span>    <span class="fl">1.99</span>   <span class="fl">0.0565</span> .  </span>
+<span id="cb10-13"><a href="regresión-lineal-simple.html#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> x             <span class="fl">1.9570</span>     <span class="fl">0.1739</span>   <span class="fl">11.25</span> <span class="fl">6.72e-12</span> <span class="sc">**</span><span class="er">*</span></span>
+<span id="cb10-14"><a href="regresión-lineal-simple.html#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="sc">---</span></span>
+<span id="cb10-15"><a href="regresión-lineal-simple.html#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Signif. codes<span class="sc">:</span>  <span class="dv">0</span> <span class="st">&#39;***&#39;</span> <span class="fl">0.001</span> <span class="st">&#39;**&#39;</span> <span class="fl">0.01</span> <span class="st">&#39;*&#39;</span> <span class="fl">0.05</span> <span class="st">&#39;.&#39;</span> <span class="fl">0.1</span> <span class="st">&#39; &#39;</span> <span class="dv">1</span></span>
+<span id="cb10-16"><a href="regresión-lineal-simple.html#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb10-17"><a href="regresión-lineal-simple.html#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Residual standard error<span class="sc">:</span> <span class="fl">41.86</span> on <span class="dv">28</span> degrees of freedom</span>
+<span id="cb10-18"><a href="regresión-lineal-simple.html#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Multiple R<span class="sc">-</span>squared<span class="sc">:</span>  <span class="fl">0.8189</span>,  Adjusted R<span class="sc">-</span>squared<span class="sc">:</span>  <span class="fl">0.8124</span> </span>
+<span id="cb10-19"><a href="regresión-lineal-simple.html#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> F<span class="sc">-</span>statistic<span class="sc">:</span> <span class="fl">126.6</span> on <span class="dv">1</span> and <span class="dv">28</span> DF,  p<span class="sc">-</span>value<span class="sc">:</span> <span class="fl">6.718e-12</span></span></code></pre></div>
+<p>De esta forma hemos calculado los parámetros que desconociamos en la ecuación de la recta. De esta forma tenemos lo siguiente:</p>
+<p>y = α + β*x
+Esto significa que cuando x = 0, “y” es igual al valor en α, y la variable respuesta “y” aumenta β por cada unidad en x</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="regresión-lineal-simple.html#cb11-1" aria-hidden="true" tabindex="-1"></a>y.amano <span class="ot">=</span> a <span class="sc">+</span> b<span class="sc">*</span>x</span>
+<span id="cb11-2"><a href="regresión-lineal-simple.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y, y.amano)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Si queremos predecir el valor de y cuando x = 100 utilizando nuestra ecuación:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="regresión-lineal-simple.html#cb12-1" aria-hidden="true" tabindex="-1"></a>y.result <span class="ot">&lt;-</span>  a <span class="sc">+</span> b<span class="sc">*</span><span class="dv">100</span></span></code></pre></div>
+<div class="warning" style="padding:0.1em; background-color:#D6EAF8; color:#21618C">
+<span>
+<p style="margin-top:1em; text-align:center">
+<b>Ejercicio 1</b>
+</p>
+<p style="margin-left:1em;">
+<ol style="list-style-type: decimal">
+<li>Utilizando los siguientes datos calcular el intercepto y la pendiente a mano mediante la suma de cuadrados:</li>
+</ol>
+<p>x &lt;- runif(20, 1, 20)
+y.pred &lt;- 20 + 2 * x
+y &lt;- y.pred + + rnorm(20,0,5)</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Realizar una interpretación de los valores de la pentiente e intercepto teniendo en cuenta la siguiente información: Asuma que la variable “y” son datos del peso de roedores y que la variable “x” es información del tamaño de estos roedores</p></li>
+<li><p>Utilizar la función de R para realizar la regresión lineal e interpretar el valor de R2 y valor de p</p></li>
+</ol>
+</p>
+</div>
+</div>
+<div id="indices-de-diversidad-y-regresión-lineal" class="section level3" number="9.0.3">
+<h3><span class="header-section-number">9.0.3</span> Indices de diversidad y regresión lineal</h3>
+<p>Ahora que conocemos como realizar una regresión lineal, vamos a utilizar los datos de la fundación COLTREE para explorar algunos índices que miden la biodiversidad y reaizar regresiones lineales con estos resultados.</p>
+<p>En adición al set de datos taxonómicos, trabajaremos con datos medioambientales de cada parcela</p>
+<p>Cargamos los datos</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="regresión-lineal-simple.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb13-2"><a href="regresión-lineal-simple.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Warning<span class="sc">:</span> package <span class="st">&#39;tidyverse&#39;</span> was built under R version <span class="dv">4</span>.<span class="fl">0.5</span></span>
+<span id="cb13-3"><a href="regresión-lineal-simple.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="sc">--</span> Attaching packages <span class="sc">---------------------------------------</span> tidyverse <span class="dv">1</span>.<span class="fl">3.1</span> <span class="sc">--</span></span>
+<span id="cb13-4"><a href="regresión-lineal-simple.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> v ggplot2 <span class="dv">3</span>.<span class="fl">3.5</span>     v purrr   <span class="dv">0</span>.<span class="fl">3.4</span></span>
+<span id="cb13-5"><a href="regresión-lineal-simple.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> v tibble  <span class="dv">3</span>.<span class="fl">1.4</span>     v dplyr   <span class="dv">1</span>.<span class="fl">0.7</span></span>
+<span id="cb13-6"><a href="regresión-lineal-simple.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> v tidyr   <span class="dv">1</span>.<span class="fl">1.3</span>     v stringr <span class="dv">1</span>.<span class="fl">4.0</span></span>
+<span id="cb13-7"><a href="regresión-lineal-simple.html#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> v readr   <span class="dv">2</span>.<span class="fl">0.1</span>     v forcats <span class="dv">0</span>.<span class="fl">5.1</span></span>
+<span id="cb13-8"><a href="regresión-lineal-simple.html#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Warning<span class="sc">:</span> package <span class="st">&#39;ggplot2&#39;</span> was built under R version <span class="dv">4</span>.<span class="fl">0.5</span></span>
+<span id="cb13-9"><a href="regresión-lineal-simple.html#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Warning<span class="sc">:</span> package <span class="st">&#39;tibble&#39;</span> was built under R version <span class="dv">4</span>.<span class="fl">0.5</span></span>
+<span id="cb13-10"><a href="regresión-lineal-simple.html#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Warning<span class="sc">:</span> package <span class="st">&#39;tidyr&#39;</span> was built under R version <span class="dv">4</span>.<span class="fl">0.5</span></span>
+<span id="cb13-11"><a href="regresión-lineal-simple.html#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Warning<span class="sc">:</span> package <span class="st">&#39;readr&#39;</span> was built under R version <span class="dv">4</span>.<span class="fl">0.5</span></span>
+<span id="cb13-12"><a href="regresión-lineal-simple.html#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Warning<span class="sc">:</span> package <span class="st">&#39;dplyr&#39;</span> was built under R version <span class="dv">4</span>.<span class="fl">0.5</span></span>
+<span id="cb13-13"><a href="regresión-lineal-simple.html#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Warning<span class="sc">:</span> package <span class="st">&#39;forcats&#39;</span> was built under R version <span class="dv">4</span>.<span class="fl">0.5</span></span>
+<span id="cb13-14"><a href="regresión-lineal-simple.html#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="sc">--</span> Conflicts <span class="sc">------------------------------------------</span> <span class="fu">tidyverse_conflicts</span>() <span class="sc">--</span></span>
+<span id="cb13-15"><a href="regresión-lineal-simple.html#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> x dplyr<span class="sc">::</span><span class="fu">filter</span>() masks stats<span class="sc">::</span><span class="fu">filter</span>()</span>
+<span id="cb13-16"><a href="regresión-lineal-simple.html#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> x dplyr<span class="sc">::</span><span class="fu">lag</span>()    masks stats<span class="sc">::</span><span class="fu">lag</span>()</span>
+<span id="cb13-17"><a href="regresión-lineal-simple.html#cb13-17" aria-hidden="true" tabindex="-1"></a>dat_spec <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Species_Coltree.csv&quot;</span>)</span>
+<span id="cb13-18"><a href="regresión-lineal-simple.html#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Rows<span class="sc">:</span> <span class="dv">7534</span> Columns<span class="sc">:</span> <span class="dv">7</span></span>
+<span id="cb13-19"><a href="regresión-lineal-simple.html#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="sc">--</span> Column specification <span class="sc">--------------------------------------------------------</span></span>
+<span id="cb13-20"><a href="regresión-lineal-simple.html#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Delimiter<span class="sc">:</span> <span class="st">&quot;,&quot;</span></span>
+<span id="cb13-21"><a href="regresión-lineal-simple.html#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="fu">chr</span> (<span class="dv">5</span>)<span class="sc">:</span> N_Familia, N_cientifico, Genero, Epiteto, Cod_HaCr</span>
+<span id="cb13-22"><a href="regresión-lineal-simple.html#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="fu">dbl</span> (<span class="dv">2</span>)<span class="sc">:</span> Parcela, DAP</span>
+<span id="cb13-23"><a href="regresión-lineal-simple.html#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb13-24"><a href="regresión-lineal-simple.html#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> i Use <span class="st">`</span><span class="at">spec()</span><span class="st">`</span> to retrieve the full column specification <span class="cf">for</span> this data.</span>
+<span id="cb13-25"><a href="regresión-lineal-simple.html#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> i Specify the column types or set <span class="st">`</span><span class="at">show_col_types = FALSE</span><span class="st">`</span> to quiet this message.</span>
+<span id="cb13-26"><a href="regresión-lineal-simple.html#cb13-26" aria-hidden="true" tabindex="-1"></a>dat_env <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Env_Coltree.csv&quot;</span>)</span>
+<span id="cb13-27"><a href="regresión-lineal-simple.html#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Rows<span class="sc">:</span> <span class="dv">141</span> Columns<span class="sc">:</span> <span class="dv">10</span></span>
+<span id="cb13-28"><a href="regresión-lineal-simple.html#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="sc">--</span> Column specification <span class="sc">--------------------------------------------------------</span></span>
+<span id="cb13-29"><a href="regresión-lineal-simple.html#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Delimiter<span class="sc">:</span> <span class="st">&quot;,&quot;</span></span>
+<span id="cb13-30"><a href="regresión-lineal-simple.html#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="fu">chr</span> (<span class="dv">1</span>)<span class="sc">:</span> Zona_vida</span>
+<span id="cb13-31"><a href="regresión-lineal-simple.html#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="fu">dbl</span> (<span class="dv">9</span>)<span class="sc">:</span> Parcela, Altitud, Temp_media, Rango_diurno_Temp, Est_Temp, Prec_anu...</span>
+<span id="cb13-32"><a href="regresión-lineal-simple.html#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb13-33"><a href="regresión-lineal-simple.html#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> i Use <span class="st">`</span><span class="at">spec()</span><span class="st">`</span> to retrieve the full column specification <span class="cf">for</span> this data.</span>
+<span id="cb13-34"><a href="regresión-lineal-simple.html#cb13-34" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> i Specify the column types or set <span class="st">`</span><span class="at">show_col_types = FALSE</span><span class="st">`</span> to quiet this message.</span></code></pre></div>
+<p>Algunas de las principales variables medioambientales</p>
+<ul>
+<li>Temp_media = Temperatura media anual</li>
+<li>Rango_diurno = Rango diurno promedio</li>
+<li>Est_T = Estacionalidad de la temperatura</li>
+<li>MaxTemp = Temperatura maxima del mes mas calido</li>
+<li>MinTemp = Temperatura minima del mes mas frio</li>
+<li>Rango_anual_T = Rango anual de temperatura</li>
+<li>T_media_tmh = Temperatura media del trimestre mas humedo</li>
+<li>T_media_tms = Temperatura media del trimestre mas seco</li>
+<li>T_media_tmc = Temperatura media del trimestre mas calido</li>
+<li>T_media_tmf = Temperatura media del trimestre mas frio</li>
+<li>Precip_anual = Precipitacion anual</li>
+<li>Precip_max = Precipitacion del mes mas humedo</li>
+<li>Precip_min = Precipitacion del mes mas seco</li>
+<li>Est_P = Estacionalidad de la precipitacion (Coeficiente de Variacion)</li>
+</ul>
+<p>Para calcular la riqueza de especies (diversidad), debemos contar el número de especies presentes en cada sitio (parcela en nuestro caso)</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="regresión-lineal-simple.html#cb14-1" aria-hidden="true" tabindex="-1"></a>conteo_parcela <span class="ot">&lt;-</span> dat_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="regresión-lineal-simple.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Parcela) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="regresión-lineal-simple.html#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(N_cientifico) <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="regresión-lineal-simple.html#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb14-5"><a href="regresión-lineal-simple.html#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>())</span>
+<span id="cb14-6"><a href="regresión-lineal-simple.html#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Adding missing grouping variables<span class="sc">:</span> <span class="st">`</span><span class="at">Parcela</span><span class="st">`</span></span>
+<span id="cb14-7"><a href="regresión-lineal-simple.html#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(conteo_parcela<span class="sc">$</span>n)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="regresión-lineal-simple.html#cb15-1" aria-hidden="true" tabindex="-1"></a>riqueza <span class="ot">&lt;-</span> conteo_parcela<span class="sc">$</span>n</span></code></pre></div>
+<p>En caso de contar con una matriz de abundancias, podemos convertir la matriz una matriz de presencia/ausencia y contar el número de especies; o utilizar el paquete vegan:</p>
+<p>Convertimos nuestros datos a una matriz de abundancias:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="regresión-lineal-simple.html#cb16-1" aria-hidden="true" tabindex="-1"></a>dat_abun <span class="ot">&lt;-</span> dat_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="regresión-lineal-simple.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Parcela, N_cientifico) <span class="sc">%&gt;%</span> <span class="co">#Seleccionamos las variables deseadas</span></span>
+<span id="cb16-3"><a href="regresión-lineal-simple.html#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Parcela, N_cientifico) <span class="sc">%&gt;%</span> <span class="co"># Agrupamos las observaciones por parcela y nombre de las especies</span></span>
+<span id="cb16-4"><a href="regresión-lineal-simple.html#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">freq =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> <span class="co"># contamos el número de individuos para obtener la abundancia de cada especie</span></span>
+<span id="cb16-5"><a href="regresión-lineal-simple.html#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> N_cientifico, <span class="at">values_from =</span> freq) <span class="co"># Mediante la función pivot_wider, convertimos la variable N_cientifico en columnas, y el conteo en observaciones a través de cada parcela. Para mayor información revise la función</span></span>
+<span id="cb16-6"><a href="regresión-lineal-simple.html#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="st">`</span><span class="at">summarise()</span><span class="st">`</span> has grouped output by <span class="st">&#39;Parcela&#39;</span>. You can override using the <span class="st">`</span><span class="at">.groups</span><span class="st">`</span> argument.</span></code></pre></div>
+<p>Reemplazamos los NA por 0</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="regresión-lineal-simple.html#cb17-1" aria-hidden="true" tabindex="-1"></a>dat_abun <span class="ot">&lt;-</span> dat_abun <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="regresión-lineal-simple.html#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace</span>(<span class="fu">is.na</span>(dat_abun), <span class="dv">0</span>) </span>
+<span id="cb17-3"><a href="regresión-lineal-simple.html#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="regresión-lineal-simple.html#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dat_abun) <span class="co"># Revisamos la matriz de abundancia creada</span></span>
+<span id="cb17-5"><a href="regresión-lineal-simple.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> grouped_df [<span class="dv">141</span> x <span class="dv">572</span>] (S3<span class="sc">:</span> grouped_df<span class="sc">/</span>tbl_df<span class="sc">/</span>tbl<span class="sc">/</span>data.frame)</span>
+<span id="cb17-6"><a href="regresión-lineal-simple.html#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Parcela                     <span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">59001</span> <span class="dv">59002</span> <span class="dv">59003</span> <span class="dv">59004</span> <span class="dv">59005</span> ...</span>
+<span id="cb17-7"><a href="regresión-lineal-simple.html#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Amaioua corymbosa           <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">2</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">4</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">0</span> ...</span>
+<span id="cb17-8"><a href="regresión-lineal-simple.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Aspidosperma curranii       <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">0</span> <span class="dv">5</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">4</span> <span class="dv">0</span> ...</span>
+<span id="cb17-9"><a href="regresión-lineal-simple.html#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Brownea stenantha           <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-10"><a href="regresión-lineal-simple.html#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Byrsonima arthropoda        <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> ...</span>
+<span id="cb17-11"><a href="regresión-lineal-simple.html#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Capparis baducca            <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-12"><a href="regresión-lineal-simple.html#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Casearia javitensis         <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">4</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-13"><a href="regresión-lineal-simple.html#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Coccoloba lehmannii         <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-14"><a href="regresión-lineal-simple.html#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Dialium guianense           <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">2</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">3</span> <span class="dv">0</span> ...</span>
+<span id="cb17-15"><a href="regresión-lineal-simple.html#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Dichapetalum scandens       <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-16"><a href="regresión-lineal-simple.html#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Ephedranthus colombianus    <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">4</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">2</span> ...</span>
+<span id="cb17-17"><a href="regresión-lineal-simple.html#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Erythroxylum citrifolium    <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> ...</span>
+<span id="cb17-18"><a href="regresión-lineal-simple.html#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Eschweilera antioquensis    <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">2</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">4</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> ...</span>
+<span id="cb17-19"><a href="regresión-lineal-simple.html#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Faramea capillipes          <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> ...</span>
+<span id="cb17-20"><a href="regresión-lineal-simple.html#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Helianthostylis sprucei     <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">2</span> ...</span>
+<span id="cb17-21"><a href="regresión-lineal-simple.html#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Helicostylis tomentosa      <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">3</span> <span class="dv">1</span> ...</span>
+<span id="cb17-22"><a href="regresión-lineal-simple.html#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Himatanthus articulatus     <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">8</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> ...</span>
+<span id="cb17-23"><a href="regresión-lineal-simple.html#cb17-23" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Inga multijuga              <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> ...</span>
+<span id="cb17-24"><a href="regresión-lineal-simple.html#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Lacistema aggregatum        <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-25"><a href="regresión-lineal-simple.html#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Machaerium capote           <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-26"><a href="regresión-lineal-simple.html#cb17-26" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Memora aspericarpa          <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">5</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">1</span> ...</span>
+<span id="cb17-27"><a href="regresión-lineal-simple.html#cb17-27" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Miconia magdalenae          <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-28"><a href="regresión-lineal-simple.html#cb17-28" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Mimosa antioquiensis        <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-29"><a href="regresión-lineal-simple.html#cb17-29" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Minquartia guianensis       <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> ...</span>
+<span id="cb17-30"><a href="regresión-lineal-simple.html#cb17-30" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Peltogyne paniculata        <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">2</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-31"><a href="regresión-lineal-simple.html#cb17-31" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Pourouma cecropiifolia      <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">5</span> <span class="dv">0</span> ...</span>
+<span id="cb17-32"><a href="regresión-lineal-simple.html#cb17-32" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Protium aracouchini         <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">2</span> <span class="dv">0</span> <span class="dv">4</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">4</span> <span class="dv">2</span> ...</span>
+<span id="cb17-33"><a href="regresión-lineal-simple.html#cb17-33" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Pseudolmedia laevigata      <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">0</span> ...</span>
+<span id="cb17-34"><a href="regresión-lineal-simple.html#cb17-34" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Psychotria erecta           <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> ...</span>
+<span id="cb17-35"><a href="regresión-lineal-simple.html#cb17-35" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Psychotria poeppigiana      <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-36"><a href="regresión-lineal-simple.html#cb17-36" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Rourea adenophora           <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">4</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> ...</span>
+<span id="cb17-37"><a href="regresión-lineal-simple.html#cb17-37" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Ryania speciosa             <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">1</span> ...</span>
+<span id="cb17-38"><a href="regresión-lineal-simple.html#cb17-38" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Salacia impressifolia       <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-39"><a href="regresión-lineal-simple.html#cb17-39" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Senna dariensis             <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-40"><a href="regresión-lineal-simple.html#cb17-40" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Swartzia macrophylla        <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-41"><a href="regresión-lineal-simple.html#cb17-41" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Talisia princeps            <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> ...</span>
+<span id="cb17-42"><a href="regresión-lineal-simple.html#cb17-42" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Virola flexuosa             <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> ...</span>
+<span id="cb17-43"><a href="regresión-lineal-simple.html#cb17-43" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Virola sebifera             <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">4</span> <span class="dv">4</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">6</span> <span class="dv">0</span> ...</span>
+<span id="cb17-44"><a href="regresión-lineal-simple.html#cb17-44" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Xylopia amazonica           <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">2</span> <span class="dv">4</span> <span class="dv">7</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> ...</span>
+<span id="cb17-45"><a href="regresión-lineal-simple.html#cb17-45" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Zygia latifolia             <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">10</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-46"><a href="regresión-lineal-simple.html#cb17-46" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Apeiba membranacea          <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-47"><a href="regresión-lineal-simple.html#cb17-47" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Bellucia axinanthera        <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">18</span> <span class="dv">23</span> <span class="dv">2</span> <span class="dv">13</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-48"><a href="regresión-lineal-simple.html#cb17-48" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Bertiera guianensis         <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-49"><a href="regresión-lineal-simple.html#cb17-49" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Brosimum guianense          <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> ...</span>
+<span id="cb17-50"><a href="regresión-lineal-simple.html#cb17-50" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Caryocar glabrum            <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">0</span> ...</span>
+<span id="cb17-51"><a href="regresión-lineal-simple.html#cb17-51" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Clidemia hirta              <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> ...</span>
+<span id="cb17-52"><a href="regresión-lineal-simple.html#cb17-52" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Cordia bicolor              <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-53"><a href="regresión-lineal-simple.html#cb17-53" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Ficus insipida              <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-54"><a href="regresión-lineal-simple.html#cb17-54" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Guapira costaricana         <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-55"><a href="regresión-lineal-simple.html#cb17-55" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Heisteria concinna          <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-56"><a href="regresión-lineal-simple.html#cb17-56" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Inga pezizifera             <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">6</span> ...</span>
+<span id="cb17-57"><a href="regresión-lineal-simple.html#cb17-57" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Inga umbellifera            <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-58"><a href="regresión-lineal-simple.html#cb17-58" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Jacaranda copaia            <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">4</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-59"><a href="regresión-lineal-simple.html#cb17-59" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Lindackeria laurina         <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">9</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-60"><a href="regresión-lineal-simple.html#cb17-60" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Maripa nicaraguensis        <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> ...</span>
+<span id="cb17-61"><a href="regresión-lineal-simple.html#cb17-61" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Matayba adenanthera         <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> ...</span>
+<span id="cb17-62"><a href="regresión-lineal-simple.html#cb17-62" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Miconia trinervia           <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-63"><a href="regresión-lineal-simple.html#cb17-63" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Mimosa quadrivalvis         <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-64"><a href="regresión-lineal-simple.html#cb17-64" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Ouratea lucens              <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-65"><a href="regresión-lineal-simple.html#cb17-65" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Oxandra venezuelana         <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-66"><a href="regresión-lineal-simple.html#cb17-66" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Pouteria collina            <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> ...</span>
+<span id="cb17-67"><a href="regresión-lineal-simple.html#cb17-67" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Simaba cedron               <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-68"><a href="regresión-lineal-simple.html#cb17-68" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Swartzia santanderensis     <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">0</span> ...</span>
+<span id="cb17-69"><a href="regresión-lineal-simple.html#cb17-69" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Tabebuia chrysantha         <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-70"><a href="regresión-lineal-simple.html#cb17-70" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Tapirira guianensis         <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">3</span> ...</span>
+<span id="cb17-71"><a href="regresión-lineal-simple.html#cb17-71" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Zygia longifolia            <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-72"><a href="regresión-lineal-simple.html#cb17-72" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Aniba perutilis             <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-73"><a href="regresión-lineal-simple.html#cb17-73" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Aniba puchury<span class="sc">-</span>minor         <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-74"><a href="regresión-lineal-simple.html#cb17-74" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Doliocarpus dentatus        <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">4</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-75"><a href="regresión-lineal-simple.html#cb17-75" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Guatteria cargadero         <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">4</span> <span class="dv">3</span> <span class="dv">12</span> <span class="dv">8</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">2</span> ...</span>
+<span id="cb17-76"><a href="regresión-lineal-simple.html#cb17-76" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Ladenbergia magnifolia      <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">11</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-77"><a href="regresión-lineal-simple.html#cb17-77" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Miconia prasina             <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">0</span> ...</span>
+<span id="cb17-78"><a href="regresión-lineal-simple.html#cb17-78" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Mouriri chamissoana         <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> ...</span>
+<span id="cb17-79"><a href="regresión-lineal-simple.html#cb17-79" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Ocotea guianensis           <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">9</span> <span class="dv">5</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> ...</span>
+<span id="cb17-80"><a href="regresión-lineal-simple.html#cb17-80" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Ormosia corcovada           <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-81"><a href="regresión-lineal-simple.html#cb17-81" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Psychotria brachybotrya     <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-82"><a href="regresión-lineal-simple.html#cb17-82" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Sloanea gracilis            <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> ...</span>
+<span id="cb17-83"><a href="regresión-lineal-simple.html#cb17-83" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Tontelea ovalifolia         <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">1</span> ...</span>
+<span id="cb17-84"><a href="regresión-lineal-simple.html#cb17-84" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Abarema jupunba             <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-85"><a href="regresión-lineal-simple.html#cb17-85" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Aparisthmium cordatum       <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-86"><a href="regresión-lineal-simple.html#cb17-86" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Conceveiba guianensis       <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-87"><a href="regresión-lineal-simple.html#cb17-87" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Goupia glabra               <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-88"><a href="regresión-lineal-simple.html#cb17-88" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Helicostylis tovarensis     <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-89"><a href="regresión-lineal-simple.html#cb17-89" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Humiriastrum colombianum    <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-90"><a href="regresión-lineal-simple.html#cb17-90" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Inga heterophylla           <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> ...</span>
+<span id="cb17-91"><a href="regresión-lineal-simple.html#cb17-91" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Inga sertulifera            <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">0</span> ...</span>
+<span id="cb17-92"><a href="regresión-lineal-simple.html#cb17-92" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Lacmellea floribunda        <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-93"><a href="regresión-lineal-simple.html#cb17-93" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Miconia poeppigii           <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">5</span> <span class="dv">13</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> ...</span>
+<span id="cb17-94"><a href="regresión-lineal-simple.html#cb17-94" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Xylopia aromatica           <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">10</span> ...</span>
+<span id="cb17-95"><a href="regresión-lineal-simple.html#cb17-95" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Xylopia discreta            <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-96"><a href="regresión-lineal-simple.html#cb17-96" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Leonia triandra             <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">4</span> <span class="dv">2</span> <span class="dv">0</span> ...</span>
+<span id="cb17-97"><a href="regresión-lineal-simple.html#cb17-97" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Miconia elata               <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">3</span> <span class="dv">0</span> ...</span>
+<span id="cb17-98"><a href="regresión-lineal-simple.html#cb17-98" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Vismia angusta              <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-99"><a href="regresión-lineal-simple.html#cb17-99" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Clathrotropis brunnea       <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">2</span> ...</span>
+<span id="cb17-100"><a href="regresión-lineal-simple.html#cb17-100" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Dendrobangia boliviana      <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-101"><a href="regresión-lineal-simple.html#cb17-101" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Miconia minutiflora         <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-102"><a href="regresión-lineal-simple.html#cb17-102" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Miconia triplinervis        <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-103"><a href="regresión-lineal-simple.html#cb17-103" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Naucleopsis glabra          <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> ...</span>
+<span id="cb17-104"><a href="regresión-lineal-simple.html#cb17-104" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> Sabicea villosa             <span class="sc">:</span> int [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> ...</span>
+<span id="cb17-105"><a href="regresión-lineal-simple.html#cb17-105" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   [list output truncated]</span>
+<span id="cb17-106"><a href="regresión-lineal-simple.html#cb17-106" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;groups&quot;</span>)<span class="ot">=</span> tibble [<span class="dv">141</span> x <span class="dv">2</span>] (S3<span class="sc">:</span> tbl_df<span class="sc">/</span>tbl<span class="sc">/</span>data.frame)</span>
+<span id="cb17-107"><a href="regresión-lineal-simple.html#cb17-107" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   ..<span class="sc">$</span> Parcela<span class="sc">:</span> num [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] <span class="dv">59001</span> <span class="dv">59002</span> <span class="dv">59003</span> <span class="dv">59004</span> <span class="dv">59005</span> ...</span>
+<span id="cb17-108"><a href="regresión-lineal-simple.html#cb17-108" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   ..<span class="sc">$</span> .rows  <span class="sc">:</span> list<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [<span class="dv">1</span><span class="sc">:</span><span class="dv">141</span>] </span>
+<span id="cb17-109"><a href="regresión-lineal-simple.html#cb17-109" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">1</span></span>
+<span id="cb17-110"><a href="regresión-lineal-simple.html#cb17-110" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">2</span></span>
+<span id="cb17-111"><a href="regresión-lineal-simple.html#cb17-111" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">3</span></span>
+<span id="cb17-112"><a href="regresión-lineal-simple.html#cb17-112" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">4</span></span>
+<span id="cb17-113"><a href="regresión-lineal-simple.html#cb17-113" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">5</span></span>
+<span id="cb17-114"><a href="regresión-lineal-simple.html#cb17-114" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">6</span></span>
+<span id="cb17-115"><a href="regresión-lineal-simple.html#cb17-115" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">7</span></span>
+<span id="cb17-116"><a href="regresión-lineal-simple.html#cb17-116" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">8</span></span>
+<span id="cb17-117"><a href="regresión-lineal-simple.html#cb17-117" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">9</span></span>
+<span id="cb17-118"><a href="regresión-lineal-simple.html#cb17-118" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">10</span></span>
+<span id="cb17-119"><a href="regresión-lineal-simple.html#cb17-119" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">11</span></span>
+<span id="cb17-120"><a href="regresión-lineal-simple.html#cb17-120" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">12</span></span>
+<span id="cb17-121"><a href="regresión-lineal-simple.html#cb17-121" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">13</span></span>
+<span id="cb17-122"><a href="regresión-lineal-simple.html#cb17-122" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">14</span></span>
+<span id="cb17-123"><a href="regresión-lineal-simple.html#cb17-123" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">15</span></span>
+<span id="cb17-124"><a href="regresión-lineal-simple.html#cb17-124" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">16</span></span>
+<span id="cb17-125"><a href="regresión-lineal-simple.html#cb17-125" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">17</span></span>
+<span id="cb17-126"><a href="regresión-lineal-simple.html#cb17-126" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">18</span></span>
+<span id="cb17-127"><a href="regresión-lineal-simple.html#cb17-127" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">19</span></span>
+<span id="cb17-128"><a href="regresión-lineal-simple.html#cb17-128" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">20</span></span>
+<span id="cb17-129"><a href="regresión-lineal-simple.html#cb17-129" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">21</span></span>
+<span id="cb17-130"><a href="regresión-lineal-simple.html#cb17-130" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">22</span></span>
+<span id="cb17-131"><a href="regresión-lineal-simple.html#cb17-131" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">23</span></span>
+<span id="cb17-132"><a href="regresión-lineal-simple.html#cb17-132" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">24</span></span>
+<span id="cb17-133"><a href="regresión-lineal-simple.html#cb17-133" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">25</span></span>
+<span id="cb17-134"><a href="regresión-lineal-simple.html#cb17-134" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">26</span></span>
+<span id="cb17-135"><a href="regresión-lineal-simple.html#cb17-135" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">27</span></span>
+<span id="cb17-136"><a href="regresión-lineal-simple.html#cb17-136" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">28</span></span>
+<span id="cb17-137"><a href="regresión-lineal-simple.html#cb17-137" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">29</span></span>
+<span id="cb17-138"><a href="regresión-lineal-simple.html#cb17-138" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">30</span></span>
+<span id="cb17-139"><a href="regresión-lineal-simple.html#cb17-139" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">31</span></span>
+<span id="cb17-140"><a href="regresión-lineal-simple.html#cb17-140" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">32</span></span>
+<span id="cb17-141"><a href="regresión-lineal-simple.html#cb17-141" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">33</span></span>
+<span id="cb17-142"><a href="regresión-lineal-simple.html#cb17-142" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">34</span></span>
+<span id="cb17-143"><a href="regresión-lineal-simple.html#cb17-143" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">35</span></span>
+<span id="cb17-144"><a href="regresión-lineal-simple.html#cb17-144" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">36</span></span>
+<span id="cb17-145"><a href="regresión-lineal-simple.html#cb17-145" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">37</span></span>
+<span id="cb17-146"><a href="regresión-lineal-simple.html#cb17-146" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">38</span></span>
+<span id="cb17-147"><a href="regresión-lineal-simple.html#cb17-147" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">39</span></span>
+<span id="cb17-148"><a href="regresión-lineal-simple.html#cb17-148" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">40</span></span>
+<span id="cb17-149"><a href="regresión-lineal-simple.html#cb17-149" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">41</span></span>
+<span id="cb17-150"><a href="regresión-lineal-simple.html#cb17-150" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">42</span></span>
+<span id="cb17-151"><a href="regresión-lineal-simple.html#cb17-151" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">43</span></span>
+<span id="cb17-152"><a href="regresión-lineal-simple.html#cb17-152" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">44</span></span>
+<span id="cb17-153"><a href="regresión-lineal-simple.html#cb17-153" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">45</span></span>
+<span id="cb17-154"><a href="regresión-lineal-simple.html#cb17-154" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">46</span></span>
+<span id="cb17-155"><a href="regresión-lineal-simple.html#cb17-155" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">47</span></span>
+<span id="cb17-156"><a href="regresión-lineal-simple.html#cb17-156" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">48</span></span>
+<span id="cb17-157"><a href="regresión-lineal-simple.html#cb17-157" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">49</span></span>
+<span id="cb17-158"><a href="regresión-lineal-simple.html#cb17-158" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">50</span></span>
+<span id="cb17-159"><a href="regresión-lineal-simple.html#cb17-159" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">51</span></span>
+<span id="cb17-160"><a href="regresión-lineal-simple.html#cb17-160" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">52</span></span>
+<span id="cb17-161"><a href="regresión-lineal-simple.html#cb17-161" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">53</span></span>
+<span id="cb17-162"><a href="regresión-lineal-simple.html#cb17-162" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">54</span></span>
+<span id="cb17-163"><a href="regresión-lineal-simple.html#cb17-163" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">55</span></span>
+<span id="cb17-164"><a href="regresión-lineal-simple.html#cb17-164" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">56</span></span>
+<span id="cb17-165"><a href="regresión-lineal-simple.html#cb17-165" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">57</span></span>
+<span id="cb17-166"><a href="regresión-lineal-simple.html#cb17-166" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">58</span></span>
+<span id="cb17-167"><a href="regresión-lineal-simple.html#cb17-167" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">59</span></span>
+<span id="cb17-168"><a href="regresión-lineal-simple.html#cb17-168" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">60</span></span>
+<span id="cb17-169"><a href="regresión-lineal-simple.html#cb17-169" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">61</span></span>
+<span id="cb17-170"><a href="regresión-lineal-simple.html#cb17-170" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">62</span></span>
+<span id="cb17-171"><a href="regresión-lineal-simple.html#cb17-171" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">63</span></span>
+<span id="cb17-172"><a href="regresión-lineal-simple.html#cb17-172" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">64</span></span>
+<span id="cb17-173"><a href="regresión-lineal-simple.html#cb17-173" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">65</span></span>
+<span id="cb17-174"><a href="regresión-lineal-simple.html#cb17-174" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">66</span></span>
+<span id="cb17-175"><a href="regresión-lineal-simple.html#cb17-175" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">67</span></span>
+<span id="cb17-176"><a href="regresión-lineal-simple.html#cb17-176" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">68</span></span>
+<span id="cb17-177"><a href="regresión-lineal-simple.html#cb17-177" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">69</span></span>
+<span id="cb17-178"><a href="regresión-lineal-simple.html#cb17-178" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">70</span></span>
+<span id="cb17-179"><a href="regresión-lineal-simple.html#cb17-179" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">71</span></span>
+<span id="cb17-180"><a href="regresión-lineal-simple.html#cb17-180" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">72</span></span>
+<span id="cb17-181"><a href="regresión-lineal-simple.html#cb17-181" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">73</span></span>
+<span id="cb17-182"><a href="regresión-lineal-simple.html#cb17-182" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">74</span></span>
+<span id="cb17-183"><a href="regresión-lineal-simple.html#cb17-183" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">75</span></span>
+<span id="cb17-184"><a href="regresión-lineal-simple.html#cb17-184" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">76</span></span>
+<span id="cb17-185"><a href="regresión-lineal-simple.html#cb17-185" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">77</span></span>
+<span id="cb17-186"><a href="regresión-lineal-simple.html#cb17-186" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">78</span></span>
+<span id="cb17-187"><a href="regresión-lineal-simple.html#cb17-187" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">79</span></span>
+<span id="cb17-188"><a href="regresión-lineal-simple.html#cb17-188" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">80</span></span>
+<span id="cb17-189"><a href="regresión-lineal-simple.html#cb17-189" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">81</span></span>
+<span id="cb17-190"><a href="regresión-lineal-simple.html#cb17-190" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">82</span></span>
+<span id="cb17-191"><a href="regresión-lineal-simple.html#cb17-191" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">83</span></span>
+<span id="cb17-192"><a href="regresión-lineal-simple.html#cb17-192" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">84</span></span>
+<span id="cb17-193"><a href="regresión-lineal-simple.html#cb17-193" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">85</span></span>
+<span id="cb17-194"><a href="regresión-lineal-simple.html#cb17-194" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">86</span></span>
+<span id="cb17-195"><a href="regresión-lineal-simple.html#cb17-195" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">87</span></span>
+<span id="cb17-196"><a href="regresión-lineal-simple.html#cb17-196" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">88</span></span>
+<span id="cb17-197"><a href="regresión-lineal-simple.html#cb17-197" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">89</span></span>
+<span id="cb17-198"><a href="regresión-lineal-simple.html#cb17-198" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">90</span></span>
+<span id="cb17-199"><a href="regresión-lineal-simple.html#cb17-199" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">91</span></span>
+<span id="cb17-200"><a href="regresión-lineal-simple.html#cb17-200" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">92</span></span>
+<span id="cb17-201"><a href="regresión-lineal-simple.html#cb17-201" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">93</span></span>
+<span id="cb17-202"><a href="regresión-lineal-simple.html#cb17-202" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">94</span></span>
+<span id="cb17-203"><a href="regresión-lineal-simple.html#cb17-203" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">95</span></span>
+<span id="cb17-204"><a href="regresión-lineal-simple.html#cb17-204" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">96</span></span>
+<span id="cb17-205"><a href="regresión-lineal-simple.html#cb17-205" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">97</span></span>
+<span id="cb17-206"><a href="regresión-lineal-simple.html#cb17-206" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">98</span></span>
+<span id="cb17-207"><a href="regresión-lineal-simple.html#cb17-207" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">$</span> <span class="er">:</span> int <span class="dv">99</span></span>
+<span id="cb17-208"><a href="regresión-lineal-simple.html#cb17-208" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. .. [list output truncated]</span>
+<span id="cb17-209"><a href="regresión-lineal-simple.html#cb17-209" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   .. ..<span class="sc">@</span> ptype<span class="sc">:</span> <span class="fu">int</span>(<span class="dv">0</span>) </span>
+<span id="cb17-210"><a href="regresión-lineal-simple.html#cb17-210" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   ..<span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">&quot;.drop&quot;</span>)<span class="ot">=</span> logi <span class="cn">TRUE</span></span></code></pre></div>
+</div>
+<div id="paquete-vegan" class="section level3" number="9.0.4">
+<h3><span class="header-section-number">9.0.4</span> Paquete vegan</h3>
+<p>install.packages(“vegan”)</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="regresión-lineal-simple.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
+<span id="cb18-2"><a href="regresión-lineal-simple.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Warning<span class="sc">:</span> package <span class="st">&#39;vegan&#39;</span> was built under R version <span class="dv">4</span>.<span class="fl">0.5</span></span>
+<span id="cb18-3"><a href="regresión-lineal-simple.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Loading required package<span class="sc">:</span> permute</span>
+<span id="cb18-4"><a href="regresión-lineal-simple.html#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Loading required package<span class="sc">:</span> lattice</span>
+<span id="cb18-5"><a href="regresión-lineal-simple.html#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Warning<span class="sc">:</span> package <span class="st">&#39;lattice&#39;</span> was built under R version <span class="dv">4</span>.<span class="fl">0.5</span></span>
+<span id="cb18-6"><a href="regresión-lineal-simple.html#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> This is vegan <span class="fl">2.5</span><span class="dv">-7</span></span></code></pre></div>
+<p>Dado que vegan trabaja con data.frames debemos transformar el tibble a un data.frame y seguir con programar en R (y no tidyverse)</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="regresión-lineal-simple.html#cb19-1" aria-hidden="true" tabindex="-1"></a>abd <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(dat_abun)</span></code></pre></div>
+<p>Asignar la primera columna (Parcela) como nombre de las filas</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="regresión-lineal-simple.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(abd) <span class="ot">&lt;-</span> abd[,<span class="dv">1</span>]</span>
+<span id="cb20-2"><a href="regresión-lineal-simple.html#cb20-2" aria-hidden="true" tabindex="-1"></a>dat_abun <span class="ot">&lt;-</span>dat_abun[,<span class="sc">-</span><span class="dv">1</span>]</span></code></pre></div>
+<p>Contar especies con una matriz de presencia/ausencia</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="regresión-lineal-simple.html#cb21-1" aria-hidden="true" tabindex="-1"></a>pa <span class="ot">&lt;-</span> <span class="fu">replace</span>(abd, abd <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>) <span class="co"># Convertimos la matriz de abundancias en una matriz de presencia/ausencia.</span></span>
+<span id="cb21-2"><a href="regresión-lineal-simple.html#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="regresión-lineal-simple.html#cb21-3" aria-hidden="true" tabindex="-1"></a>riqueza <span class="ot">&lt;-</span> <span class="fu">apply</span>(pa, <span class="dv">1</span>, sum) <span class="co"># Sumamos las especies presentes en cada parcela para estimar su riqueza.</span></span>
+<span id="cb21-4"><a href="regresión-lineal-simple.html#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="regresión-lineal-simple.html#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(riqueza)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>Tambien podemos generar la matriz de abundancias de manera tradicional utilizando tabla de conteo:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="regresión-lineal-simple.html#cb22-1" aria-hidden="true" tabindex="-1"></a>abd2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame.matrix</span>(<span class="fu">table</span>(dat_spec<span class="sc">$</span>Parcela, dat_spec<span class="sc">$</span>N_cientifico))</span>
+<span id="cb22-2"><a href="regresión-lineal-simple.html#cb22-2" aria-hidden="true" tabindex="-1"></a>riqueza2 <span class="ot">&lt;-</span> <span class="fu">specnumber</span>(abd) </span>
+<span id="cb22-3"><a href="regresión-lineal-simple.html#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="regresión-lineal-simple.html#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># verificamos si las dos vías conducen al mismo resultado</span></span>
+<span id="cb22-5"><a href="regresión-lineal-simple.html#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(riqueza, riqueza2)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>A partir de la matriz de abundacias, podemos calcular índices de diversidad como shannon o simpson mediante la función diversity() del paquete vegan. Utilice la función diversity() para calcular el indice de shannon.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="regresión-lineal-simple.html#cb23-1" aria-hidden="true" tabindex="-1"></a>div <span class="ot">&lt;-</span> <span class="fu">diversity</span>(dat_abun, <span class="at">index =</span> <span class="st">&quot;shannon&quot;</span>)</span></code></pre></div>
+<p>Ahora Vamos a relacionar la riqueza de especies (o diversidad) con algunos de los factores ambientales de las parcelas.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="regresión-lineal-simple.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(riqueza <span class="sc">~</span> dat_env<span class="sc">$</span>Temp_media, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">cex=</span><span class="fl">0.5</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>Riqueza ~ T_media</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="regresión-lineal-simple.html#cb25-1" aria-hidden="true" tabindex="-1"></a>reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(riqueza <span class="sc">~</span> dat_env<span class="sc">$</span>Temp_media) <span class="co"># Ajustamos un modelo con la riqueza de especies y la temperatura media</span></span>
+<span id="cb25-2"><a href="regresión-lineal-simple.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg)</span>
+<span id="cb25-3"><a href="regresión-lineal-simple.html#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb25-4"><a href="regresión-lineal-simple.html#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Call<span class="sc">:</span></span>
+<span id="cb25-5"><a href="regresión-lineal-simple.html#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="fu">lm</span>(<span class="at">formula =</span> riqueza <span class="sc">~</span> dat_env<span class="sc">$</span>Temp_media)</span>
+<span id="cb25-6"><a href="regresión-lineal-simple.html#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb25-7"><a href="regresión-lineal-simple.html#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Residuals<span class="sc">:</span></span>
+<span id="cb25-8"><a href="regresión-lineal-simple.html#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>      Min       1Q   Median       3Q      Max </span>
+<span id="cb25-9"><a href="regresión-lineal-simple.html#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="sc">-</span><span class="fl">19.5299</span>  <span class="sc">-</span><span class="fl">4.9216</span>   <span class="fl">0.0015</span>   <span class="fl">4.8653</span>  <span class="fl">21.3207</span> </span>
+<span id="cb25-10"><a href="regresión-lineal-simple.html#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb25-11"><a href="regresión-lineal-simple.html#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Coefficients<span class="sc">:</span></span>
+<span id="cb25-12"><a href="regresión-lineal-simple.html#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>                    Estimate Std. Error t value <span class="fu">Pr</span>(<span class="sc">&gt;</span><span class="er">|</span>t<span class="sc">|</span>)    </span>
+<span id="cb25-13"><a href="regresión-lineal-simple.html#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> (Intercept)         <span class="sc">-</span><span class="fl">5.3239</span>     <span class="fl">2.1833</span>  <span class="sc">-</span><span class="fl">2.438</span>    <span class="fl">0.016</span> <span class="sc">*</span>  </span>
+<span id="cb25-14"><a href="regresión-lineal-simple.html#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> dat_env<span class="sc">$</span>Temp_media   <span class="fl">1.2806</span>     <span class="fl">0.1015</span>  <span class="fl">12.611</span>   <span class="sc">&lt;</span><span class="fl">2e-16</span> <span class="sc">**</span><span class="er">*</span></span>
+<span id="cb25-15"><a href="regresión-lineal-simple.html#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="sc">---</span></span>
+<span id="cb25-16"><a href="regresión-lineal-simple.html#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Signif. codes<span class="sc">:</span>  <span class="dv">0</span> <span class="st">&#39;***&#39;</span> <span class="fl">0.001</span> <span class="st">&#39;**&#39;</span> <span class="fl">0.01</span> <span class="st">&#39;*&#39;</span> <span class="fl">0.05</span> <span class="st">&#39;.&#39;</span> <span class="fl">0.1</span> <span class="st">&#39; &#39;</span> <span class="dv">1</span></span>
+<span id="cb25-17"><a href="regresión-lineal-simple.html#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb25-18"><a href="regresión-lineal-simple.html#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Residual standard error<span class="sc">:</span> <span class="fl">8.186</span> on <span class="dv">139</span> degrees of freedom</span>
+<span id="cb25-19"><a href="regresión-lineal-simple.html#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Multiple R<span class="sc">-</span>squared<span class="sc">:</span>  <span class="fl">0.5336</span>,  Adjusted R<span class="sc">-</span>squared<span class="sc">:</span>  <span class="fl">0.5303</span> </span>
+<span id="cb25-20"><a href="regresión-lineal-simple.html#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> F<span class="sc">-</span>statistic<span class="sc">:</span>   <span class="dv">159</span> on <span class="dv">1</span> and <span class="dv">139</span> DF,  p<span class="sc">-</span>value<span class="sc">:</span> <span class="er">&lt;</span> <span class="fl">2.2e-16</span></span>
+<span id="cb25-21"><a href="regresión-lineal-simple.html#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(riqueza <span class="sc">~</span> dat_env<span class="sc">$</span>Temp_media, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">cex=</span><span class="fl">0.5</span>)</span>
+<span id="cb25-22"><a href="regresión-lineal-simple.html#cb25-22" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(reg, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<div class="warning" style="padding:0.1em; background-color:#D6EAF8; color:#21618C">
+<span>
+<p style="margin-top:1em; text-align:center">
+<b>Ejercicio 2</b>
+</p>
+<p style="margin-left:1em;">
+<ol style="list-style-type: decimal">
+<li>Con base a los resultados de la regresión lineal, reponda las siguientes preguntas:</li>
+</ol>
+<ul>
+<li>¿La riqueza de especies depende de la temperatura?</li>
+<li>¿Cuál resultado de la regresión demuestra eso?</li>
+<li>¿Cuánta varianza explica la temperatura en la variación de la riqueza de especies?</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Añadir etiquetas a los ejes de la gráfica anterior e insertar una leyenda con el valor de R^2 y la ecuación de la línea de regresión.</li>
+</ol>
+</p>
+</div>
+<div class="warning" style="padding:0.1em; background-color:#D6EAF8; color:#21618C">
+<span>
+<p style="margin-top:1em; text-align:center">
+<b>Ejercicio 3</b>
+</p>
+<p style="margin-left:1em;">
+<ol style="list-style-type: decimal">
+<li><p>Realizar regresiones con las otras variables ambientales y determinar cuales de ellas pueden explicar la variabilidad en riqueza a traves del gradiente altitudinal.</p></li>
+<li><p>Repetir el mismo analisis pero ahora con el Indice de Shannon como variable independiente. Los resultados son congruentes?</p></li>
+<li><p>Mostrar los resultados de todos estos analisis en gráficos de dispersión con una línea de tendencia y su respectiva leyenda.</p></li>
+</ol>
+</p>
+</div>
+</div>
+<div id="supuestos-de-la-regresión-lineal" class="section level3" number="9.0.5">
+<h3><span class="header-section-number">9.0.5</span> Supuestos de la regresión lineal</h3>
+<p>Para poder validar los resultados de nuestra regresión lineal, debemos saber si nuestro modelo cumple con los supuestos o requisitos asociados al modelo:</p>
+<ul>
+<li><em>Linealidad:</em> Debido a que la ecuación de la recta que se emplea en la regresión lineal, la relación entre las variables dependientes e independientes debe ser lineal. Esto puede ser observado fácilmente mediante el diagrama de dispersión:</li>
+</ul>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="regresión-lineal-simple.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(riqueza <span class="sc">~</span> dat_env<span class="sc">$</span>Temp_media, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">cex=</span><span class="fl">0.5</span>)</span>
+<span id="cb26-2"><a href="regresión-lineal-simple.html#cb26-2" aria-hidden="true" tabindex="-1"></a>lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(riqueza <span class="sc">~</span> dat_env<span class="sc">$</span>Temp_media)</span>
+<span id="cb26-3"><a href="regresión-lineal-simple.html#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lm, <span class="at">col=</span><span class="st">&quot;red&quot;</span>) </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>Podemos observar que es probable que los datos no se relacionan linealmente y ajustar una relación lineal podría resultar en resultados erroneos</p>
+<ul>
+<li><em>Independencia de los residuos:</em> Los residuos deben ser independientes entre sí y representan una variable aleatoria, es decir, que la predicción de un valor los residuos no es afectada por los residuos cercanos. Podemos probar este supuesto mediante el test de durbin-watson:</li>
+</ul>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="regresión-lineal-simple.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb27-2"><a href="regresión-lineal-simple.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Warning<span class="sc">:</span> package <span class="st">&#39;lmtest&#39;</span> was built under R version <span class="dv">4</span>.<span class="fl">0.5</span></span>
+<span id="cb27-3"><a href="regresión-lineal-simple.html#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Loading required package<span class="sc">:</span> zoo</span>
+<span id="cb27-4"><a href="regresión-lineal-simple.html#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Warning<span class="sc">:</span> package <span class="st">&#39;zoo&#39;</span> was built under R version <span class="dv">4</span>.<span class="fl">0.5</span></span>
+<span id="cb27-5"><a href="regresión-lineal-simple.html#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb27-6"><a href="regresión-lineal-simple.html#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Attaching package<span class="sc">:</span> <span class="st">&#39;zoo&#39;</span></span>
+<span id="cb27-7"><a href="regresión-lineal-simple.html#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> The following objects are masked from <span class="st">&#39;package:base&#39;</span><span class="sc">:</span></span>
+<span id="cb27-8"><a href="regresión-lineal-simple.html#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb27-9"><a href="regresión-lineal-simple.html#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>     as.Date, as.Date.numeric</span>
+<span id="cb27-10"><a href="regresión-lineal-simple.html#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dwtest</span>(lm) <span class="co"># En esta prueba, valores de DW alrededor de 2 y p significativos significan que los residuos son independientes (normalmente se considenran valores entre 1.5 y 2.5)</span></span>
+<span id="cb27-11"><a href="regresión-lineal-simple.html#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb27-12"><a href="regresión-lineal-simple.html#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   Durbin<span class="sc">-</span>Watson test</span>
+<span id="cb27-13"><a href="regresión-lineal-simple.html#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb27-14"><a href="regresión-lineal-simple.html#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> data<span class="sc">:</span>  lm</span>
+<span id="cb27-15"><a href="regresión-lineal-simple.html#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> DW <span class="ot">=</span> <span class="fl">1.2752</span>, p<span class="sc">-</span>value <span class="ot">=</span> <span class="fl">5.06e-06</span></span>
+<span id="cb27-16"><a href="regresión-lineal-simple.html#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> alternative hypothesis<span class="sc">:</span> true autocorrelation is greater than <span class="dv">0</span></span></code></pre></div>
+<ul>
+<li><em>Residuos constantes “homocedasticidad”:</em> Los residuos (diferencia entre los valores observados de la variable dependiente respecto a los valores predecidos mediante la ecuación de la recta) deben ser constantes. Esto quiere decir que los residuos no aumentan ni disminuyen a medida que se predicen valores más grandes o pequeños. Podemos observar este supuesto graficando nuestro vector de regresión lineal:</li>
+</ul>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="regresión-lineal-simple.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lm) <span class="co"># Al graficar esto presionamos enter en la consola y debemos observar la primera gráfica &quot;Residual vs Fitted&quot;. Al haber homocedasticidad, la linea roja debe observarse como una linea recta. Con nuestros datos parece complirse este supuesto.</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-25-2.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-25-3.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-25-4.png" width="672" /></p>
+<p><em>Normalidad de residuos:</em> Los residuos deben presentan una distribución normal. Mediante la gráfica de histograma y la prueba de shaphiro-wilk podemos probar este supuesto:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="regresión-lineal-simple.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(lm<span class="sc">$</span>residuals, <span class="dv">15</span>) <span class="co"># Los residuos parecen ajustarse a una distribución normal</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p>?shapiro.test</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="regresión-lineal-simple.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(lm<span class="sc">$</span>residuals) <span class="co"># Con el valor de p de la prueba, aceptamos la hipótesis nula ya que p &gt; 0.05, por lo que los residuos si presentan una distribución normal</span></span>
+<span id="cb30-2"><a href="regresión-lineal-simple.html#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb30-3"><a href="regresión-lineal-simple.html#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   Shapiro<span class="sc">-</span>Wilk normality test</span>
+<span id="cb30-4"><a href="regresión-lineal-simple.html#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb30-5"><a href="regresión-lineal-simple.html#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> data<span class="sc">:</span>  lm<span class="sc">$</span>residuals</span>
+<span id="cb30-6"><a href="regresión-lineal-simple.html#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> W <span class="ot">=</span> <span class="fl">0.99037</span>, p<span class="sc">-</span>value <span class="ot">=</span> <span class="fl">0.4452</span></span></code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="análisis-de-varianza---anova.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="regresión-lineal-múltiple.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/10_sesion_9.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

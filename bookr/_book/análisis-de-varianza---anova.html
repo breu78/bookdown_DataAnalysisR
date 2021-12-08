@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 8 Análisis de varianza - ANOVA | Sesión 8</title>
+  <meta name="description" content="Everything you need (and nothing more) to start a bookdown book." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 8 Análisis de varianza - ANOVA | Sesión 8" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://seankross.com/bookdown-start/" />
+  
+  <meta property="og:description" content="Everything you need (and nothing more) to start a bookdown book." />
+  <meta name="github-repo" content="seankross/bookdown-start" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8 Análisis de varianza - ANOVA | Sesión 8" />
+  
+  <meta name="twitter:description" content="Everything you need (and nothing more) to start a bookdown book." />
+  
+
+<meta name="author" content="Silvia Fernanda Ardila Hurtado" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="de-números-aleatorios-distribuciones-y-probabilidades.html"/>
+<link rel="next" href="regresión-lineal-simple.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introducción.html"><a href="introducción.html#sobre-este-curso"><i class="fa fa-check"></i><b>1.1</b> Sobre este curso</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html"><i class="fa fa-check"></i><b>2</b> Introducción a la programación con R</a>
+<ul>
+<li class="chapter" data-level="2.0.1" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#la-línea-de-comandos-terminal"><i class="fa fa-check"></i><b>2.0.1</b> La línea de comandos (Terminal)</a></li>
+<li class="chapter" data-level="2.0.2" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#función-ayuda"><i class="fa fa-check"></i><b>2.0.2</b> Función ayuda</a></li>
+<li class="chapter" data-level="2.0.3" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#creando-nuevas-variables"><i class="fa fa-check"></i><b>2.0.3</b> Creando nuevas variables:</a></li>
+<li class="chapter" data-level="2.0.4" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#el-área-de-trabajo-o-memoria---ventana-arriba-a-la-derecha-environment"><i class="fa fa-check"></i><b>2.0.4</b> El área de trabajo o memoria - Ventana arriba a la derecha ‘Environment’</a></li>
+<li class="chapter" data-level="2.0.5" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#vamos-a-practicar"><i class="fa fa-check"></i><b>2.0.5</b> Vamos a practicar</a></li>
+<li class="chapter" data-level="2.0.6" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#r-como-calculadora---operadores-y-funciones."><i class="fa fa-check"></i><b>2.0.6</b> R como calculadora - Operadores y funciones.</a></li>
+<li class="chapter" data-level="2.0.7" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#tipos-de-datos-y-objetos"><i class="fa fa-check"></i><b>2.0.7</b> Tipos de Datos y Objetos</a></li>
+<li class="chapter" data-level="2.0.8" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#vectores-i-vectores-sencillos"><i class="fa fa-check"></i><b>2.0.8</b> Vectores I: Vectores sencillos</a></li>
+<li class="chapter" data-level="2.0.9" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#vectores-ii-vectores-más-complejos"><i class="fa fa-check"></i><b>2.0.9</b> Vectores II: Vectores más complejos</a></li>
+<li class="chapter" data-level="2.0.10" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#indexar"><i class="fa fa-check"></i><b>2.0.10</b> Indexar</a></li>
+<li class="chapter" data-level="2.0.11" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#nas"><i class="fa fa-check"></i><b>2.0.11</b> NA´s</a></li>
+<li class="chapter" data-level="2.0.12" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#matrices"><i class="fa fa-check"></i><b>2.0.12</b> Matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html"><i class="fa fa-check"></i><b>3</b> Visualización de datos en R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#gráficos-y-diagrama-de-dispersión-simple"><i class="fa fa-check"></i><b>3.1</b> Gráficos y diagrama de dispersión simple</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#diagrama-de-dispersión-función-plot"><i class="fa fa-check"></i><b>3.1.1</b> Diagrama de dispersión: función plot()</a></li>
+<li class="chapter" data-level="3.1.2" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#etiquetas-de-la-gráfica-xlab-ylab-main"><i class="fa fa-check"></i><b>3.1.2</b> Etiquetas de la gráfica: xlab, ylab, main</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#demostración-de-la-versatilidad-de-la-gráfica"><i class="fa fa-check"></i><b>3.2</b> Demostración de la versatilidad de la gráfica</a></li>
+<li class="chapter" data-level="3.3" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#barras-cajas-e-histogramas"><i class="fa fa-check"></i><b>3.3</b> Barras, cajas e histogramas</a></li>
+<li class="chapter" data-level="3.4" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#función-par"><i class="fa fa-check"></i><b>3.4</b> Función par()</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#gráficos-compuestos"><i class="fa fa-check"></i><b>3.4.1</b> Gráficos compuestos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html"><i class="fa fa-check"></i><b>4</b> Leyendo y manejando datos en R</a>
+<ul>
+<li class="chapter" data-level="" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#estableciendo-el-directorio-de-trabajo-para-poder-leer-datos-desde-un-archivo"><i class="fa fa-check"></i>Estableciendo el directorio de trabajo para poder leer datos desde un archivo</a></li>
+<li class="chapter" data-level="4.1" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#data-frame"><i class="fa fa-check"></i><b>4.1</b> Data frame</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#leer-archivo-desde-carpeta-de-trabajo"><i class="fa fa-check"></i><b>4.1.1</b> Leer archivo desde carpeta de trabajo</a></li>
+<li class="chapter" data-level="4.1.2" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#evaluar-la-estructura-del-data-frame"><i class="fa fa-check"></i><b>4.1.2</b> Evaluar la estructura del data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#acceder-variables-dentro-del-data-frame"><i class="fa fa-check"></i><b>4.2</b> Acceder variables dentro del data frame</a></li>
+<li class="chapter" data-level="4.3" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#acceder-observaciones-mas-complejos"><i class="fa fa-check"></i><b>4.3</b> Acceder observaciones mas complejos</a></li>
+<li class="chapter" data-level="4.4" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#agregar-columnas-al-data-frame-para-apoyar-el-análisis"><i class="fa fa-check"></i><b>4.4</b> Agregar columnas al data frame para apoyar el análisis</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#crear-rangos-en-una-variable-continua"><i class="fa fa-check"></i><b>4.4.1</b> crear rangos en una variable continua:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#indexar-y-reemplazar"><i class="fa fa-check"></i><b>4.5</b> Indexar y reemplazar</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html"><i class="fa fa-check"></i><b>5</b> Manejando datos utilizando tidyverse</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#readr"><i class="fa fa-check"></i><b>5.1</b> Readr</a></li>
+<li class="chapter" data-level="5.2" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#tibble"><i class="fa fa-check"></i><b>5.2</b> Tibble</a></li>
+<li class="chapter" data-level="5.3" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#dplyr"><i class="fa fa-check"></i><b>5.3</b> Dplyr</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#select"><i class="fa fa-check"></i><b>5.3.1</b> Select</a></li>
+<li class="chapter" data-level="5.3.2" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#filter"><i class="fa fa-check"></i><b>5.3.2</b> Filter</a></li>
+<li class="chapter" data-level="5.3.3" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#summarise"><i class="fa fa-check"></i><b>5.3.3</b> Summarise</a></li>
+<li class="chapter" data-level="5.3.4" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#mutate"><i class="fa fa-check"></i><b>5.3.4</b> Mutate</a></li>
+<li class="chapter" data-level="5.3.5" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#arrange"><i class="fa fa-check"></i><b>5.3.5</b> Arrange</a></li>
+<li class="chapter" data-level="5.3.6" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#separate"><i class="fa fa-check"></i><b>5.3.6</b> Separate()</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#aggregate"><i class="fa fa-check"></i><b>5.4</b> Aggregate</a></li>
+<li class="chapter" data-level="5.5" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#stringr"><i class="fa fa-check"></i><b>5.5</b> Stringr</a></li>
+<li class="chapter" data-level="5.6" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#visualización-de-datos-utilizando-ggplot2"><i class="fa fa-check"></i><b>5.6</b> Visualización de datos utilizando ggplot2</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#theme"><i class="fa fa-check"></i><b>5.6.1</b> Theme</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#forcats"><i class="fa fa-check"></i><b>5.7</b> Forcats</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html"><i class="fa fa-check"></i><b>6</b> Introducción a Rmarkdown</a>
+<ul>
+<li class="chapter" data-level="6.0.1" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html#sintaxis-de-texto-plano"><i class="fa fa-check"></i><b>6.0.1</b> Sintaxis de texto plano:</a></li>
+<li class="chapter" data-level="6.1" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html#título-2"><i class="fa fa-check"></i><b>6.1</b> Título 2</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html#título-3"><i class="fa fa-check"></i><b>6.1.1</b> Título 3</a></li>
+<li class="chapter" data-level="6.1.2" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html#sintaxis-de-código"><i class="fa fa-check"></i><b>6.1.2</b> Sintaxis de código:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html"><i class="fa fa-check"></i><b>7</b> De números aleatorios, distribuciones y probabilidades</a>
+<ul>
+<li class="chapter" data-level="7.0.1" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html#distribución-uniforme"><i class="fa fa-check"></i><b>7.0.1</b> Distribución uniforme</a></li>
+<li class="chapter" data-level="7.0.2" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html#distribución-normal"><i class="fa fa-check"></i><b>7.0.2</b> Distribución normal</a></li>
+<li class="chapter" data-level="7.0.3" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html#tidy"><i class="fa fa-check"></i><b>7.0.3</b> Tidy</a></li>
+<li class="chapter" data-level="7.0.4" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html#probabilidad-en-la-distribución-normal"><i class="fa fa-check"></i><b>7.0.4</b> Probabilidad en la distribución normal</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html"><i class="fa fa-check"></i><b>8</b> Análisis de varianza - ANOVA</a>
+<ul>
+<li class="chapter" data-level="8.0.1" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html#anova-a-mano"><i class="fa fa-check"></i><b>8.0.1</b> Anova a mano</a></li>
+<li class="chapter" data-level="8.0.2" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html#estadístico-f"><i class="fa fa-check"></i><b>8.0.2</b> Estadístico F</a></li>
+<li class="chapter" data-level="8.0.3" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html#anova-con-funciones-de-r"><i class="fa fa-check"></i><b>8.0.3</b> Anova con funciones de R</a></li>
+<li class="chapter" data-level="8.0.4" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html#anova-con-datos-reales"><i class="fa fa-check"></i><b>8.0.4</b> Anova con datos reales</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html"><i class="fa fa-check"></i><b>9</b> Regresión lineal simple</a>
+<ul>
+<li class="chapter" data-level="9.0.1" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#regresión-lineal"><i class="fa fa-check"></i><b>9.0.1</b> Regresión lineal</a></li>
+<li class="chapter" data-level="9.0.2" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#regresión-a-mano"><i class="fa fa-check"></i><b>9.0.2</b> Regresión a mano</a></li>
+<li class="chapter" data-level="9.0.3" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#indices-de-diversidad-y-regresión-lineal"><i class="fa fa-check"></i><b>9.0.3</b> Indices de diversidad y regresión lineal</a></li>
+<li class="chapter" data-level="9.0.4" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#paquete-vegan"><i class="fa fa-check"></i><b>9.0.4</b> Paquete vegan</a></li>
+<li class="chapter" data-level="9.0.5" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#supuestos-de-la-regresión-lineal"><i class="fa fa-check"></i><b>9.0.5</b> Supuestos de la regresión lineal</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="regresión-lineal-múltiple.html"><a href="regresión-lineal-múltiple.html"><i class="fa fa-check"></i><b>10</b> Regresión lineal múltiple</a>
+<ul>
+<li class="chapter" data-level="10.0.1" data-path="regresión-lineal-múltiple.html"><a href="regresión-lineal-múltiple.html#regresión-lineal-múltiple-1"><i class="fa fa-check"></i><b>10.0.1</b> Regresión lineal múltiple</a></li>
+<li class="chapter" data-level="10.0.2" data-path="regresión-lineal-múltiple.html"><a href="regresión-lineal-múltiple.html#colinealidad"><i class="fa fa-check"></i><b>10.0.2</b> Colinealidad</a></li>
+<li class="chapter" data-level="10.0.3" data-path="regresión-lineal-múltiple.html"><a href="regresión-lineal-múltiple.html#selección-de-modelos"><i class="fa fa-check"></i><b>10.0.3</b> Selección de modelos</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Sesión 8</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="análisis-de-varianza---anova" class="section level1" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Análisis de varianza - ANOVA</h1>
+<p>En esta sesión vamos a aprender a realizar el test de análisis de varianza o ANOVA. Mediante esta prueba, se busca encontrar si hay diferencias significativas entre las medias de dos grupos. Para poder calcularla, se tendrán en cuenta dos tipos de varianza: 1) La varianza entre grupos (los valores promedio de cada grupo se comparan con la media total de los datos); y la varianza dentro del grupo (la varianza de cada dato en un grupo con el promedio dentro del mismo grupo).</p>
+<p>Vamos a aprender primero como realizar la anova a mano paso a paso y luego utilizaremos la función de ANOVA en R.</p>
+<div id="anova-a-mano" class="section level3" number="8.0.1">
+<h3><span class="header-section-number">8.0.1</span> Anova a mano</h3>
+<p>Vamos a generar nuestros datos para hacer una Anova a mano. Supongamos que estamos experimentando con un tratamiento que permita a las plantulas de una planta crecer más rápido. Para esto tendremos dos grupos de plantas de una misma especie, unas a las que se les provea un compuesto “z” el cuál debería acelerar el crecimiento y otros a los que no. Llamaremos al grupo con el tratamiento “z” g1 y el otro grupo g2.</p>
+<p>Generamos datos aleatorios del crecimiento de las plantas, la cual es nuestra variable dependiente</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="análisis-de-varianza---anova.html#cb1-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean=</span><span class="dv">10</span>, <span class="at">sd=</span><span class="dv">2</span>) <span class="co"># 30 observaciones (replicas) en donde el crecimiento en promedio es 10, el doble de lo normal</span></span>
+<span id="cb1-2"><a href="análisis-de-varianza---anova.html#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="análisis-de-varianza---anova.html#cb1-3" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean=</span><span class="dv">5</span>, <span class="at">sd=</span><span class="dv">2</span>) <span class="co"># 30 observaciones (replicas) en donde el crecimiento en promedio es 5, en ambos grupos la variación en el crecimiento de cada grupo es el mismo, con sd=2</span></span>
+<span id="cb1-4"><a href="análisis-de-varianza---anova.html#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="análisis-de-varianza---anova.html#cb1-5" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(g1, g2) <span class="co"># Los concatenamos en un mismo vector</span></span>
+<span id="cb1-6"><a href="análisis-de-varianza---anova.html#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="análisis-de-varianza---anova.html#cb1-7" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">each =</span> <span class="dv">30</span>) <span class="co"># Creamos la variable de nuestros grupos o variable independiente, el 1 corresponde a las plantulas de g1 y el 2 a los de g2</span></span>
+<span id="cb1-8"><a href="análisis-de-varianza---anova.html#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="análisis-de-varianza---anova.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="análisis-de-varianza---anova.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y) <span class="co"># En este punto parecen haber diferencia entre el crecimiento del grupo 1 y 2</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
+<p>Ahora empezamos a realizar una ANOVA paso a paso. Para esto, hallaremos la suma de cuadrados y los grados de libertad, pues esto es igual a la varianza</p>
+<p>Obtenemos los promedios de cada agrupo y el total, los cuales necesitaremos para hallar la suma de los residuales al cuadrado (suma total de la distancia entre cada observación con la media elevada al cuadrado)</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="análisis-de-varianza---anova.html#cb3-1" aria-hidden="true" tabindex="-1"></a>tot.mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(y) <span class="co"># Obtenemos el promedio de todas la observaciones</span></span>
+<span id="cb3-2"><a href="análisis-de-varianza---anova.html#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="análisis-de-varianza---anova.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># en la grafica: </span></span>
+<span id="cb3-4"><a href="análisis-de-varianza---anova.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">&quot;grey&quot;</span>, <span class="at">cex=</span><span class="fl">0.5</span>) </span>
+<span id="cb3-5"><a href="análisis-de-varianza---anova.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(tot.mean, <span class="dv">0</span>, <span class="at">col=</span><span class="st">&quot;grey&quot;</span>) </span>
+<span id="cb3-6"><a href="análisis-de-varianza---anova.html#cb3-6" aria-hidden="true" tabindex="-1"></a>?abline</span>
+<span id="cb3-7"><a href="análisis-de-varianza---anova.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> starting httpd help server ... done</span>
+<span id="cb3-8"><a href="análisis-de-varianza---anova.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># a = intercepto, b = pendiente, para una línea horizontal la pendiente (slope) = 0</span></span>
+<span id="cb3-9"><a href="análisis-de-varianza---anova.html#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="análisis-de-varianza---anova.html#cb3-10" aria-hidden="true" tabindex="-1"></a>g1.mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(g1)</span>
+<span id="cb3-11"><a href="análisis-de-varianza---anova.html#cb3-11" aria-hidden="true" tabindex="-1"></a>g2.mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(g2) </span>
+<span id="cb3-12"><a href="análisis-de-varianza---anova.html#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">30</span>), <span class="fu">c</span>(g1.mean, g1.mean) , <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># media del grupo 1</span></span>
+<span id="cb3-13"><a href="análisis-de-varianza---anova.html#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">60</span>), <span class="fu">c</span>(g2.mean, g2.mean) , <span class="at">col =</span> <span class="st">&quot;green&quot;</span>) <span class="co"># media del grupo 2</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Calculamos la suma de cuadrados de los residuos, los cuales se dividen en suma de cuadrados totales (SST); el error de la suma de cuadrados (SSE), que se refiere a la varianza dentro de cada grupo que no se puede explicar; y la suma de cuadrados del tratamiento (SSA) o varianza entre grupos.</p>
+<p>Suma de cuadrados total: SST = SSE + SSA</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="análisis-de-varianza---anova.html#cb4-1" aria-hidden="true" tabindex="-1"></a>SST <span class="ot">&lt;-</span> <span class="fu">sum</span>((y <span class="sc">-</span> tot.mean) <span class="sc">^</span><span class="dv">2</span>) <span class="co">#Hallamos el SST sumando la resta entre la media de todos los datos con cada observación elevada al cuadrado</span></span></code></pre></div>
+<p>Suma de cuadrados residual</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="análisis-de-varianza---anova.html#cb5-1" aria-hidden="true" tabindex="-1"></a>SSE.g1 <span class="ot">&lt;-</span> <span class="fu">sum</span>((g1 <span class="sc">-</span> g1.mean) <span class="sc">^</span><span class="dv">2</span>) <span class="co"># Realizamos el mismo paso para calcular el SST pero con el subconjunto de datos de cada grupo</span></span>
+<span id="cb5-2"><a href="análisis-de-varianza---anova.html#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="análisis-de-varianza---anova.html#cb5-3" aria-hidden="true" tabindex="-1"></a>SSE.g2 <span class="ot">&lt;-</span> <span class="fu">sum</span>((g2 <span class="sc">-</span> g2.mean) <span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb5-4"><a href="análisis-de-varianza---anova.html#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="análisis-de-varianza---anova.html#cb5-5" aria-hidden="true" tabindex="-1"></a>SSE <span class="ot">&lt;-</span> SSE.g1 <span class="sc">+</span> SSE.g2 <span class="co">#Sumamos los SSE de cada grupo</span></span></code></pre></div>
+<p>SSA</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="análisis-de-varianza---anova.html#cb6-1" aria-hidden="true" tabindex="-1"></a>SSA <span class="ot">&lt;-</span> SST <span class="sc">-</span> SSE </span></code></pre></div>
+<p><em>En la gráfica:</em>
+Se dibujan los residuos en vez de las sumas de los cuadrados:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="análisis-de-varianza---anova.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">&quot;grey&quot;</span>, <span class="at">cex=</span><span class="fl">0.5</span>) </span>
+<span id="cb7-2"><a href="análisis-de-varianza---anova.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(tot.mean, <span class="dv">0</span>, <span class="at">col=</span><span class="st">&quot;grey&quot;</span>)</span>
+<span id="cb7-3"><a href="análisis-de-varianza---anova.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">30</span>), <span class="fu">c</span>(g1.mean, g1.mean) , <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># media del grupo 1</span></span>
+<span id="cb7-4"><a href="análisis-de-varianza---anova.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">60</span>), <span class="fu">c</span>(g2.mean, g2.mean) , <span class="at">col =</span> <span class="st">&quot;green&quot;</span>) <span class="co"># media del grupo 2</span></span>
+<span id="cb7-5"><a href="análisis-de-varianza---anova.html#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="análisis-de-varianza---anova.html#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">segments</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">60</span>, tot.mean, <span class="dv">1</span><span class="sc">:</span><span class="dv">60</span>, y, <span class="at">col=</span><span class="st">&quot;lightgrey&quot;</span>)</span>
+<span id="cb7-7"><a href="análisis-de-varianza---anova.html#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">segments</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>, g1.mean, <span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>, g1, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb7-8"><a href="análisis-de-varianza---anova.html#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">segments</span>(<span class="dv">31</span><span class="sc">:</span><span class="dv">60</span>, g2.mean, <span class="dv">31</span><span class="sc">:</span><span class="dv">60</span>, g2, <span class="at">col=</span><span class="st">&quot;green&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>A partir de acá, vamos a calcular el estadístico F, el promedio de los cuadrados (MSA Y MSE), los grados de libertad y el valor de p (valor de significancia) para determinar si nuestros grupos son estadísticamente diferentes</p>
+<p>MSA = <em>SSA/k-1</em>
+Donde k-1 es igual a los grados de libertad</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="análisis-de-varianza---anova.html#cb8-1" aria-hidden="true" tabindex="-1"></a>MSA <span class="ot">&lt;-</span> SSA<span class="sc">/</span><span class="dv">1</span> <span class="co">#siendo k igual al número de grupos, que en nuestro caso es 2</span></span></code></pre></div>
+<p>MSE = <em>SSE/k(n-1)</em>
+Donde k(n-1) es igual a los grados de libertad</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="análisis-de-varianza---anova.html#cb9-1" aria-hidden="true" tabindex="-1"></a>MSE <span class="ot">&lt;-</span> SSE<span class="sc">/</span><span class="dv">58</span> <span class="co">#en este caso, n es igual a 30 o número de observaciones por grupo</span></span></code></pre></div>
+</div>
+<div id="estadístico-f" class="section level3" number="8.0.2">
+<h3><span class="header-section-number">8.0.2</span> Estadístico F</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="análisis-de-varianza---anova.html#cb10-1" aria-hidden="true" tabindex="-1"></a>Fval <span class="ot">&lt;-</span> MSA<span class="sc">/</span>MSE </span>
+<span id="cb10-2"><a href="análisis-de-varianza---anova.html#cb10-2" aria-hidden="true" tabindex="-1"></a>Fval </span>
+<span id="cb10-3"><a href="análisis-de-varianza---anova.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="fl">82.47409</span></span></code></pre></div>
+<p>Valor de significancia pf = qf(Fval, k-1, k(n-1))</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="análisis-de-varianza---anova.html#cb11-1" aria-hidden="true" tabindex="-1"></a>sig <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span><span class="fu">pf</span>(Fval, <span class="dv">1</span>, <span class="dv">58</span>)</span>
+<span id="cb11-2"><a href="análisis-de-varianza---anova.html#cb11-2" aria-hidden="true" tabindex="-1"></a>sig</span>
+<span id="cb11-3"><a href="análisis-de-varianza---anova.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="fl">9.731105e-13</span></span></code></pre></div>
+<p>Usualmente, valores pequeños de p provienen de valores de F grandes, y estos a su vez sugieren una varianza mas grande entre grupos que dentro de cada grupo. En nuestro experimento, se puede concluir que la sustancia “z” está teniendo afectando el crecimiento de las plántulas de manera positiva.</p>
+<p>Finalmente, podemos usar el R2 para determinar cuanta varianza en nuestros datos (y) está siendo explicada por la variable independiente (x)</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="análisis-de-varianza---anova.html#cb12-1" aria-hidden="true" tabindex="-1"></a>R2 <span class="ot">=</span> <span class="dv">1</span> <span class="sc">-</span> (SSE<span class="sc">/</span>SST)</span>
+<span id="cb12-2"><a href="análisis-de-varianza---anova.html#cb12-2" aria-hidden="true" tabindex="-1"></a>R2 <span class="co"># es la varianza que puede ser explicada por las diferencias en las medias</span></span>
+<span id="cb12-3"><a href="análisis-de-varianza---anova.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="fl">0.5871125</span></span></code></pre></div>
+<p>Felicitaciones, hizo una ANOVA por usted mismo(a), paso a paso. De ahora en adelante, puede usar las funciones de R!</p>
+<div class="warning" style="padding:0.1em; background-color:#D6EAF8; color:#21618C">
+<span>
+<p style="margin-top:1em; text-align:center">
+<b>Ejercicio 1</b>
+</p>
+<p style="margin-left:1em;">
+<ol style="list-style-type: decimal">
+<li>Crear tres vectores de datos aleatorios, cada uno de 40 observaciones que se diferencien por sus valores medias: entre g1 y g2 por un valor de 2 y entre g2 y g3 de un valor de 5, las cuales vienen de una distribución normal con una sd=2. Concatenar ambos vectores.</li>
+<li>Crear un vector “y” en el cuál se repitan tres letras (A,B,C), cada una igual al número de observaciones de cada vector creado en el punto 1.</li>
+<li>Realizar una anova con los vectores creados anteriormente e identificar si la varianza entre los grupos es significativamente diferente.</li>
+</ol>
+</p>
+</div>
+</div>
+<div id="anova-con-funciones-de-r" class="section level3" number="8.0.3">
+<h3><span class="header-section-number">8.0.3</span> Anova con funciones de R</h3>
+<p>En R, usamos la función aov() para hacer una anova rápidamente</p>
+<p>?aov()</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="análisis-de-varianza---anova.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(y <span class="sc">~</span> x)</span>
+<span id="cb13-2"><a href="análisis-de-varianza---anova.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Call<span class="sc">:</span></span>
+<span id="cb13-3"><a href="análisis-de-varianza---anova.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>    <span class="fu">aov</span>(<span class="at">formula =</span> y <span class="sc">~</span> x)</span>
+<span id="cb13-4"><a href="análisis-de-varianza---anova.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb13-5"><a href="análisis-de-varianza---anova.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Terms<span class="sc">:</span></span>
+<span id="cb13-6"><a href="análisis-de-varianza---anova.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>                        x Residuals</span>
+<span id="cb13-7"><a href="análisis-de-varianza---anova.html#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Sum of Squares  <span class="fl">436.9578</span>  <span class="fl">307.2911</span></span>
+<span id="cb13-8"><a href="análisis-de-varianza---anova.html#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Deg. of Freedom        <span class="dv">1</span>        <span class="dv">58</span></span>
+<span id="cb13-9"><a href="análisis-de-varianza---anova.html#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb13-10"><a href="análisis-de-varianza---anova.html#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Residual standard error<span class="sc">:</span> <span class="fl">2.301765</span></span>
+<span id="cb13-11"><a href="análisis-de-varianza---anova.html#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Estimated effects may be unbalanced</span></code></pre></div>
+<p>Si quieremos ver el valor de F y el valor de p, utilizamos la función “summary”</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="análisis-de-varianza---anova.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(y <span class="sc">~</span> x)) </span>
+<span id="cb14-2"><a href="análisis-de-varianza---anova.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>             Df Sum Sq Mean Sq F value   <span class="fu">Pr</span>(<span class="sc">&gt;</span>F)    </span>
+<span id="cb14-3"><a href="análisis-de-varianza---anova.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> x            <span class="dv">1</span>  <span class="fl">437.0</span>   <span class="fl">437.0</span>   <span class="fl">82.47</span> <span class="fl">9.73e-13</span> <span class="sc">**</span><span class="er">*</span></span>
+<span id="cb14-4"><a href="análisis-de-varianza---anova.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Residuals   <span class="dv">58</span>  <span class="fl">307.3</span>     <span class="fl">5.3</span>                     </span>
+<span id="cb14-5"><a href="análisis-de-varianza---anova.html#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="sc">---</span></span>
+<span id="cb14-6"><a href="análisis-de-varianza---anova.html#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Signif. codes<span class="sc">:</span>  <span class="dv">0</span> <span class="st">&#39;***&#39;</span> <span class="fl">0.001</span> <span class="st">&#39;**&#39;</span> <span class="fl">0.01</span> <span class="st">&#39;*&#39;</span> <span class="fl">0.05</span> <span class="st">&#39;.&#39;</span> <span class="fl">0.1</span> <span class="st">&#39; &#39;</span> <span class="dv">1</span></span></code></pre></div>
+<p>Vemos que el valor de F es igual al que calculamos anteriormente, y también el valor de p (Pr(&gt;F)) es significativo y recahzamos la hipótesis nula H0.</p>
+<p>Hasta este punto, hemos realizado un anova de una vía, ya que solo determinamos el efecto de una sola variable independiente, lo que es igual a realizar una regresión lineal simple, ya que Anova es un método que ocurre dentro del modelo de la regresión lineal.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="análisis-de-varianza---anova.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x))</span>
+<span id="cb15-2"><a href="análisis-de-varianza---anova.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb15-3"><a href="análisis-de-varianza---anova.html#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Call<span class="sc">:</span></span>
+<span id="cb15-4"><a href="análisis-de-varianza---anova.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="fu">lm</span>(<span class="at">formula =</span> y <span class="sc">~</span> x)</span>
+<span id="cb15-5"><a href="análisis-de-varianza---anova.html#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb15-6"><a href="análisis-de-varianza---anova.html#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Residuals<span class="sc">:</span></span>
+<span id="cb15-7"><a href="análisis-de-varianza---anova.html#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>     Min      1Q  Median      3Q     Max </span>
+<span id="cb15-8"><a href="análisis-de-varianza---anova.html#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="sc">-</span><span class="fl">6.4457</span> <span class="sc">-</span><span class="fl">1.2989</span> <span class="sc">-</span><span class="fl">0.1858</span>  <span class="fl">1.3737</span>  <span class="fl">5.5046</span> </span>
+<span id="cb15-9"><a href="análisis-de-varianza---anova.html#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb15-10"><a href="análisis-de-varianza---anova.html#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Coefficients<span class="sc">:</span></span>
+<span id="cb15-11"><a href="análisis-de-varianza---anova.html#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>             Estimate Std. Error t value <span class="fu">Pr</span>(<span class="sc">&gt;</span><span class="er">|</span>t<span class="sc">|</span>)    </span>
+<span id="cb15-12"><a href="análisis-de-varianza---anova.html#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> (Intercept)  <span class="fl">15.7091</span>     <span class="fl">0.9397</span>  <span class="fl">16.717</span>  <span class="sc">&lt;</span> <span class="fl">2e-16</span> <span class="sc">**</span><span class="er">*</span></span>
+<span id="cb15-13"><a href="análisis-de-varianza---anova.html#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> x            <span class="sc">-</span><span class="fl">5.3973</span>     <span class="fl">0.5943</span>  <span class="sc">-</span><span class="fl">9.082</span> <span class="fl">9.73e-13</span> <span class="sc">**</span><span class="er">*</span></span>
+<span id="cb15-14"><a href="análisis-de-varianza---anova.html#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="sc">---</span></span>
+<span id="cb15-15"><a href="análisis-de-varianza---anova.html#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Signif. codes<span class="sc">:</span>  <span class="dv">0</span> <span class="st">&#39;***&#39;</span> <span class="fl">0.001</span> <span class="st">&#39;**&#39;</span> <span class="fl">0.01</span> <span class="st">&#39;*&#39;</span> <span class="fl">0.05</span> <span class="st">&#39;.&#39;</span> <span class="fl">0.1</span> <span class="st">&#39; &#39;</span> <span class="dv">1</span></span>
+<span id="cb15-16"><a href="análisis-de-varianza---anova.html#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb15-17"><a href="análisis-de-varianza---anova.html#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Residual standard error<span class="sc">:</span> <span class="fl">2.302</span> on <span class="dv">58</span> degrees of freedom</span>
+<span id="cb15-18"><a href="análisis-de-varianza---anova.html#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Multiple R<span class="sc">-</span>squared<span class="sc">:</span>  <span class="fl">0.5871</span>,  Adjusted R<span class="sc">-</span>squared<span class="sc">:</span>   <span class="fl">0.58</span> </span>
+<span id="cb15-19"><a href="análisis-de-varianza---anova.html#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> F<span class="sc">-</span>statistic<span class="sc">:</span> <span class="fl">82.47</span> on <span class="dv">1</span> and <span class="dv">58</span> DF,  p<span class="sc">-</span>value<span class="sc">:</span> <span class="fl">9.731e-13</span></span></code></pre></div>
+</div>
+<div id="anova-con-datos-reales" class="section level3" number="8.0.4">
+<h3><span class="header-section-number">8.0.4</span> Anova con datos reales</h3>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="análisis-de-varianza---anova.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb16-2"><a href="análisis-de-varianza---anova.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Warning<span class="sc">:</span> package <span class="st">&#39;tidyverse&#39;</span> was built under R version <span class="dv">4</span>.<span class="fl">0.5</span></span>
+<span id="cb16-3"><a href="análisis-de-varianza---anova.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="sc">--</span> Attaching packages <span class="sc">---------------------------------------</span> tidyverse <span class="dv">1</span>.<span class="fl">3.1</span> <span class="sc">--</span></span>
+<span id="cb16-4"><a href="análisis-de-varianza---anova.html#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> v ggplot2 <span class="dv">3</span>.<span class="fl">3.5</span>     v purrr   <span class="dv">0</span>.<span class="fl">3.4</span></span>
+<span id="cb16-5"><a href="análisis-de-varianza---anova.html#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> v tibble  <span class="dv">3</span>.<span class="fl">1.4</span>     v dplyr   <span class="dv">1</span>.<span class="fl">0.7</span></span>
+<span id="cb16-6"><a href="análisis-de-varianza---anova.html#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> v tidyr   <span class="dv">1</span>.<span class="fl">1.3</span>     v stringr <span class="dv">1</span>.<span class="fl">4.0</span></span>
+<span id="cb16-7"><a href="análisis-de-varianza---anova.html#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> v readr   <span class="dv">2</span>.<span class="fl">0.1</span>     v forcats <span class="dv">0</span>.<span class="fl">5.1</span></span>
+<span id="cb16-8"><a href="análisis-de-varianza---anova.html#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Warning<span class="sc">:</span> package <span class="st">&#39;ggplot2&#39;</span> was built under R version <span class="dv">4</span>.<span class="fl">0.5</span></span>
+<span id="cb16-9"><a href="análisis-de-varianza---anova.html#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Warning<span class="sc">:</span> package <span class="st">&#39;tibble&#39;</span> was built under R version <span class="dv">4</span>.<span class="fl">0.5</span></span>
+<span id="cb16-10"><a href="análisis-de-varianza---anova.html#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Warning<span class="sc">:</span> package <span class="st">&#39;tidyr&#39;</span> was built under R version <span class="dv">4</span>.<span class="fl">0.5</span></span>
+<span id="cb16-11"><a href="análisis-de-varianza---anova.html#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Warning<span class="sc">:</span> package <span class="st">&#39;readr&#39;</span> was built under R version <span class="dv">4</span>.<span class="fl">0.5</span></span>
+<span id="cb16-12"><a href="análisis-de-varianza---anova.html#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Warning<span class="sc">:</span> package <span class="st">&#39;dplyr&#39;</span> was built under R version <span class="dv">4</span>.<span class="fl">0.5</span></span>
+<span id="cb16-13"><a href="análisis-de-varianza---anova.html#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Warning<span class="sc">:</span> package <span class="st">&#39;forcats&#39;</span> was built under R version <span class="dv">4</span>.<span class="fl">0.5</span></span>
+<span id="cb16-14"><a href="análisis-de-varianza---anova.html#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="sc">--</span> Conflicts <span class="sc">------------------------------------------</span> <span class="fu">tidyverse_conflicts</span>() <span class="sc">--</span></span>
+<span id="cb16-15"><a href="análisis-de-varianza---anova.html#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> x dplyr<span class="sc">::</span><span class="fu">filter</span>() masks stats<span class="sc">::</span><span class="fu">filter</span>()</span>
+<span id="cb16-16"><a href="análisis-de-varianza---anova.html#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> x dplyr<span class="sc">::</span><span class="fu">lag</span>()    masks stats<span class="sc">::</span><span class="fu">lag</span>()</span></code></pre></div>
+<p>En esta sección vamos a explorar el análisis de anova con un set de datos que contiene información taxonómica de especies vegetales, abundancia e información del diametro promedio de cada especie colectada en diferentes parcelas. Estos datos hacen parte de la fundación COLTREE, la cual se dedica al monitoreo de parcelas permanentes de vegetacion a nivel nacional, con el proposito de comprender el funcionamiento de los bosques en terminos de su productividad vegetal y su relacion con el ciclo del carbono.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="análisis-de-varianza---anova.html#cb17-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Species_Coltree.csv&quot;</span>)</span>
+<span id="cb17-2"><a href="análisis-de-varianza---anova.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Rows<span class="sc">:</span> <span class="dv">7534</span> Columns<span class="sc">:</span> <span class="dv">7</span></span>
+<span id="cb17-3"><a href="análisis-de-varianza---anova.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="sc">--</span> Column specification <span class="sc">--------------------------------------------------------</span></span>
+<span id="cb17-4"><a href="análisis-de-varianza---anova.html#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Delimiter<span class="sc">:</span> <span class="st">&quot;,&quot;</span></span>
+<span id="cb17-5"><a href="análisis-de-varianza---anova.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="fu">chr</span> (<span class="dv">5</span>)<span class="sc">:</span> N_Familia, N_cientifico, Genero, Epiteto, Cod_HaCr</span>
+<span id="cb17-6"><a href="análisis-de-varianza---anova.html#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="fu">dbl</span> (<span class="dv">2</span>)<span class="sc">:</span> Parcela, DAP</span>
+<span id="cb17-7"><a href="análisis-de-varianza---anova.html#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb17-8"><a href="análisis-de-varianza---anova.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> i Use <span class="st">`</span><span class="at">spec()</span><span class="st">`</span> to retrieve the full column specification <span class="cf">for</span> this data.</span>
+<span id="cb17-9"><a href="análisis-de-varianza---anova.html#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> i Specify the column types or set <span class="st">`</span><span class="at">show_col_types = FALSE</span><span class="st">`</span> to quiet this message.</span></code></pre></div>
+<p>Utilizando la función de Anova en R, vamos a evaluar si existen diferencias en el diametro entre los géneros de plantas de una misma familia. En este ejemplo, vamos a trabajar con mas de dos grupos ya que es más frecuente utilizar otra prueba (T-Test) para comparar solo dos grupos.</p>
+<p>Escogemos la familia Anacardiaceae</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="análisis-de-varianza---anova.html#cb18-1" aria-hidden="true" tabindex="-1"></a>familia <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="análisis-de-varianza---anova.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(N_Familia <span class="sc">==</span> <span class="st">&quot;ANACARDIACEAE&quot;</span>)</span></code></pre></div>
+<p>Visualizamos las medias de los géneros</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="análisis-de-varianza---anova.html#cb19-1" aria-hidden="true" tabindex="-1"></a>familia <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="análisis-de-varianza---anova.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Genero, <span class="at">y =</span> DAP)) <span class="sc">+</span></span>
+<span id="cb19-3"><a href="análisis-de-varianza---anova.html#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>Realizamos la Anova</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="análisis-de-varianza---anova.html#cb20-1" aria-hidden="true" tabindex="-1"></a>anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(familia<span class="sc">$</span>DAP <span class="sc">~</span> familia<span class="sc">$</span>Genero)</span>
+<span id="cb20-2"><a href="análisis-de-varianza---anova.html#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="análisis-de-varianza---anova.html#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anova)</span>
+<span id="cb20-4"><a href="análisis-de-varianza---anova.html#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>                 Df Sum Sq Mean Sq F value <span class="fu">Pr</span>(<span class="sc">&gt;</span>F)  </span>
+<span id="cb20-5"><a href="análisis-de-varianza---anova.html#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> familia<span class="sc">$</span>Genero   <span class="dv">2</span>   <span class="dv">3847</span>  <span class="fl">1923.4</span>   <span class="fl">2.746</span> <span class="fl">0.0668</span> .</span>
+<span id="cb20-6"><a href="análisis-de-varianza---anova.html#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Residuals      <span class="dv">184</span> <span class="dv">128863</span>   <span class="fl">700.3</span>                 </span>
+<span id="cb20-7"><a href="análisis-de-varianza---anova.html#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="sc">---</span></span>
+<span id="cb20-8"><a href="análisis-de-varianza---anova.html#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Signif. codes<span class="sc">:</span>  <span class="dv">0</span> <span class="st">&#39;***&#39;</span> <span class="fl">0.001</span> <span class="st">&#39;**&#39;</span> <span class="fl">0.01</span> <span class="st">&#39;*&#39;</span> <span class="fl">0.05</span> <span class="st">&#39;.&#39;</span> <span class="fl">0.1</span> <span class="st">&#39; &#39;</span> <span class="dv">1</span></span></code></pre></div>
+<p>En este ejemplo, vemos que tenemos un valor de F bajo, y un valor de p&gt;0.05, por lo que concluimos que el diametro entre los géneros de esta familia no difieren entré si significativamente. Sin embargo, con summary no obtenemos información sobre cuáles grupos se están diferenciando o no. Para esto, hacemos uso de una prueba post-hoc o “Tukey’s Honest Significant Differences” (HSD) para ayudarnos a cuantificar cuales grupos difieren entre ellos.</p>
+<p>?TukeyHSD()</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="análisis-de-varianza---anova.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(anova)</span>
+<span id="cb21-2"><a href="análisis-de-varianza---anova.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>   Tukey multiple comparisons of means</span>
+<span id="cb21-3"><a href="análisis-de-varianza---anova.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>     <span class="dv">95</span>% family<span class="sc">-</span>wise confidence level</span>
+<span id="cb21-4"><a href="análisis-de-varianza---anova.html#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb21-5"><a href="análisis-de-varianza---anova.html#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Fit<span class="sc">:</span> <span class="fu">aov</span>(<span class="at">formula =</span> familia<span class="sc">$</span>DAP <span class="sc">~</span> familia<span class="sc">$</span>Genero)</span>
+<span id="cb21-6"><a href="análisis-de-varianza---anova.html#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> </span>
+<span id="cb21-7"><a href="análisis-de-varianza---anova.html#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="er">$</span><span class="st">`</span><span class="at">familia$Genero</span><span class="st">`</span></span>
+<span id="cb21-8"><a href="análisis-de-varianza---anova.html#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>                         diff         lwr      upr     p adj</span>
+<span id="cb21-9"><a href="análisis-de-varianza---anova.html#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Spondias<span class="sc">-</span>Astronium  <span class="fl">7.390421</span> <span class="sc">-</span><span class="fl">27.5649622</span> <span class="fl">42.34580</span> <span class="fl">0.8716087</span></span>
+<span id="cb21-10"><a href="análisis-de-varianza---anova.html#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Tapirira<span class="sc">-</span>Astronium <span class="fl">15.816341</span>  <span class="sc">-</span><span class="fl">0.5479194</span> <span class="fl">32.18060</span> <span class="fl">0.0606142</span></span>
+<span id="cb21-11"><a href="análisis-de-varianza---anova.html#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> Tapirira<span class="sc">-</span>Spondias   <span class="fl">8.425920</span> <span class="sc">-</span><span class="fl">23.2113415</span> <span class="fl">40.06318</span> <span class="fl">0.8042146</span></span></code></pre></div>
+<p>Podemos ver un valor de p asociado a la interacción entre grupos. Vemos que los géneros que más difieren son Tapirira y Astronium, sin embargo las medias no son significativamente diferente</p>
+<div class="warning" style="padding:0.1em; background-color:#D6EAF8; color:#21618C">
+<span>
+<p style="margin-top:1em; text-align:center">
+<b>Ejercicio 2</b>
+</p>
+<p style="margin-left:1em;">
+<ol style="list-style-type: decimal">
+<li>Realizar un Anova para evaluar si existen diferencias en el diametro entre las familias de dos parcelas diferentes y realice una prueba post hoc</li>
+</ol>
+</p>
+</div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="de-números-aleatorios-distribuciones-y-probabilidades.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="regresión-lineal-simple.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/09_sesion_8.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

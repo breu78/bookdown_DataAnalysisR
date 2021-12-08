@@ -1,0 +1,67 @@
+# Introducción
+
+<style> body {text-align: justify} </style> <!-- Justify text. -->
+
+El curso Introducción al análisis de datos utilizando R está principalmente dirigido a estudiantes de Biología y de Ingeniería Forestal en sus primeros semestres para familiarizarlos en el uso del lenguaje de programación R. Sin embargo, dado que la mayoría dell contenido se dedica a la introducción a la programación y análisis de datos se ajusta fácilmente a las necesidades de estudiantes de otras carreras.
+
+R es un lenguaje de programación de entorno de software libre para computación estadística y gráfica (R Development Core Team, 2021). En años recientes, R se ha vuelto una herramienta indispensable para el análisis de datos (o ciencia de datos) en muchas áreas de las ciencias básicas y aplicadas (Tippmann, 2015) y en la industria (Gandrud, 2013). En lugar de aprender múltiples herramientas, los estudiantes pueden utilizar un entorno único para una gran diversidad de métodos de análisis de datos y la presentación de sus resultados. Más que un lenguaje de programación, R ofrece nuevas vías no solo para la análisis de datos si no también para la enseñanza de la estadística, debido a que los problemas estadísticos pueden ser desarrollados y analizados de manera transparente y reproducible, p.ej. usando R Markdown (Incerti et al., 2019). Esto permite un aprendizaje interactivo y orientado a resolver problemas, combinando la teoría y la práctica. De esta manera, se puede lograr una comprensión más profunda de análisis de datos de forma más sencilla, lo cual permitirá practicar análisis de datos utilizando todas las herramientas y posibilidades que les ofrece el lenguaje de programación R. 
+
+## Sobre este curso
+
+Este curso está diseñado bajo el concepto de aula invertida (flipped classroom) que promueve el autoaprendizaje y puede ser dictada en modalidad presencial, virtual o mixto (p.ej en presencialidad remota, o híbrida). Esto significa que los participantes, de manera autodidacta, adquieren conocimiento previo a la clase sincrónica (i.e. interacción con los tutores), mediante vídeos y scripts de programación en R disponibles a través de la plataforma Moodle. Durante la clase sincrónica y bajo la orientación de un instructor se profundizan estos conocimientos a través de ejercicios prácticos que buscan resolver problemas reales en el análisis de datos.
+
+Este curso está estructurado en tres unidades, cada una compuesta de 5 sesiones, la última dedicada a la evaluación. En la primera unidad, se da inicio con una introducción a la programación y generación de gráficos en R, teniendo en cuenta los diferentes tipos de datos. En la segunda unidad se profundiza en métodos más avanzados y eficientes en la selección, el cálculo y visualización de datos usando la colección de paquetes tidyverse y se dan los fundamentos para presentar flujos de trabajo transparentes y reproducibles usando R Markdown. En la tercera Unidad se explorarán los conceptos básicos de la estadística univariada a través de dos tipos de análisis ampliamente utilizados en el análisis de datos, análisis de varianza y regresión lineal simple. 
+
+Cada unidad incluye una sesión completa de práctica con ejercicios y retos en donde se profundiza el aspecto de análisis de datos con R. Las clases están enfocadas a maximizar el trabajo práctico a través de programar y resolver problemas y reducir la introducción teórica al mínimo necesario, con el fin de fortalecer las competencias en la selección, análisis y visualización de datos.
+
+## Lo que aprenderás
+
++ Aprenderás la sintaxis básica del lenguaje R, la de la colección de paquetes Tidyverse y de R Markdown; es decir aprenderás programar, graficar y presentar informes utilizando R.
+
++ Aprenderás sobre diferente tipos de datos y las funciones que se utilizan para la manipulación, análisis y visualización de datos en R
+
++ Aprenderás los conceptos de analizar y graficar datos en R y presentar los resultados utilizando R Markdown
+
++ Aprenderás a manipular y indexar las distintas estructuras de datos y extraer elementos o subconjuntos
+
++ Aprenderás a aplicar métodos básicos en el análisis de datos en R y graficar los resultados acorde con lineamientos básicos 
+
++ Aprenderás a utilizar y valorar R como herramienta principal en la gestión, análisis y visualización de datos.
+
++ Aprenderás a valorar las estrategias que permitan la transparencia y reproducibilidad durante el proceso de análisis de datos. 
+
+## Plan de estudios
+
+El tiempo de dedicación a este curso son 8 horas semanales; 4 horas semanales de trabajo con interacción con el tutor, y 4 horas de trabajo independiente para repasar el contenido y resolver ejercicios de profundización. La dinámica del curso está diseñado de la siguiente manera: 
+
+(1) Previo a la reunión sincrónica con el tutor debes revisar el material teórico e introductorio que estará disponible en moodle. Con esta introducción, trabajarás de manera independiente en un script de R que está disponible en la plataforma moodle antes de la clase. Durante este trabajo puedes anotar tus inquietudes y preguntas. Terminarás esta primera fase de trabajo independiente con un quizz sencillo de preguntas de selección múltiple disponible en la plataforma moodle.
+
+(2) Durante la clase sincrónica (i.e. en presencialidad o a través de una plataforma, p.ej. Zoom) trabajarás de manera interactiva en R sobre el script (i.e. cada participante un su computador y compartiendo pantalla cuando sea necesario) y resuelvas las preguntas de manera interactiva. Además, durante la clase sincrónica practicarás individualmente o en equipo en resolver las problemas de los ejercicios bajo la orientación del tutor. 
+
+(3) Terminando la clase el tutor te facilitará e introducirá algunos retos, los cuales debes trabajar como tarea de trabajo independiente y resolverlas durante la próxima clase.    
+
+El curso se evalúa a través de quizes y ejercicios, los cuales evalúan las competencias adquiridas en cada sesión. Los quizes sobre los conceptos y técnicas de cada sesión serán considerados para la nota final del curso (en total 40% de la nota final). Además, al final de cada una de las tres Unidades del curso, desarrollarás ejercicios de análisis de datos que valdrán como cada uno 20% de la nota final.
+
+## ¿Cómo empezar?
+
+Todo el material que acompaña el curso Introducción al análisis de datos utilizando R está disponible en la plataforma moodle de la Universidad; si no tienes acceso debes ponerte en contacto con el coordinador de tu programa. Asimismo la comunicación con el tutor, con los demás participantes, e incluso las actividades evaluativas se realizarán a través de la plataforma moodle; es decir debes siempre estar atento y consultarlo con frecuencia. 
+Durante el curso trabajamos con el lenguaje de programación R y el interfaz gráfico RStudio. Se requiere instalar las dos, ayuda como instalar y descargarlos puedes encontrar aquí:
+
++ https://www.r-project.org/ -> Download
++ https://www.rstudio.com/  -> Download
+
+## Datos
+
+### SantanderBIO
+
+El proyecto SantanderBio consistió en expediciones biológicas para documentar la biodiversidad del departamento de Santander en Colombia. SantanderBio se llevó a cabo por medio de expediciones en tres ecosistemas estratégicos del departamento, siendo estos las inmediaciones del Páramo de Almorzadero en el municipio de Santa Bárbara, la Serranía de los Yariguíes en el municipio El Carmen de Chucurí y la cuenca media del río Magdalena en el municipio de Cimitarra.
+
+Como resultado las expediciones realizaron un aporte considerable al inventario de la biodiversidad en grupos biológicos como Plantas, Insectos, Peces, Anfibios, Reptiles, Aves y Mamíferos, con un rango de altura desde 74 hasta 3603 metros. Los datos estań estructurado como se puede acceder a través del Global Biodiversity Information Facility (GBIF).
+
+### ColTree
+
+Estos datos hacen parte de la fundación COLTREE, la cual se dedica al monitoreo de parcelas permanentes de vegetación en Colombia. Los datos corresponden a la abundancia de todas las especies en parcelas de 20 por 20 metros y comprenden 148 parcelas ubicadas sobre el norte de la cordillera oriental, en los departamentos de Santander y Norte de Santander, desde el Magdalena medio hasta el páramo de Santurbán. Las parcelas abarcan un rango altitudinal entre 65 y 3410 msnm. 
+
+### Páramos
+
+### Permanencia

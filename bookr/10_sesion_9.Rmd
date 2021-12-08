@@ -1,0 +1,331 @@
+# Regresión lineal simple
+
+En esta sesión vamos a conocer los fundamentos básicos para realizar una regresión lineal y como se realiza en R.
+
+### Regresión lineal
+
+Mediante la regresión lineal, podemos predecir el valor de una variable depentiente "y" en función de una variable independiente "x" mediante la ecuación de la recta (yi=α+β*xi+ϵi). Además, la regresión lineal nos sirve como análisis exploratorio para observar si dos o mas variables se relacionan linealmente (si 'x' cambia entonces 'y' también cambiará en una magnitud similar)
+
+A diferencia de la Anova, nuestra variable independiente "x" es usualmente una variable contínua y no una variable categórica, pero su notación es la misma:
+
+*lm(y ~ x)* 
+
+Como vimos anteriormente, utilizamos la función lm (linear model)
+
+Vamos a crear datos para realizar una regesión lineal simple. Para esto, debemos crear 3 componentes: respuesta (y) = parte deterministico (x) + parte estocástico (error).
+
+Creamos la variable deterministica, es decir, datos definidos los cuales conocemos (30 valores aleatorios entre 15 y 150)
+
+```{r collapse=TRUE, comment="-"}
+x <- runif(30,15,150)
+x
+```
+
+Creamos la variable de respuesta (parte deterministica)
+
+```{r collapse=TRUE, comment="-"}
+y.pred <- 20 + 2 * x
+plot(x, y.pred, pch = 19)
+
+summary(lm(y.pred ~ x)) # Obtenemos un R2 de 1 (ajuste perfecto), valor de p significativo (vemos que tiene 3 asteríscos indicando un alto nivel de significancia); es decir podemos predicir y perfectamente a traves de 20 + 2 * x
+```
+
+Cuando trabajamos con datos reales, casi nunca encontramos un ajuste perfecto porque hay un error asociado a los datos que tiene su origin en otras factores que influyen la relación entre y y x (incluso errores en la medicion)
+
+Ahora añadimos el componente estocástico (el error) a la variable respuesta:
+```{r collapse=TRUE, comment="-"}
+y <- y.pred + rnorm(30,0,50) # el error viene de una distribucion normal con una media de 0
+```
+
+Observamos mediante un gráfico como se relacionan ahora nuestras variables
+
+```{r collapse=TRUE, comment="-"}
+plot(y ~ x, pch = 19)
+
+summary(lm(y ~ x)) # Ahora el ajuste de la regresión es menor debido al error en y
+
+```
+
+### Regresión a mano
+
+Igual que en un anova, podemos calcular los parámetros de la regresión a mano mediante el método de la suma de cuadrados y la información del promedio de los datos.
+
+Recordemos que hacemos uso de la ecuación de la recta = yi=α+β*xi+ϵi, en los que debemos calcular algunos parámetros con el método de la suma de cuadrados. En esta ecuación se nos presentan varios componentes:
+
++ *yi* o variable respuesta
+
++ *α* o intercepto, el cual es el valor de y cuando x = 0
+
++ *β* o pendiente (el valor de p que obtenemos nos dice si la pendiente es significativa diferente de 0 o no)
+
++ *xi* o variable predictora
+
++ *ϵi* o el error. Todos los modelos estadísticos tienen una varianza residual de información observada no tenida en cuenta en nuestros predictores y está direcamente relacionada con la variable respuesta a través de una distribución (típicamente una distribución normal, por lo menos para cumplir los supuestos de la regresión lineal). Para tener un mejor ajuste de nuestro modelo, debemos entender como se genero nuestra variable dependiente. De esta manera, nos aseguramos de escoger una distribución que describa nuestros datos y que capture el error residual correctamente (funcion rnorm())
+
+Vamos a calcular la suma de cuadrados de nuestros datos
+
+```{r collapse=TRUE, comment="-"}
+SSY <- sum((y - mean(y))^2) # sumas de cuadrados corregidas en y
+
+SSX <- sum((x - mean(x))^2) # sumas de cuadrados corregidas en x
+
+SSXY <- sum((x - mean(x)) * (y - mean(y))) # suma corregida de productos (covarianza de x e y en la expectativa)
+```
+
+*Pendiente:*
+
+```{r collapse=TRUE, comment="-"}
+b <- SSXY/SSX # máxima probabilidad de pendiente b
+b
+```
+
+*Intercepto:*
+
+```{r collapse=TRUE, comment="-"}
+a <- mean(y) - b * mean(x) # Usamos la ecuación y valores promedio para calcular el intercepto 
+a
+```
+
+Comprobamos:
+
+```{r collapse=TRUE, comment="-"}
+summary(lm(y ~ x))
+```
+
+De esta forma hemos calculado los parámetros que desconociamos en la ecuación de la recta. De esta forma tenemos lo siguiente:
+
+y = α + β*x 
+Esto significa que cuando x = 0, "y" es igual al valor en α, y la variable respuesta "y" aumenta β por cada unidad en x
+
+```{r collapse=TRUE, comment="-"}
+y.amano = a + b*x
+plot(y, y.amano)
+```
+
+Si queremos predecir el valor de y cuando x = 100 utilizando nuestra ecuación:
+
+```{r collapse=TRUE, comment="-"}
+y.result <-  a + b*100
+```
+
+<div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
+<span>
+<p style='margin-top:1em; text-align:center'>
+<b>Ejercicio 1</b></p>
+<p style='margin-left:1em;'>
+1. Utilizando los siguientes datos calcular el intercepto y la pendiente a mano mediante la suma de cuadrados:
+
+x <- runif(20, 1, 20)
+y.pred <- 20 + 2 * x
+y <- y.pred + + rnorm(20,0,5)
+
+2. Realizar una interpretación de los valores de la pentiente e intercepto teniendo en cuenta la siguiente información: Asuma que la variable "y" son datos del peso de roedores y que la variable "x" es información del tamaño de estos roedores
+
+3. Utilizar la función de R para realizar la regresión lineal e interpretar el valor de R2 y valor de p
+
+</p>
+</div>
+
+### Indices de diversidad y regresión lineal  
+
+Ahora que conocemos como realizar una regresión lineal, vamos a utilizar los datos de la fundación COLTREE para explorar algunos índices que miden la biodiversidad y reaizar regresiones lineales con estos resultados.
+
+En adición al set de datos taxonómicos, trabajaremos con datos medioambientales de cada parcela
+
+Cargamos los datos
+
+```{r collapse=TRUE, comment="-"}
+library(tidyverse)
+dat_spec <- read_csv("Species_Coltree.csv")
+dat_env <- read_csv("Env_Coltree.csv")
+```
+
+Algunas de las principales variables medioambientales
+
+  - Temp_media = Temperatura media anual
+  -  Rango_diurno = Rango diurno promedio
+  - Est_T = Estacionalidad de la temperatura
+  - MaxTemp = Temperatura maxima del mes mas calido
+  - MinTemp = Temperatura minima del mes mas frio
+  - Rango_anual_T = Rango anual de temperatura
+  - T_media_tmh = Temperatura media del trimestre mas humedo
+  - T_media_tms = Temperatura media del trimestre mas seco
+  - T_media_tmc = Temperatura media del trimestre mas calido
+  - T_media_tmf = Temperatura media del trimestre mas frio
+  - Precip_anual = Precipitacion anual
+  - Precip_max = Precipitacion del mes mas humedo
+  - Precip_min = Precipitacion del mes mas seco
+  - Est_P = Estacionalidad de la precipitacion (Coeficiente de Variacion)
+
+Para calcular la riqueza de especies (diversidad), debemos contar el número de especies presentes en cada sitio (parcela en nuestro caso)
+
+```{r collapse=TRUE, comment="-"}
+conteo_parcela <- dat_spec %>% 
+  group_by(Parcela) %>% 
+  select(N_cientifico) %>%
+  unique() %>% 
+  summarise(n = n())
+
+barplot(conteo_parcela$n)
+
+riqueza <- conteo_parcela$n
+```
+
+En caso de contar con una matriz de abundancias, podemos convertir la matriz una matriz de presencia/ausencia y contar el número de especies; o utilizar el paquete vegan:
+
+Convertimos nuestros datos a una matriz de abundancias:
+
+```{r collapse=TRUE, comment="-"}
+dat_abun <- dat_spec %>% 
+  select(Parcela, N_cientifico) %>% #Seleccionamos las variables deseadas
+  group_by(Parcela, N_cientifico) %>% # Agrupamos las observaciones por parcela y nombre de las especies
+  summarise(freq = n()) %>% # contamos el número de individuos para obtener la abundancia de cada especie
+  pivot_wider(names_from = N_cientifico, values_from = freq) # Mediante la función pivot_wider, convertimos la variable N_cientifico en columnas, y el conteo en observaciones a través de cada parcela. Para mayor información revise la función
+```
+
+Reemplazamos los NA por 0
+
+```{r collapse=TRUE, comment="-"}
+dat_abun <- dat_abun %>%
+  replace(is.na(dat_abun), 0) 
+
+str(dat_abun) # Revisamos la matriz de abundancia creada
+```
+
+### Paquete vegan
+
+install.packages("vegan")
+
+```{r collapse=TRUE, comment="-"}
+library(vegan)
+```
+
+Dado que vegan trabaja con data.frames debemos transformar el tibble a un data.frame y seguir con programar en R (y no tidyverse)
+
+```{r collapse=TRUE, comment="-"}
+abd <- as.data.frame(dat_abun)
+```
+
+Asignar la primera columna (Parcela) como nombre de las filas
+
+```{r collapse=TRUE, comment="-"}
+rownames(abd) <- abd[,1]
+dat_abun <-dat_abun[,-1]
+
+```
+
+Contar especies con una matriz de presencia/ausencia
+
+```{r collapse=TRUE, comment="-"}
+pa <- replace(abd, abd > 0, 1) # Convertimos la matriz de abundancias en una matriz de presencia/ausencia.
+
+riqueza <- apply(pa, 1, sum) # Sumamos las especies presentes en cada parcela para estimar su riqueza.
+
+barplot(riqueza)
+```
+
+Tambien podemos generar la matriz de abundancias de manera tradicional utilizando tabla de conteo:
+
+```{r collapse=TRUE, comment="-"}
+abd2 <- as.data.frame.matrix(table(dat_spec$Parcela, dat_spec$N_cientifico))
+riqueza2 <- specnumber(abd) 
+
+# verificamos si las dos vías conducen al mismo resultado
+plot(riqueza, riqueza2)
+```
+
+A partir de la matriz de abundacias, podemos calcular índices de diversidad como shannon o simpson mediante la función diversity() del paquete vegan. Utilice la función diversity() para calcular el indice de shannon.
+
+```{r collapse=TRUE, comment="-"}
+div <- diversity(dat_abun, index = "shannon")
+```
+
+Ahora Vamos a relacionar la riqueza de especies (o diversidad) con algunos de los factores ambientales de las parcelas.
+
+```{r collapse=TRUE, comment="-"}
+plot(riqueza ~ dat_env$Temp_media, pch=19, cex=0.5)
+```
+
+Riqueza ~ T_media
+
+```{r collapse=TRUE, comment="-"}
+reg <- lm(riqueza ~ dat_env$Temp_media) # Ajustamos un modelo con la riqueza de especies y la temperatura media
+summary(reg)
+
+plot(riqueza ~ dat_env$Temp_media, pch=19, cex=0.5)
+abline(reg, col = "red")
+```
+
+<div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
+<span>
+<p style='margin-top:1em; text-align:center'>
+<b>Ejercicio 2</b></p>
+<p style='margin-left:1em;'>
+1. Con base a los resultados de la regresión lineal, reponda las siguientes preguntas:
+
+  - ¿La riqueza de especies depende de la temperatura?
+  - ¿Cuál resultado de la regresión demuestra eso?
+  - ¿Cuánta varianza explica la temperatura en la variación de la riqueza de especies?
+  
+2. Añadir etiquetas a los ejes de la gráfica anterior e insertar una leyenda con el valor de R^2 y la ecuación de la línea de regresión.
+
+</p>
+</div>
+
+
+
+<div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
+<span>
+<p style='margin-top:1em; text-align:center'>
+<b>Ejercicio 3</b></p>
+<p style='margin-left:1em;'>
+1. Realizar regresiones con las otras variables ambientales y determinar cuales de ellas pueden explicar la variabilidad en riqueza a traves del gradiente altitudinal.
+
+2. Repetir el mismo analisis pero ahora con el Indice de Shannon como variable independiente. Los resultados son congruentes?
+
+3. Mostrar los resultados de todos estos analisis en gráficos de dispersión con una línea de tendencia y su respectiva leyenda.
+
+</p>
+</div>
+
+### Supuestos de la regresión lineal
+
+Para poder validar los resultados de nuestra regresión lineal, debemos saber si nuestro modelo cumple con los supuestos o requisitos asociados al modelo:
+
++ *Linealidad:* Debido a que la ecuación de la recta que se emplea en la regresión lineal, la relación entre las variables dependientes e independientes debe ser lineal. Esto puede ser observado fácilmente mediante el diagrama de dispersión:
+
+```{r collapse=TRUE, comment="-"}
+plot(riqueza ~ dat_env$Temp_media, pch=19, cex=0.5)
+lm <- lm(riqueza ~ dat_env$Temp_media)
+abline(lm, col="red") 
+```
+
+Podemos observar que es probable que los datos no se relacionan linealmente y ajustar una relación lineal podría resultar en resultados erroneos
+
++ *Independencia de los residuos:* Los residuos deben ser independientes entre sí y representan una variable aleatoria, es decir, que la predicción de un valor los residuos no es afectada por los residuos cercanos. Podemos probar este supuesto mediante el test de durbin-watson:
+
+```{r collapse=TRUE, comment="-"}
+library(lmtest)
+
+dwtest(lm) # En esta prueba, valores de DW alrededor de 2 y p significativos significan que los residuos son independientes (normalmente se considenran valores entre 1.5 y 2.5)
+```
+
++ *Residuos constantes "homocedasticidad":* Los residuos (diferencia entre los valores observados de la variable dependiente respecto a los valores predecidos mediante la ecuación de la recta) deben ser constantes. Esto quiere decir que los residuos no aumentan ni disminuyen a medida que se predicen valores más grandes o pequeños. Podemos observar este supuesto graficando nuestro vector de regresión lineal:
+
+```{r collapse=TRUE, comment="-"}
+plot(lm) # Al graficar esto presionamos enter en la consola y debemos observar la primera gráfica "Residual vs Fitted". Al haber homocedasticidad, la linea roja debe observarse como una linea recta. Con nuestros datos parece complirse este supuesto.
+
+```
+
+*Normalidad de residuos:* Los residuos deben presentan una distribución normal. Mediante la gráfica de histograma y la prueba de shaphiro-wilk podemos probar este supuesto:
+
+```{r collapse=TRUE, comment="-"}
+hist(lm$residuals, 15) # Los residuos parecen ajustarse a una distribución normal
+```
+
+?shapiro.test
+
+```{r collapse=TRUE, comment="-"}
+shapiro.test(lm$residuals) # Con el valor de p de la prueba, aceptamos la hipótesis nula ya que p > 0.05, por lo que los residuos si presentan una distribución normal
+```
+

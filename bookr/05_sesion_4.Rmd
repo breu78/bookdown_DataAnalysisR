@@ -1,0 +1,553 @@
+# Manejando datos utilizando tidyverse
+
+En esta sesión vamos a trabajar los datos de la sesión anterior de una manera diferente. Para esto vamos a cargar el conjunto de paquetes Tidyverse.
+
+install.packages("tidyverse")
+
+```{r pressure, warning=FALSE, include=FALSE}
+library(tidyverse)
+```
+
+Los paquetes que ofrece Tidyverse están orientados a facilitar la manipulación, importación, exploración y visualización de datos, permitiendo que el proceso sea eficiente y que los scripts puedan ser reproducibles entre usuarios. En esta sesión vamos a trabajar principalmente con el paquete  dplyr y algunas generalidades de otros paquetes para trabajar con datos tidy.
+
+Los "datos tidy" se caracterizan por lo siguiente:
+
+ * Cada columna es una variable
+ * Cada fila es una observación
+ * Cada celda es un valor único
+
+Estas 3 propiedades las veremos con frecuencia a lo largo de esta sesión.
+
+***
+
+##  Readr        
+
+El paquete Readr es una alternativa para leer datos rectangulares como un .csv. Las principales ventajas de usar readr para leer un .csv son la velocidad con la que se importan los datos y el "parse" realizado sobre estos. Esto último quiere decir que la función analizará automaticamente el tipo de dato que está siendo importando y no producirá cambios inesperados. Con frecuencia, la función base de R puede convertir vectores de caracteres a factores. Además, Readr lee automáticamente formatos de fechas.
+
+```{r collapse=TRUE, comment="-"}
+dat <- read_csv("SantanderBIO.csv") #Como resultado devuelve el número de filas y columnas, los nombres de las variables y el tipo de dato de cada una.
+```
+
+Recordemos que nuestro data frame contiene información sobre inventarios de la biodiversidad en el marco del proyecto Santander BIO. Nuestro data frame cuenta con información taxonómica (Nombre de la especie, familia, reino, etc) e información sobre los sitios y la altura a la que se encuentran estas especies.
+
+Podemos cambiar el tipo de dato al importarlo, por ejemplo convertir algunas variables en factores
+
+```{r collapse=TRUE, comment="-"}
+dat <- read_csv("SantanderBIO.csv", col_types = 
+                  list(
+                    species = col_character(),
+                    locality = col_factor(),
+                    municipality = col_factor(),
+                    kingdom = col_factor(),
+                    phylum = col_character(),
+                    class = col_character(),
+                    order = col_character(),
+                    family = col_character(),
+                    taxonRank = col_character(),
+                    elevation = col_double()
+                  )
+)
+```
+
+***
+
+##  Tibble                                      
+
+Tibble es una forma moderna de data frame que ha probado ser más eficiente. Los tibbles no cambian los nombres de las variables o el tipo de dato.
+
+```{r collapse=TRUE, comment="-"}
+class(dat) #Si miramos de que clase son los objetos cargados con el paquete Readr, nos damos cuenta que estos son de tipo tibble. Por esto, no hace sentido convertir un objeto cargado con Readr a un tibble, pero si podemos convertir un data frame convencional en un tibble.
+
+dat_conv <-read.csv("SantanderBIO.csv")
+
+class(dat_conv)
+
+dat_tibble <- as_tibble(dat_conv)
+
+class(dat_tibble)
+```
+
+Hay dos diferencias entre un tibble y un data frame convencional: el método de impresión o print() y la forma de obtener subconjuntos.
+
+```{r collapse=TRUE, comment="-"}
+dat_tibble #Tibble nos muestra hasta 10 observaciones para mantener la consola menos saturada. En caso de necesitar más de 10 observaciones puede indicarlo de la siguiente manera:
+
+dat_tibble %>% print(n = 20)
+```
+
+Extraer datos de un tibble se hace de una manera más estricta, ya que estos no realizan coincidencia parcial. Necesitará escribir el nombre completo de la variable.
+
+```{r collapse=TRUE, comment="-"}
+dat_conv$lo[1:5] #De forma convencional, al escribir el nombre incompleto de una variable, este mostrará la variable con que mejor coincida
+
+dat_tibble$lo #Mientras que en tibble resultará en un error
+dat$lo #Lo mismo sucederá con Readr
+```
+
+Finalmente, usted puede crear tibbles fila por fila o por columnas
+
+```{r collapse=TRUE, comment="-"}
+tibble(x = 1:5, y = 1, z = x ^ 2 + y) #Por columnas
+
+tribble( 
+  ~x, ~y,  ~z,
+  "a", 2,  3.6,
+  "b", 1,  8.5
+)#Por fila
+```
+
+***
+
+## Dplyr 
+```{r}
+dat <- read_csv("SantanderBIO.csv")
+```
+
+
+Dplyr es uno de los paquetes más utiles para la manipulación de datos. Dentro de sus funciones más utiles se encuentran:
+
+mutate() Añade nuevas variables en función de variables existentes
+select() Selecciona variables de acuerdo a su nombre
+filter() Selcciona observaciones de acuerdo a sus valores
+summarise() Resume cada grupo en menos filas
+arrange() Cambia el orden de las observaciones
+
+La forma simple para seleccionar una variable en un data frame común es mediante el símbolo $
+
+```{r collapse=TRUE, comment="-"}
+dat$species
+```
+
+***
+
+### Select
+
+Mediante el paquete dplyr podemos seleccionar variables con la función select()
+?select()
+
+```{r collapse=TRUE, comment="-"}
+select(dat, species) #Seleccionamos el data frame y seguido una variable
+
+select(dat, species, locality, municipality) #O más de una variable
+```
+
+Podemos encadenar varias funciones mediante "pipes" o %>% (se puede generar mediante el atajo control+shift+m). Esto es muy útil ya que nos permite realizar tareas con menos línea de código
+
+Empezamos cargando primero los datos por fuera de cualquier función, seguido de un pipe
+
+```{r collapse=TRUE, comment="-"}
+dat %>% select(species)
+```
+
+Ya que tenemos nuestra variable seleccionada, podemos encadenar funciones que trabajen sobre estos datos. Si la función no requiere parametros adicionales, la función se escribe en su forma básica: funcion()
+
+```{r collapse=TRUE, comment="-"}
+dat %>% select(species) %>% unique() #Nos muestra los valores únicos de esta variable
+```
+
+La estructura básica de este proceso es escoger nuestro set de datos, filtrar y seleccionar las variables que necesitamos y aplicar una función. La complejidad del código dependerá del resultado deseado. A continuación vamos a realizar una función simple en un conjunto de datos específico de nuestro set de datos.
+
+***
+
+### Filter
+
+?filter()
+
+```{r collapse=TRUE, comment="-"}
+dat %>% filter(municipality == "El Carmen de Chucuri") #Hasta este paso filtramos nuestras observaciones
+
+dat %>% filter(municipality == "El Carmen de Chucuri") %>% select(species) #Seleccionamos las localidades en las cuales se registró la especie Xiphidium caeruleum
+
+dat %>% filter(municipality == "El Carmen de Chucuri") %>% select(species) %>% unique() #Y obtenemos los nombres únicos de las especies que están presentes en el municipio de El carmen de Chuchuri
+
+El_Carmen <- dat %>% 
+  filter(municipality == "El Carmen de Chucuri") %>% 
+  select(species) %>% 
+  unique() #Esto puede ser guardado en un vector y separado de una forma mas elegante
+
+length(El_Carmen$species) #Para El Carmen de Chucurí se registraron 357 especies
+```
+
+¿Cuántas clases hay en ese mismo municipio?
+
+```{r collapse=TRUE, comment="-"}
+class_carmen <- dat %>% 
+  filter(municipality == "El Carmen de Chucuri") %>% 
+  select(class) %>% 
+  unique()
+
+length(class_carmen$class) #En El Carmen de Chucurí se registraron 9 clases
+```
+
+***
+
+### Summarise
+
+Podemos realizar resumenes estadísticos de nuestros datos y crear un nuevo data frame con los resultados usando la función summarise()
+
+?summarise()
+
+Vamos a promediar los valores de elevación
+
+```{r collapse=TRUE, comment="-"}
+ele_mean <- dat %>% 
+  summarise(mean = mean(elevation), n = n()) #El argumento n nos muestra el tamaño del grupo y lo indexa en una columna
+```
+
+Explique el resultado y lo que se muestra en cada columna
+
+Podemos agrupar los resultados
+
+```{r collapse=TRUE, comment="-"}
+conteo_clase <- dat %>% 
+  group_by(class) %>% 
+  summarise(n = n()) #Realizamos un conteo de los registros de especies en cada clase
+
+ele_mean_group <- dat %>% 
+  group_by(municipality) %>% 
+  summarise(mean = mean(elevation), n = n())
+```
+
+Es posible realizar más de una operación simplemente añadiendo una "," y escribiéndola dentro de summarise. Calcule el valor promedio, mínimo y máximo de la elevación por municipio.
+
+```{r collapse=TRUE, comment="-"}
+ele_mean_group <- dat %>% 
+  group_by(municipality) %>% 
+  summarise(mean = mean(elevation), min(elevation), max(elevation), n = n())
+```
+
+Podemos etiquetar nuestros datos o incluso organizarlos dentro de un mismo data frame
+
+```{r collapse=TRUE, comment="-"}
+#Creamos una etiqueta para cada clase
+
+clase_etiqueta <- dat %>% 
+  group_by(class) %>% 
+  summarise(cur_group_id()) #Esto podra ser utilizado mas adelante con mutate() y crear una nueva variable en el data frame existente
+```
+
+Utilizamos las funciones cur_ para crear subconjuntos de datos ordenados por grupo. Los nuevos subconjuntos serán una lista de tibbles.
+
+?context
+
+Las funciones cur_ devuelven información sobre el grupo seleccionado en listas de tibles que puede contener una o mas variables. Esto dependerá de la función cur_ que usemos:
+
+Mediante cur_data obtenemos el conjunto de variables asociadas a los factores de una variable deseada. El vector resultante será un data frame de dos variables, una columna del grupo (o variable) seleccionada y otra columna con una lista de las variables asociadas a cada factor:
+
+```{r collapse=TRUE, comment="-"}
+clase_datos <- dat %>% 
+  group_by(class) %>% 
+  summarise(data = list(cur_data()))
+```
+
+Ya que nuestro data frame contiene listas dentro, podemos acceder a ella mediante corchetes []:
+
+Podemos extraer las variables mediante $
+
+```{r collapse=TRUE, comment="-"}
+clase_datos$class
+clase_datos$data
+```
+
+Para acceder a los elementos de una variable, usamos corchetes dobles. Y finalmente, usamos nuevamente $ para acceder a una variable ya que estamos dentro de otro data.frame
+
+```{r collapse=TRUE, comment="-"}
+clase_datos$data[[1]]$species #Seleccionamos el la columna "species" del tible de la primera clase contenido en el vector clase_datos
+```
+
+Para especificar una clase, las funciones de dplyr:
+
+```{r collapse=TRUE, comment="-"}
+Aves <- clase_datos %>% 
+  filter(class == "Aves") %>% 
+  select(data)
+```
+
+cur_data elimina la variable seleccionada con los diferentes tibles que crea, si queremos mantenerla, usamos cur_data_all
+
+```{r collapse=TRUE, comment="-"}
+clase_datos_completo <- dat %>% 
+  group_by(class) %>% 
+  summarise(data = list(cur_data_all()))
+```
+
+<div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
+<span>
+<p style='margin-top:1em; text-align:center'>
+<b>Ejercicio 1</b></p>
+<p style='margin-left:1em;'>
+1. Utilizar "summarise" y "filter" para averiguar cuál es la familia con mayor registro de especies
+2. Averiguar cuál es la elevacion máxima en la que fue registrada una planta y un animal
+</p>
+</div>
+
+***
+### Mutate
+
+Ahora vamos a ver como se modifican columnas en dplyr mediante la función mutate().
+
+?mutate()
+
+Vamos a crear una nueva varible que etiquete las observaciones de a cuerdo a una variable, en este caso, dependiendo de a que clase pertenecen
+
+```{r collapse=TRUE, comment="-"}
+da <- dat %>% 
+  group_by(class) %>% 
+  mutate(id = cur_group_id())
+```
+
+En mutate, las nuevas variables se crean a partir de las variables existentes.
+
+```{r collapse=TRUE, comment="-"}
+new_var <- dat %>%
+  select(species, elevation) %>% #Nos quedamos con 2 variables
+  mutate(
+    doble_elevacion = elevation * 2, #Creamos una nueva variable a partir de los datos de elevación
+    doble_elevacion_logaritmo = log(doble_elevacion) #Creamos una segunda variable a partir de la variable anterior
+  )
+```
+
+Tambien es posible remover o modificar variables existentes. Vamos a eliminar la variable order, y modificar la variable de elevación 
+
+```{r collapse=TRUE, comment="-"}
+nuevo_dat <- dat %>% 
+  mutate(
+    order = NULL,
+    elevation = elevation/2
+  )
+```
+
+Podemos modificar multiples columnas usando "across" dentro de "mutate"
+
+?across
+
+```{r collapse=TRUE, comment="-"}
+across_data <- dat %>% 
+  mutate(across(.cols = everything(), as.factor)) #Convertimos todas las columnas en factores
+```
+
+Ya que la elevación es una variable numérica, debemos evitar tenerla como factor
+
+```{r collapse=TRUE, comment="-"}
+across_data <- dat %>%
+  mutate(across(!elevation, as.factor)) #Con el signo de admiración antes de la variable, estamos indicando que aplique la funcion "as.factor" a todas las columnas menos a elevation
+```
+
+<div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
+<span>
+<p style='margin-top:1em; text-align:center'>
+<b>Ejercicio 2</b></p>
+<p style='margin-left:1em;'>
+1. Crear dos columnas nuevas, una en donde le sume 1000 a cada observacion de elevación y otra donde le reste 1000. Ademas, mantenga la variable de especies, municipio y de elevación orginal.
+2. Explorar el argumento "starts_with()" para seleccionar las variables que empiezan con una secuencia de caracteres en especifico. 
+
+</p>
+</div>
+
+***
+### Arrange 
+
+Finalmente con arrange() podemos cambiar el orden de las observaciones o filas
+
+?arrange
+
+Vamos a ordenar nuestra variable numérica de elevación
+
+```{r collapse=TRUE, comment="-"}
+ordenado <- dat %>% arrange(elevation) #Ordena las observaciones de menor a mayor
+```
+
+Ordenelo de mayor a menor usando desc() en la funcion arrange()
+
+```{r collapse=TRUE, comment="-"}
+ordenado <- dat %>% arrange(desc(elevation))
+```
+
+Tambien es posible ordenarlo por categorias de una variable. Intente crear un data frame ordenado por su género
+
+En nuestro set de datos, no existe una columna para el género. Vamos a intentar crearla a partir de la variable species, la cual contiene el epíteto genérico y crear una nueva variable con estos caracteres.
+
+***
+
+### Separate()
+
+Podemos separar characteres con separate()
+
+?separate()
+
+```{r collapse=TRUE, comment="-"}
+separado <- dat %>% separate(species, c("genus", "species"))
+```
+
+separate() se encarga de separar caracteres cuando encuentra un valor diferente a una letra o numero, como el espacio. En este caso, separará los caracteres en dos columnas llamadas "specie" y "genus". Vemos que luego de ejecutar, obtenemos una advertencia con las posiciones de filas en las que encontraron problemas. Revisamos las posiciones en el data frame original
+
+```{r collapse=TRUE, comment="-"}
+dat$species[c(226, 720, 950)] #Vemos que el epíteto de estas especies está acompañado de otra palabra separado con -. ¿Qué pasa si añadimos una tercera columna?
+
+separado <- dat %>% separate(species, c("specie", "genus", "otro"))
+```
+
+Si usamos NA en vez del nombre de la nueva columna omitiremos esa columna
+
+```{r eval=FALSE, collapse=TRUE, comment="-", include=FALSE}
+separado <- dat %>% separate(genus, c(NA, "species"))
+```
+
+O podemos especificar el comportamiento de la separación
+
+```{r collapse=TRUE, comment="-"}
+separado <- dat %>% 
+  separate(species, c("genus", "species"), " ", extra = "merge")#Le indicamos a la función que solo debe separar los caracteres cuando encuntre un espacio " ", y lo que queda sera único o se hará un "merge".
+```
+
+Revisamos la observacion 226
+
+```{r collapse=TRUE, comment="-"}
+separado$genus[226]
+```
+
+También podemos realizar esto mediante expresiones regulares que veremos mas adelante en la sesion
+
+```{r collapse=TRUE, comment="-"}
+separado <- dat %>% 
+  separate(species, c("specie", "genus"), sep = " ")
+```
+
+¡Ahora podemos ordenar nuestras observaciones de acuerdo al genero!
+
+```{r collapse=TRUE, comment="-"}
+ordenado_grupo <- separado %>% arrange(genus)
+```
+
+***
+
+## Aggregate     
+
+Una alternativa clásica en R a la función de summarise() en dplyr es aggregate, aunque es recomendable usar los paquetes de tidiverse, conocer la sintaxis de otras funciones es recomendable para desarrollar habilidades en la programación
+
+Al igual que summarise, aggregate() permite calcular resúmenes estadísticos de subconjuntos de datos
+
+?aggregate
+
+Vamos a promediar la elevación a través de algunos grupos en nuestros datos
+
+```{r collapse=TRUE, comment="-"}
+aggre_prom <- aggregate(elevation ~ class, data = dat, FUN = mean) #Aggregate tiene 3 argumentos básicos usando la formula ~. Primero se escribe el elemento al cual se aplicará la función, en este caso la elevación; seguido el grupo de observaciones que se tomara en cuenta para aplicar la función, que en este caso es la clase; el nombre del vector en el cual se encuentran estos elementos y la función a realizar. La función se lee como: Realice una promedio de la elevación en cada clase de nuestras espcies en el set de datos llamado dat
+```
+
+Esta es la forma que utilizabamos en dplyr para realizar el mismo proceso
+
+```{r collapse=TRUE, comment="-"}
+sum_prom <- dat %>% 
+  group_by(class) %>% 
+  summarise(mean = mean(elevation))
+```
+
+Adicionalmente, podemos obtener resultados que dependan de mas de una variable. Si necesitamos obtener los valores promedio de elevación por clase y al mismo tiempo por municipio, agregamos el signo "+" de la siguiente manera:
+
+```{r collapse=TRUE, comment="-"}
+aggre_prom <- aggregate(elevation ~ class+municipality, data = dat, FUN = mean) #De esta forma, obtener el valor promedio de elvación de los registros en cada clase y en cada municipio
+
+sum_prom <- dat %>% 
+  group_by(class, municipality) %>% 
+  summarise(mean = mean(elevation)) #Esto funciona de igual forma en summarise añadiendo otra variable en group_by
+```
+
+<div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
+<span>
+<p style='margin-top:1em; text-align:center'>
+<b>Ejercicio 3</b></p>
+<p style='margin-left:1em;'>
+1. ¿Qué pasa al cambiar el orden de las variables en aggregate y en summarise? ¿Son los resultados iguales? Explique.
+2. Utilice la función aggregate para calcular el número de observaciones de especies por orden utilizando la funcion length. Realice el mismo proceso usando el paquete dplyr
+3. Calcule la desviacion estándar, el valor mínimo y máximo de la elevación para cada familia, phylum y municipio con aggregate y dplyr.
+</p>
+</div>
+
+***
+##  Stringr                                    
+
+El paquete stringr brinda herramientas útiles para trabajar con expresiones regulares y caracteres. Las expresiones regulares son un lenguaje que describen patrones de texto. Esto es de gran ayuda cuando necesitamos preparar y limpiar nuestros datos. Ejecute las siguientes funciones y describa lo que esta pasando.
+
+```{r collapse=TRUE, comment="-"}
+x <- fruit[1:5]
+
+str_detect(x, "aeiou")
+
+str_detect(x, "[aeiou]")
+
+str_count(x, "[aeiou]")
+
+str_subset(x, "[aeiou]")
+
+str_locate(x, "[aeiou]")
+
+str_extract(x, "[aeiou]")
+
+str_match(x, "(.)[aeiou](.)")
+
+str_replace(x, "[aeiou]", "?")
+
+str_split(c("a,b", "c,d,e"), ",")
+```
+
+Todas las funciones de stringr comienzan con str_, y las funciones anteriores son las 7 principales del paquete.
+
+Aplicando estas funciones a nuestro set de datos, podemos realizar busquedas de caracteres de nuestros registros
+
+```{r collapse=TRUE, comment="-"}
+which(str_detect(dat$species, "Clusia hammeliana")=="TRUE") #Buscamos la posición de una especie en particular
+```
+
+Sin embargo, si no estamos seguro, podemos hacer una busqueda con algunos caracteres que recordemos
+
+```{r collapse=TRUE, comment="-"}
+which(str_detect(dat$species, "sia hamm")=="TRUE")
+```
+
+También podemos contar el numero de registros por localidad o municipio
+
+```{r collapse=TRUE, comment="-"}
+sum(str_count(dat$municipality, "Cimitarra"))
+```
+
+En stringr podemos hacer busquedas mas generalizadas que no veremos en esta sesión, pero esto es un ejemplo de lo que podemos hacer conociendo algunas clases de caracteres
+
+```{r collapse=TRUE, comment="-"}
+str_subset(dat$species, "[:space:][aeiou]") #Extraemos todas las especies en la que su epíteto específico comienza con una vocal. Observe que [:space:] es una clase de caracter que se utiliza para indicar que antes de las vocales debe haber un espacio, de otra manera se obtendrían todos los registros que tuviesen alguna vocal en cualquier posición.
+```
+
+¿Cómo podemos averiguar si hay un número en los nombres de especies?
+
+```{r collapse=TRUE, comment="-"}
+which(str_detect(dat$species, "123456789"))
+which(str_detect(dat$species, "[:digit:]")) #La clase de caracter para encontrar cualquier número es [:digit:]
+str_detect(dat$elevation, "[:digit:]")
+```
+
+Explore las clases de caracteres pre-creados
+
+  + Puntuación: [:punct:]
+  
+  + Letras: [:alpha:]
+  
+  + Letras minúsculas: [:lower:]
+  
+  + Letras mayúsculas: [:upper:]
+
+  + Dígitos: [:digit:]
+
+  + Dígitos hexadecimales: [:xdigit:]
+
+  + Letras y núMeros: [:alnum:]
+
+  + Caracteres de control: [:cntrl:]
+
+  + Letras, números y puntuación: [:graph:]
+
+  + Letras, números, puntuación y espacio en blanco: [:print:]
+
+  + Caracter de espacio: [:space:]
+
+  + Espacio y tabulador: [:blank:]
+

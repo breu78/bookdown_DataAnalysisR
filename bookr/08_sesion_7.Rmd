@@ -1,0 +1,176 @@
+# De números aleatorios, distribuciones y probabilidades
+
+En R, existen funciones para la generación de números aleatorios, es decir, podemos generar cualquier número de 0 a infinito de forma automática. Para esto, debemos especificar la distribución de probabilidad de la cual queremos obtener estos números aleatorios.
+
+Una distribución de probabilidad describe la gama de resultados que podemos obtener. De esta manera, la probabilidad de que obtengamos un valor dependerá de la distribución de probabilidad.
+
+*Ejemplo:*
+
+#### La probabilidad de los dados: 
+
+Un dado convencional se caracteriza por poseer 6 lados, y cada lado representa un valor de 1 al 6. Frecuentemente en juegos de mesa como el parqués, mientras más alto sea el número, más podremos avanzar y ganar. Al lanzar el dado para poder avanzar, existe una probabilidad fija de obtener cualquiera de los 6 lados. Ya que esta probabilidad es la misma para cada lado (1/6), podríamos decir que la distribución de los números de un dado pertenece a una distribución uniforme.
+
+### Distribución uniforme
+
+En nuestro ejemplo del dado, planteamos que la distribución de los números de cada lado del dado tiene una distribucion uniforme, debido a que la probabilidad de de obtener cada lado es la misma. Vamos a explorar un poco esto en R.
+
+En nuestro ejemplo del dado, planteamos que la distribución de los números de cada lado del dado es uniforme, debido a que la probabilidad de obtener cada lado es la misma. Vamos a explorar un poco esto en R.
+
+Para obtener un número aleatorio "n" de una distribución uniforme utilizamos runif()
+
+?runif
+
+Vamos a escoger 10 números aleatorios del 1 al 6 provenientes de una distribución uniforme
+
+```{r collapse=TRUE, comment="-"}
+ru1 <- runif(n = 10, min = 1, max = 6) #Los números que obtendremos tienen decimales
+
+hist(ru1)
+```
+
+Según nuestro histograma, y dependiendo de los números que se seleccionen, puede que obtengamos más veces un número que otro, ¿entonces la probabilidad no es la misma?
+
+```{r collapse=TRUE, comment="-"}
+ru2 <- runif(n =100, min = 1, max = 6) 
+hist(ru2)
+
+ru3 <- runif(n =1000, min = 1, max = 6) 
+hist(ru3)
+```
+
+¡Ahora nuestro histograma parece más uniforme!. Cuando trabajamos con datos, siempre es una buena practica tener una muestra grande, con esto evitamos el sesgo en nuestros analisis.
+
+### Distribución normal
+
+La distribución normal es una de las más importantes, ya que se ajusta a muchos datos que representan procesos en la vida real. Su representación se asemeja a la de una campana, la campana de Gauss.
+
+Para obtener un número aleatorio "n" de una distribución normal utilizamos rnorm()
+
+?rnorm
+
+```{r collapse=TRUE, comment="-"}
+rnorm(n = 4, mean = 100, sd = 5)
+```
+
+?set.seed para reproducir los mismos números
+Utilizamos ?set.seed para reproducir el mismo grupo de números cada vez
+
+```{r collapse=TRUE, comment="-"}
+set.seed(6)
+rnorm(n = 10, mean = 5, sd = 5)
+set.seed(6)
+rnorm(n = 10, mean = 5, sd = 5)
+set.seed(4)
+rnorm(n = 10, mean = 5, sd = 5)
+```
+
+Distribución normal estándar
+
+```{r collapse=TRUE, comment="-"}
+rn<-rnorm(n = 100)
+rn<-rnorm(n = 1000, mean = 0, sd = 1)
+rn
+hist(rn)
+mean(rn)
+sd(rn)
+```
+
+Distribución normal con media de 5 y desviación estándar de 2
+
+```{r collapse=TRUE, comment="-"}
+rn<-rnorm(n = 100, mean = 5, sd = 2)
+hist(rn)
+mean(rn)
+sd(rn)
+```
+
+Aumente n: 1000, 10000, 100000
+
+```{r collapse=TRUE, comment="-"}
+r<-rnorm(1000000, mean=5, sd=2)
+hist(r)
+mean(r)
+sd(r)
+```
+
+Vamos a cargar un conjunto de datos que contiene medidas del sépalo y pétalo de diferentes especies del género Iris.
+
+```{r collapse=TRUE, comment="-"}
+data(iris)
+hist(iris$Sepal.Length)
+hist(iris$Sepal.Width)
+hist(iris$Petal.Length)
+hist(iris$Petal.Width)
+
+```
+
+### Tidy
+
+```{r collapse=TRUE, comment="-"}
+library(ggplot2)
+
+ggplot(iris, aes(Sepal.Width)) +
+  geom_bar(stat = "count")
+
+```
+
+¿Cuál de las 4 variables (Sepal.Length, Sepal.Width, Petal.Length, Petal.Width) representa mejor una distribución normal?
+
+
+<div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
+<span>
+<p style='margin-top:1em; text-align:center'>
+<b>Ejercicio 1</b></p>
+<p style='margin-left:1em;'>
+1. Crear un vector v1 que contenga una muestra de 1000 números aleatorios provenientes de una distribución normal con media de 112 y desviación estándar de 35. Graficar los valores en un histograma.
+2. Crear un vector v2 que contenga una muestra de 1000 números aleatorios provenientes de una distribución normal con media de 34 y desviación estándar de 3. Graficar los valores en un histograma.
+3. 3. Multiplicar v1 con v2 y graficar el resutado en un histograma. ¿Cuál es la diferencia de este histograma con los anteriores?
+4. Crear un vector "x" que contenga 15 números entre 1 y 50 que vengan de una distribución uniforme. Crear otro vector "y" que contenga los valores de "x" pero dos veces mas grande. Sumar a cada valor de "y" un valor constante de 7. Graficar mostrando "y" sobre "x" : plot(x,y)
+
+</p>
+</div>
+
+### Probabilidad en la distribución normal
+
+Para calcular la probabilidad de obtener un rango de valores que pertenezcan a una distribución normal, utilizamos la función pnorm()
+
+?pnorm
+
+Podemos calcular la probabilidad de obtener un valor menor de -2 que venga de una distribución normal (mean = 2, sd = 2)
+
+```{r collapse=TRUE, comment="-"}
+pnorm(q = -2, mean = 2, sd = 2)
+```
+
+O también podemos calcular la probabilidad de obtener un valor mayor que -2 que venga de la distribución normal mencionada anteriormente (mean = 2, sd = 2)
+
+```{r collapse=TRUE, comment="-"}
+1-pnorm(-2,mean=2,sd=2)
+```
+
+<div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
+<span>
+<p style='margin-top:1em; text-align:center'>
+<b>Ejercicio 2</b></p>
+<p style='margin-left:1em;'>
+1. ¿Cuál es la probabilidad de obtener un valor menor que 5 proveniente de la distribución normal mencionada anteriormente (mean = 5, sd = 2)?
+2. ¿Cuál es la probabilidad de obtener un valor entre 2 y 8?
+</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

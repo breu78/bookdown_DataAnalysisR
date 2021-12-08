@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Leyendo y manejando datos en R | Introducción al análisis de datos utilizando R</title>
+  <meta name="description" content="Everything you need (and nothing more) to start a bookdown book." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Leyendo y manejando datos en R | Introducción al análisis de datos utilizando R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://seankross.com/bookdown-start/" />
+  
+  <meta property="og:description" content="Everything you need (and nothing more) to start a bookdown book." />
+  <meta name="github-repo" content="seankross/bookdown-start" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Leyendo y manejando datos en R | Introducción al análisis de datos utilizando R" />
+  
+  <meta name="twitter:description" content="Everything you need (and nothing more) to start a bookdown book." />
+  
+
+<meta name="author" content="Björn Reu, Yovanny Duran, Zarith Villamizar, Silvia Ardila y Sergio Bolivar" />
+
+
+<meta name="date" content="2021-12-06" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="visualización-de-datos-en-r.html"/>
+<link rel="next" href="manejando-datos-utilizando-tidyverse.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introducción.html"><a href="introducción.html#sobre-este-curso"><i class="fa fa-check"></i><b>1.1</b> Sobre este curso</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html"><i class="fa fa-check"></i><b>2</b> Introducción a la programación con R</a>
+<ul>
+<li class="chapter" data-level="2.0.1" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#la-línea-de-comandos-terminal"><i class="fa fa-check"></i><b>2.0.1</b> La línea de comandos (Terminal)</a></li>
+<li class="chapter" data-level="2.0.2" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#función-ayuda"><i class="fa fa-check"></i><b>2.0.2</b> Función ayuda</a></li>
+<li class="chapter" data-level="2.0.3" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#creando-nuevas-variables"><i class="fa fa-check"></i><b>2.0.3</b> Creando nuevas variables:</a></li>
+<li class="chapter" data-level="2.0.4" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#el-área-de-trabajo-o-memoria---ventana-arriba-a-la-derecha-environment"><i class="fa fa-check"></i><b>2.0.4</b> El área de trabajo o memoria - Ventana arriba a la derecha ‘Environment’</a></li>
+<li class="chapter" data-level="2.0.5" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#vamos-a-practicar"><i class="fa fa-check"></i><b>2.0.5</b> Vamos a practicar</a></li>
+<li class="chapter" data-level="2.0.6" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#r-como-calculadora---operadores-y-funciones."><i class="fa fa-check"></i><b>2.0.6</b> R como calculadora - Operadores y funciones.</a></li>
+<li class="chapter" data-level="2.0.7" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#tipos-de-datos-y-objetos"><i class="fa fa-check"></i><b>2.0.7</b> Tipos de Datos y Objetos</a></li>
+<li class="chapter" data-level="2.0.8" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#vectores-i-vectores-sencillos"><i class="fa fa-check"></i><b>2.0.8</b> Vectores I: Vectores sencillos</a></li>
+<li class="chapter" data-level="2.0.9" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#vectores-ii-vectores-más-complejos"><i class="fa fa-check"></i><b>2.0.9</b> Vectores II: Vectores más complejos</a></li>
+<li class="chapter" data-level="2.0.10" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#indexar"><i class="fa fa-check"></i><b>2.0.10</b> Indexar</a></li>
+<li class="chapter" data-level="2.0.11" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#nas"><i class="fa fa-check"></i><b>2.0.11</b> NA´s</a></li>
+<li class="chapter" data-level="2.0.12" data-path="introducción-a-la-programación-con-r.html"><a href="introducción-a-la-programación-con-r.html#matrices"><i class="fa fa-check"></i><b>2.0.12</b> Matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html"><i class="fa fa-check"></i><b>3</b> Visualización de datos en R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#gráficos-y-diagrama-de-dispersión-simple"><i class="fa fa-check"></i><b>3.1</b> Gráficos y diagrama de dispersión simple</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#diagrama-de-dispersión-función-plot"><i class="fa fa-check"></i><b>3.1.1</b> Diagrama de dispersión: función plot()</a></li>
+<li class="chapter" data-level="3.1.2" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#etiquetas-de-la-gráfica-xlab-ylab-main"><i class="fa fa-check"></i><b>3.1.2</b> Etiquetas de la gráfica: xlab, ylab, main</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#demostración-de-la-versatilidad-de-la-gráfica"><i class="fa fa-check"></i><b>3.2</b> Demostración de la versatilidad de la gráfica</a></li>
+<li class="chapter" data-level="3.3" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#barras-cajas-e-histogramas"><i class="fa fa-check"></i><b>3.3</b> Barras, cajas e histogramas</a></li>
+<li class="chapter" data-level="3.4" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#función-par"><i class="fa fa-check"></i><b>3.4</b> Función par()</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="visualización-de-datos-en-r.html"><a href="visualización-de-datos-en-r.html#gráficos-compuestos"><i class="fa fa-check"></i><b>3.4.1</b> Gráficos compuestos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html"><i class="fa fa-check"></i><b>4</b> Leyendo y manejando datos en R</a>
+<ul>
+<li class="chapter" data-level="" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#estableciendo-el-directorio-de-trabajo-para-poder-leer-datos-desde-un-archivo"><i class="fa fa-check"></i>Estableciendo el directorio de trabajo para poder leer datos desde un archivo</a></li>
+<li class="chapter" data-level="4.1" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#data-frame"><i class="fa fa-check"></i><b>4.1</b> Data frame</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#leer-archivo-desde-carpeta-de-trabajo"><i class="fa fa-check"></i><b>4.1.1</b> Leer archivo desde carpeta de trabajo</a></li>
+<li class="chapter" data-level="4.1.2" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#evaluar-la-estructura-del-data-frame"><i class="fa fa-check"></i><b>4.1.2</b> Evaluar la estructura del data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#acceder-variables-dentro-del-data-frame"><i class="fa fa-check"></i><b>4.2</b> Acceder variables dentro del data frame</a></li>
+<li class="chapter" data-level="4.3" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#acceder-observaciones-mas-complejos"><i class="fa fa-check"></i><b>4.3</b> Acceder observaciones mas complejos</a></li>
+<li class="chapter" data-level="4.4" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#agregar-columnas-al-data-frame-para-apoyar-el-análisis"><i class="fa fa-check"></i><b>4.4</b> Agregar columnas al data frame para apoyar el análisis</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#crear-rangos-en-una-variable-continua"><i class="fa fa-check"></i><b>4.4.1</b> crear rangos en una variable continua:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="leyendo-y-manejando-datos-en-r.html"><a href="leyendo-y-manejando-datos-en-r.html#indexar-y-reemplazar"><i class="fa fa-check"></i><b>4.5</b> Indexar y reemplazar</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html"><i class="fa fa-check"></i><b>5</b> Manejando datos utilizando tidyverse</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#readr"><i class="fa fa-check"></i><b>5.1</b> Readr</a></li>
+<li class="chapter" data-level="5.2" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#tibble"><i class="fa fa-check"></i><b>5.2</b> Tibble</a></li>
+<li class="chapter" data-level="5.3" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#dplyr"><i class="fa fa-check"></i><b>5.3</b> Dplyr</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#select"><i class="fa fa-check"></i><b>5.3.1</b> Select</a></li>
+<li class="chapter" data-level="5.3.2" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#filter"><i class="fa fa-check"></i><b>5.3.2</b> Filter</a></li>
+<li class="chapter" data-level="5.3.3" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#summarise"><i class="fa fa-check"></i><b>5.3.3</b> Summarise</a></li>
+<li class="chapter" data-level="5.3.4" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#mutate"><i class="fa fa-check"></i><b>5.3.4</b> Mutate</a></li>
+<li class="chapter" data-level="5.3.5" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#arrange"><i class="fa fa-check"></i><b>5.3.5</b> Arrange</a></li>
+<li class="chapter" data-level="5.3.6" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#separate"><i class="fa fa-check"></i><b>5.3.6</b> Separate()</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#aggregate"><i class="fa fa-check"></i><b>5.4</b> Aggregate</a></li>
+<li class="chapter" data-level="5.5" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#stringr"><i class="fa fa-check"></i><b>5.5</b> Stringr</a></li>
+<li class="chapter" data-level="5.6" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#visualización-de-datos-utilizando-ggplot2"><i class="fa fa-check"></i><b>5.6</b> Visualización de datos utilizando ggplot2</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#theme"><i class="fa fa-check"></i><b>5.6.1</b> Theme</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="manejando-datos-utilizando-tidyverse.html"><a href="manejando-datos-utilizando-tidyverse.html#forcats"><i class="fa fa-check"></i><b>5.7</b> Forcats</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html"><i class="fa fa-check"></i><b>6</b> Introducción a Rmarkdown</a>
+<ul>
+<li class="chapter" data-level="6.0.1" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html#sintaxis-de-texto-plano"><i class="fa fa-check"></i><b>6.0.1</b> Sintaxis de texto plano:</a></li>
+<li class="chapter" data-level="6.1" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html#título-2"><i class="fa fa-check"></i><b>6.1</b> Título 2</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html#título-3"><i class="fa fa-check"></i><b>6.1.1</b> Título 3</a></li>
+<li class="chapter" data-level="6.1.2" data-path="introducción-a-rmarkdown.html"><a href="introducción-a-rmarkdown.html#sintaxis-de-código"><i class="fa fa-check"></i><b>6.1.2</b> Sintaxis de código:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html"><i class="fa fa-check"></i><b>7</b> De números aleatorios, distribuciones y probabilidades</a>
+<ul>
+<li class="chapter" data-level="7.0.1" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html#distribución-uniforme"><i class="fa fa-check"></i><b>7.0.1</b> Distribución uniforme</a></li>
+<li class="chapter" data-level="7.0.2" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html#distribución-normal"><i class="fa fa-check"></i><b>7.0.2</b> Distribución normal</a></li>
+<li class="chapter" data-level="7.0.3" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html#tidy"><i class="fa fa-check"></i><b>7.0.3</b> Tidy</a></li>
+<li class="chapter" data-level="7.0.4" data-path="de-números-aleatorios-distribuciones-y-probabilidades.html"><a href="de-números-aleatorios-distribuciones-y-probabilidades.html#probabilidad-en-la-distribución-normal"><i class="fa fa-check"></i><b>7.0.4</b> Probabilidad en la distribución normal</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html"><i class="fa fa-check"></i><b>8</b> Análisis de varianza - ANOVA</a>
+<ul>
+<li class="chapter" data-level="8.0.1" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html#anova-a-mano"><i class="fa fa-check"></i><b>8.0.1</b> Anova a mano</a></li>
+<li class="chapter" data-level="8.0.2" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html#estadístico-f"><i class="fa fa-check"></i><b>8.0.2</b> Estadístico F</a></li>
+<li class="chapter" data-level="8.0.3" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html#anova-con-funciones-de-r"><i class="fa fa-check"></i><b>8.0.3</b> Anova con funciones de R</a></li>
+<li class="chapter" data-level="8.0.4" data-path="análisis-de-varianza---anova.html"><a href="análisis-de-varianza---anova.html#anova-con-datos-reales"><i class="fa fa-check"></i><b>8.0.4</b> Anova con datos reales</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html"><i class="fa fa-check"></i><b>9</b> Regresión lineal simple</a>
+<ul>
+<li class="chapter" data-level="9.0.1" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#regresión-lineal"><i class="fa fa-check"></i><b>9.0.1</b> Regresión lineal</a></li>
+<li class="chapter" data-level="9.0.2" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#regresión-a-mano"><i class="fa fa-check"></i><b>9.0.2</b> Regresión a mano</a></li>
+<li class="chapter" data-level="9.0.3" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#indices-de-diversidad-y-regresión-lineal"><i class="fa fa-check"></i><b>9.0.3</b> Indices de diversidad y regresión lineal</a></li>
+<li class="chapter" data-level="9.0.4" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#paquete-vegan"><i class="fa fa-check"></i><b>9.0.4</b> Paquete vegan</a></li>
+<li class="chapter" data-level="9.0.5" data-path="regresión-lineal-simple.html"><a href="regresión-lineal-simple.html#supuestos-de-la-regresión-lineal"><i class="fa fa-check"></i><b>9.0.5</b> Supuestos de la regresión lineal</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="regresión-lineal-múltiple.html"><a href="regresión-lineal-múltiple.html"><i class="fa fa-check"></i><b>10</b> Regresión lineal múltiple</a>
+<ul>
+<li class="chapter" data-level="10.0.1" data-path="regresión-lineal-múltiple.html"><a href="regresión-lineal-múltiple.html#regresión-lineal-múltiple-1"><i class="fa fa-check"></i><b>10.0.1</b> Regresión lineal múltiple</a></li>
+<li class="chapter" data-level="10.0.2" data-path="regresión-lineal-múltiple.html"><a href="regresión-lineal-múltiple.html#colinealidad"><i class="fa fa-check"></i><b>10.0.2</b> Colinealidad</a></li>
+<li class="chapter" data-level="10.0.3" data-path="regresión-lineal-múltiple.html"><a href="regresión-lineal-múltiple.html#selección-de-modelos"><i class="fa fa-check"></i><b>10.0.3</b> Selección de modelos</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introducción al análisis de datos utilizando R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="leyendo-y-manejando-datos-en-r" class="section level1" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Leyendo y manejando datos en R</h1>
+<div id="estableciendo-el-directorio-de-trabajo-para-poder-leer-datos-desde-un-archivo" class="section level3 unnumbered">
+<h3>Estableciendo el directorio de trabajo para poder leer datos desde un archivo</h3>
+<p>Antes de empezar, debemos crear nuestro sitio de trabajo mediante la función setwd(), en el cual debemos poner entre comillas la dirección de la carpeta en la que tenemos guardado este script y el archivo con los datos del proyecto Santander BIO “Santander_BIO_data.csv”</p>
+<pre><code>setwd(&quot;~/r tic/sesion 2&quot;) # Note que empieza con ~ ya que esto nos dirige automáticamente a la carpeta mis documentos que R establece por defecto. Las carpetas se separan con /</code></pre>
+<p>En RStudio se recomienda utilizar: Session -&gt; Set Working Directory</p>
+<hr />
+</div>
+<div id="data-frame" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Data frame</h2>
+<p>Al igual que una matriz, los data frames son un conjunto de elementos ordenados en dos dimensiones. Filas (observaciones) y columnas (variables). Sin embargo, en un data frame se pueden almacenar diferentes tipos de datos en diferentes columnas.</p>
+<p>Una de las formas más comunes en la que vamos a encontrar datos, es en formato Excel o .csv. Estos son datos tabulados que constan de dos dimensiones, filas y columnas, que pueden almacenar datos numéricos y caracteres.</p>
+<hr />
+<div id="leer-archivo-desde-carpeta-de-trabajo" class="section level3" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> Leer archivo desde carpeta de trabajo</h3>
+<p>Para leer con facilidad en R los archivos .csv (coma seperated values), es posible importarlos de la siguiente forma:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="leyendo-y-manejando-datos-en-r.html#cb2-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">&quot;SantanderBIO.csv&quot;</span>) <span class="co"># Note que los nombres de los documentos van entre comillas y con la extensión del documento</span></span></code></pre></div>
+<p>Ya hemos cargado nuestros datos en un data frame, el cual se trata de información sobre inventarios de la biodiversidad en el marco del proyecto Santander BIO. Nuestro data frame cuenta con información taxonómica (Nombre de la especie, familia, reino, etc.) e información sobre los sitios y la altura a la que se encuentran estas especies.</p>
+<hr />
+</div>
+<div id="evaluar-la-estructura-del-data-frame" class="section level3" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> Evaluar la estructura del data frame</h3>
+<p>Ahora vamos a explorar nuestros datos aprendiendo paso a paso algunas funciones importantes</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="leyendo-y-manejando-datos-en-r.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dat) <span class="co"># Dimensiones de los datos: 1255 filas (observaciones) y 11 columnas (variables)</span></span>
+<span id="cb3-2"><a href="leyendo-y-manejando-datos-en-r.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="dv">1255</span>   <span class="dv">10</span></span>
+<span id="cb3-3"><a href="leyendo-y-manejando-datos-en-r.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(dat) <span class="co">#Nombre de las columnas</span></span>
+<span id="cb3-4"><a href="leyendo-y-manejando-datos-en-r.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">1</span>] <span class="st">&quot;species&quot;</span>      <span class="st">&quot;locality&quot;</span>     <span class="st">&quot;municipality&quot;</span> <span class="st">&quot;kingdom&quot;</span>      <span class="st">&quot;phylum&quot;</span>      </span>
+<span id="cb3-5"><a href="leyendo-y-manejando-datos-en-r.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  [<span class="dv">6</span>] <span class="st">&quot;class&quot;</span>        <span class="st">&quot;order&quot;</span>        <span class="st">&quot;family&quot;</span>       <span class="st">&quot;taxonRank&quot;</span>    <span class="st">&quot;elevation&quot;</span></span>
+<span id="cb3-6"><a href="leyendo-y-manejando-datos-en-r.html#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dat) <span class="co">#Estructura de los datos</span></span>
+<span id="cb3-7"><a href="leyendo-y-manejando-datos-en-r.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="st">&#39;data.frame&#39;</span><span class="sc">:</span> <span class="dv">1255</span> obs. of  <span class="dv">10</span> variables<span class="sc">:</span></span>
+<span id="cb3-8"><a href="leyendo-y-manejando-datos-en-r.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> species     <span class="sc">:</span> chr  <span class="st">&quot;Aciotis circaeifolia&quot;</span> <span class="st">&quot;Adiantum obliquum&quot;</span> <span class="st">&quot;Adiantum pulverulentum&quot;</span> <span class="st">&quot;Adiantum wilsonii&quot;</span> ...</span>
+<span id="cb3-9"><a href="leyendo-y-manejando-datos-en-r.html#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> locality    <span class="sc">:</span> chr  <span class="st">&quot;El Aguila&quot;</span> <span class="st">&quot;El Aguila&quot;</span> <span class="st">&quot;El Aguila&quot;</span> <span class="st">&quot;El Aguila&quot;</span> ...</span>
+<span id="cb3-10"><a href="leyendo-y-manejando-datos-en-r.html#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> municipality<span class="sc">:</span> chr  <span class="st">&quot;Cimitarra&quot;</span> <span class="st">&quot;Cimitarra&quot;</span> <span class="st">&quot;Cimitarra&quot;</span> <span class="st">&quot;Cimitarra&quot;</span> ...</span>
+<span id="cb3-11"><a href="leyendo-y-manejando-datos-en-r.html#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> kingdom     <span class="sc">:</span> chr  <span class="st">&quot;Plantae&quot;</span> <span class="st">&quot;Plantae&quot;</span> <span class="st">&quot;Plantae&quot;</span> <span class="st">&quot;Plantae&quot;</span> ...</span>
+<span id="cb3-12"><a href="leyendo-y-manejando-datos-en-r.html#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> phylum      <span class="sc">:</span> chr  <span class="st">&quot;Tracheophyta&quot;</span> <span class="st">&quot;Tracheophyta&quot;</span> <span class="st">&quot;Tracheophyta&quot;</span> <span class="st">&quot;Tracheophyta&quot;</span> ...</span>
+<span id="cb3-13"><a href="leyendo-y-manejando-datos-en-r.html#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> class       <span class="sc">:</span> chr  <span class="st">&quot;Magnoliopsida&quot;</span> <span class="st">&quot;Polypodiopsida&quot;</span> <span class="st">&quot;Polypodiopsida&quot;</span> <span class="st">&quot;Polypodiopsida&quot;</span> ...</span>
+<span id="cb3-14"><a href="leyendo-y-manejando-datos-en-r.html#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> order       <span class="sc">:</span> chr  <span class="st">&quot;Myrtales&quot;</span> <span class="st">&quot;Polypodiales&quot;</span> <span class="st">&quot;Polypodiales&quot;</span> <span class="st">&quot;Polypodiales&quot;</span> ...</span>
+<span id="cb3-15"><a href="leyendo-y-manejando-datos-en-r.html#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> family      <span class="sc">:</span> chr  <span class="st">&quot;Melastomataceae&quot;</span> <span class="st">&quot;Pteridaceae&quot;</span> <span class="st">&quot;Pteridaceae&quot;</span> <span class="st">&quot;Pteridaceae&quot;</span> ...</span>
+<span id="cb3-16"><a href="leyendo-y-manejando-datos-en-r.html#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> taxonRank   <span class="sc">:</span> chr  <span class="st">&quot;SPECIES&quot;</span> <span class="st">&quot;SPECIES&quot;</span> <span class="st">&quot;SPECIES&quot;</span> <span class="st">&quot;SPECIES&quot;</span> ...</span>
+<span id="cb3-17"><a href="leyendo-y-manejando-datos-en-r.html#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>  <span class="er">$</span> elevation   <span class="sc">:</span> int  <span class="dv">158</span> <span class="dv">158</span> <span class="dv">159</span> <span class="dv">158</span> <span class="dv">158</span> <span class="dv">158</span> <span class="dv">158</span> <span class="dv">155</span> <span class="dv">158</span> <span class="dv">122</span> ...</span></code></pre></div>
+<p>Tambien es posible preguntar por otras condiciones en nuestro data frame que no sean necesariamente numéricas o que su resultado no sea una posición. Por ejemplo, un resultado tipo lógico, mediante la función is.numeric/character()</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="leyendo-y-manejando-datos-en-r.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.numeric</span>(dat<span class="sc">$</span>species) </span>
+<span id="cb4-2"><a href="leyendo-y-manejando-datos-en-r.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="cn">FALSE</span></span>
+<span id="cb4-3"><a href="leyendo-y-manejando-datos-en-r.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">is.character</span>(dat<span class="sc">$</span>species) </span>
+<span id="cb4-4"><a href="leyendo-y-manejando-datos-en-r.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="cn">TRUE</span></span>
+<span id="cb4-5"><a href="leyendo-y-manejando-datos-en-r.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">is.numeric</span>(dat<span class="sc">$</span>elevation) </span>
+<span id="cb4-6"><a href="leyendo-y-manejando-datos-en-r.html#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="cn">TRUE</span></span>
+<span id="cb4-7"><a href="leyendo-y-manejando-datos-en-r.html#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">is.character</span>(dat<span class="sc">$</span>elevation) </span>
+<span id="cb4-8"><a href="leyendo-y-manejando-datos-en-r.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="cn">FALSE</span></span></code></pre></div>
+<hr />
+</div>
+</div>
+<div id="acceder-variables-dentro-del-data-frame" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Acceder variables dentro del data frame</h2>
+<p>Para seleccionar una variable o columna del data frame utilizaremos el caracter “$” seguido del nombre asignado asignado a nuestros datos, después colocaremos el nombre de la variable deseada o podremos desplegar todas las opciones con tabulador</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="leyendo-y-manejando-datos-en-r.html#cb5-1" aria-hidden="true" tabindex="-1"></a>ele <span class="ot">&lt;-</span> dat<span class="sc">$</span>elevation</span>
+<span id="cb5-2"><a href="leyendo-y-manejando-datos-en-r.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ele)<span class="co">#La función head devuelve por defecto los seis primeros valores de un vector</span></span>
+<span id="cb5-3"><a href="leyendo-y-manejando-datos-en-r.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="dv">158</span> <span class="dv">158</span> <span class="dv">159</span> <span class="dv">158</span> <span class="dv">158</span> <span class="dv">158</span></span>
+<span id="cb5-4"><a href="leyendo-y-manejando-datos-en-r.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(ele)<span class="co">#En contraste, la función tail devuelve los seis últimos valores</span></span>
+<span id="cb5-5"><a href="leyendo-y-manejando-datos-en-r.html#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="dv">2575</span> <span class="dv">2525</span> <span class="dv">2402</span> <span class="dv">2390</span> <span class="dv">2525</span> <span class="dv">2525</span></span>
+<span id="cb5-6"><a href="leyendo-y-manejando-datos-en-r.html#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(dat<span class="sc">$</span>elevation) <span class="co">#Con min obtenemos el valor mínimo de una variable deseada (en este caso altura de la observación)</span></span>
+<span id="cb5-7"><a href="leyendo-y-manejando-datos-en-r.html#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="dv">74</span></span>
+<span id="cb5-8"><a href="leyendo-y-manejando-datos-en-r.html#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(dat<span class="sc">$</span>elevation) <span class="co">#Y con max el valor máximo.</span></span>
+<span id="cb5-9"><a href="leyendo-y-manejando-datos-en-r.html#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="dv">3603</span></span></code></pre></div>
+<p><em>Ejercicio:</em> Explorar con las funciones mean() y sd().</p>
+<p>Sabemos que hay distintos lugares en donde se colecto la información y que cada lugar puede aparecer más de una vez porque es probable que cuente con más de una especie colectada, también es probable que una especie se repita debido a que se puede encontrar en más de un lugar. Entonces, vamos a averiguar el número de especies registradas en total.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="leyendo-y-manejando-datos-en-r.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat<span class="sc">$</span>species)</span>
+<span id="cb6-2"><a href="leyendo-y-manejando-datos-en-r.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="st">&quot;Aciotis circaeifolia&quot;</span>   <span class="st">&quot;Adiantum obliquum&quot;</span>      <span class="st">&quot;Adiantum pulverulentum&quot;</span></span>
+<span id="cb6-3"><a href="leyendo-y-manejando-datos-en-r.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">4</span>] <span class="st">&quot;Adiantum wilsonii&quot;</span>      <span class="st">&quot;Aechmea longicuspis&quot;</span>    <span class="st">&quot;Aegiphila cordata&quot;</span></span>
+<span id="cb6-4"><a href="leyendo-y-manejando-datos-en-r.html#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(dat<span class="sc">$</span>species)<span class="co"># Con la longitud del vector podemos obtener el número total de registros</span></span>
+<span id="cb6-5"><a href="leyendo-y-manejando-datos-en-r.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="dv">1255</span></span>
+<span id="cb6-6"><a href="leyendo-y-manejando-datos-en-r.html#cb6-6" aria-hidden="true" tabindex="-1"></a>species <span class="ot">&lt;-</span> <span class="fu">unique</span>(dat<span class="sc">$</span>species) <span class="co">#Con la función &quot;unique&quot; obtendremos los nombres de las especies sin que se repitan</span></span>
+<span id="cb6-7"><a href="leyendo-y-manejando-datos-en-r.html#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="leyendo-y-manejando-datos-en-r.html#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(species) <span class="co">#Hay 1000 especies en total</span></span>
+<span id="cb6-9"><a href="leyendo-y-manejando-datos-en-r.html#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="dv">1000</span></span></code></pre></div>
+<p>Ahora averiguaremos cuantas especie únicas puede haber en un municipio aleatorio. Para esto, vamos a crear un vector que contenga solo los datos del municipio deseado, aunque esto no es obligatorio, puede ser una forma ordenada de escribir nuestro código.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="leyendo-y-manejando-datos-en-r.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(dat<span class="sc">$</span>municipio) <span class="co">#Nombres de los municipios de colecta</span></span>
+<span id="cb7-2"><a href="leyendo-y-manejando-datos-en-r.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="cn">NULL</span></span>
+<span id="cb7-3"><a href="leyendo-y-manejando-datos-en-r.html#cb7-3" aria-hidden="true" tabindex="-1"></a>m_Cimitarra <span class="ot">&lt;-</span> dat[dat<span class="sc">$</span>municipality<span class="sc">==</span><span class="st">&quot;Cimitarra&quot;</span>,] <span class="co">#Usamos los corchetes [] para seleccionar las filas que contengan datos únicamente del municipio de Cimitarra. Después de la &quot;,&quot; se deja vacío para que extraiga todas las columnas asociadas a las filas que seleccionamos</span></span>
+<span id="cb7-4"><a href="leyendo-y-manejando-datos-en-r.html#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="leyendo-y-manejando-datos-en-r.html#cb7-5" aria-hidden="true" tabindex="-1"></a>sp_unicas_cimitarra <span class="ot">&lt;-</span> <span class="fu">unique</span>(m_Cimitarra<span class="sc">$</span>species)</span>
+<span id="cb7-6"><a href="leyendo-y-manejando-datos-en-r.html#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="leyendo-y-manejando-datos-en-r.html#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(sp_unicas_cimitarra) <span class="co">#En el municipio de Cimitarra se registraron 397 especies </span></span>
+<span id="cb7-8"><a href="leyendo-y-manejando-datos-en-r.html#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="dv">397</span></span></code></pre></div>
+<div class="warning" style="padding:0.1em; background-color:#D6EAF8; color:#21618C">
+<span>
+<p style="margin-top:1em; text-align:center">
+<b>Ejercicio 1</b>
+</p>
+<p style="margin-left:1em;">
+<ol style="list-style-type: decimal">
+<li>Extraer la siguiente información del municipio de Cimitarra:</li>
+</ol>
+<ul>
+<li>Elevacion máxima y mínima de los registros en SantanderBIO</li>
+<li>Elevación máxima y mínima de los registros de aves</li>
+<li>Número de localidades únicas</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Extraer la altura máxima y mínima de la que se tiene registro en cada reino (Plantae, Animalia) por localidad (Vereda El Aguila, Vereda Guineales, Vereda Locacion, Vereda Riveras de San Juan)</p></li>
+<li><p>Calcular el promedio de la altura por municipio</p></li>
+</ol>
+</p>
+</div>
+</div>
+<div id="acceder-observaciones-mas-complejos" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Acceder observaciones mas complejos</h2>
+<p>Podemos especificar más de una condición para crear un set de datos más pequeño</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="leyendo-y-manejando-datos-en-r.html#cb8-1" aria-hidden="true" tabindex="-1"></a>or_operador <span class="ot">&lt;-</span> dat[dat<span class="sc">$</span>municipality<span class="sc">==</span><span class="st">&quot;Cimitarra&quot;</span> <span class="sc">|</span> dat<span class="sc">$</span>municipality<span class="sc">==</span><span class="st">&quot;Santa Barbara&quot;</span>,] <span class="co"># Utilizamos el simbolo &quot;|&quot; o &quot;or&quot; para extraer una condición u otra. Si ambas condiciones son verdaderas en nuestro set de datos, se extraerán ambas.</span></span>
+<span id="cb8-2"><a href="leyendo-y-manejando-datos-en-r.html#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="leyendo-y-manejando-datos-en-r.html#cb8-3" aria-hidden="true" tabindex="-1"></a>or_operador <span class="ot">&lt;-</span> dat[dat<span class="sc">$</span>municipality<span class="sc">==</span><span class="st">&quot;Cimitarra&quot;</span> <span class="sc">|</span> dat<span class="sc">$</span>municipality<span class="sc">==</span><span class="st">&quot;Santa&quot;</span>,] <span class="co"># En este caso solo  se extraerán las observaciones de Cimitarra ya que no existe un municipio llamado &quot;Santa&quot; dentro de nuestros datos</span></span>
+<span id="cb8-4"><a href="leyendo-y-manejando-datos-en-r.html#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="leyendo-y-manejando-datos-en-r.html#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Si queremos elegir todas las observaciones menos una en particular, usamos el operador lógico &quot;!&quot;</span></span>
+<span id="cb8-6"><a href="leyendo-y-manejando-datos-en-r.html#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="leyendo-y-manejando-datos-en-r.html#cb8-7" aria-hidden="true" tabindex="-1"></a>plantas_no <span class="ot">&lt;-</span> dat[<span class="sc">!</span>dat<span class="sc">$</span>kingdom<span class="sc">==</span><span class="st">&quot;Plantae&quot;</span>,] <span class="co"># Seleccionamos solo observaciones con registros del reino Animalia</span></span></code></pre></div>
+<p>Para seleccionar varias condiciones usamos “&amp;”</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="leyendo-y-manejando-datos-en-r.html#cb9-1" aria-hidden="true" tabindex="-1"></a>alt_0_100 <span class="ot">&lt;-</span> dat[dat<span class="sc">$</span>elevation <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> dat<span class="sc">$</span>elevation <span class="sc">&lt;</span> <span class="dv">100</span>,] <span class="co"># Seleccionar alturas entre 0 y 100 metros</span></span>
+<span id="cb9-2"><a href="leyendo-y-manejando-datos-en-r.html#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="leyendo-y-manejando-datos-en-r.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(alt_0_100[,<span class="dv">1</span>]) <span class="co"># Existen 16 observaciones registradas en el rango de altura de 0 a 100 metros, todos en Cimitarra</span></span>
+<span id="cb9-4"><a href="leyendo-y-manejando-datos-en-r.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="dv">16</span></span></code></pre></div>
+<p>¿Cómo podemos verificar que obtuvimos los datos deseados?</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="leyendo-y-manejando-datos-en-r.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(alt_0_100<span class="sc">$</span>elevation)</span>
+<span id="cb10-2"><a href="leyendo-y-manejando-datos-en-r.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="dv">74</span></span>
+<span id="cb10-3"><a href="leyendo-y-manejando-datos-en-r.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(alt_0_100<span class="sc">$</span>elevation)</span>
+<span id="cb10-4"><a href="leyendo-y-manejando-datos-en-r.html#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="dv">97</span></span></code></pre></div>
+<p>¿Cómo podemos averiguar el número de observaciones de anfibios por municipio?</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="leyendo-y-manejando-datos-en-r.html#cb11-1" aria-hidden="true" tabindex="-1"></a>amphi_cimitarra <span class="ot">&lt;-</span> dat[dat<span class="sc">$</span>municipality<span class="sc">==</span><span class="st">&quot;Cimitarra&quot;</span> <span class="sc">&amp;</span> dat<span class="sc">$</span>class<span class="sc">==</span><span class="st">&quot;Amphibia&quot;</span>,]</span>
+<span id="cb11-2"><a href="leyendo-y-manejando-datos-en-r.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(amphi_cimitarra[,<span class="dv">1</span>])</span>
+<span id="cb11-3"><a href="leyendo-y-manejando-datos-en-r.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="dv">33</span></span></code></pre></div>
+<p><em>Ejericio:</em> Calcular también para El carmen de Chucurí y Santa Barbara.</p>
+<hr />
+</div>
+<div id="agregar-columnas-al-data-frame-para-apoyar-el-análisis" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Agregar columnas al data frame para apoyar el análisis</h2>
+<p>En el ejercicio anterior observamos una diferencia en el número de registros de anfibios en cada municipio. Vamos a ver el número de registros totales en cada municipio</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="leyendo-y-manejando-datos-en-r.html#cb12-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>conteo <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co">#Podemos añadir una nueva columna que tenga el número 1 en cada observación y así hacer una suma de filas </span></span>
+<span id="cb12-2"><a href="leyendo-y-manejando-datos-en-r.html#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="leyendo-y-manejando-datos-en-r.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(dat[dat<span class="sc">$</span>municipality<span class="sc">==</span><span class="st">&quot;Cimitarra&quot;</span>, <span class="st">&quot;conteo&quot;</span>]) <span class="co">#En Cimitarra existen 551 registros</span></span>
+<span id="cb12-4"><a href="leyendo-y-manejando-datos-en-r.html#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="dv">551</span></span>
+<span id="cb12-5"><a href="leyendo-y-manejando-datos-en-r.html#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(dat[dat<span class="sc">$</span>municipality<span class="sc">==</span><span class="st">&quot;El Carmen de Chucuri&quot;</span>, <span class="st">&quot;conteo&quot;</span>]) <span class="co">#En el Carmen de Chucuri existen 372 registros totales</span></span>
+<span id="cb12-6"><a href="leyendo-y-manejando-datos-en-r.html#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="dv">372</span></span>
+<span id="cb12-7"><a href="leyendo-y-manejando-datos-en-r.html#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(dat[dat<span class="sc">$</span>municipality<span class="sc">==</span><span class="st">&quot;Santa Barbara&quot;</span>, <span class="st">&quot;conteo&quot;</span>]) <span class="co">#En Santa Barbara existen 332 registros</span></span>
+<span id="cb12-8"><a href="leyendo-y-manejando-datos-en-r.html#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="dv">332</span></span></code></pre></div>
+<p>Finalmente, podemos eliminar la columna de conteo</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="leyendo-y-manejando-datos-en-r.html#cb13-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat[,<span class="sc">-</span><span class="dv">11</span>]</span></code></pre></div>
+<hr />
+<div id="crear-rangos-en-una-variable-continua" class="section level3" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> crear rangos en una variable continua:</h3>
+<p>¿Cuál es el rango de altura en la que registraron los anfibios del ejercicio anterior?</p>
+<p>Para esto usaremos la función cut()</p>
+<p>?cut</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="leyendo-y-manejando-datos-en-r.html#cb14-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>cut <span class="ot">&lt;-</span> <span class="fu">cut</span>(dat<span class="sc">$</span>elevation, <span class="dv">4</span>)</span>
+<span id="cb14-2"><a href="leyendo-y-manejando-datos-en-r.html#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="leyendo-y-manejando-datos-en-r.html#cb14-3" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>cut <span class="ot">&lt;-</span> <span class="fu">cut</span>(dat<span class="sc">$</span>elevation, <span class="dv">4</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>))</span></code></pre></div>
+<p>Explique que sucede en las líneas de código anterior, luego defina 4 rangos de altura que empiece desde 0 y termine en 4000 metros y colóqueles una etiqueta. Finalmente responda la pregunta anterior.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="leyendo-y-manejando-datos-en-r.html#cb15-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>cut <span class="ot">&lt;-</span> <span class="fu">cut</span>(dat<span class="sc">$</span>elevation, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1000</span>,<span class="dv">2000</span>,<span class="dv">3000</span>,<span class="dv">4000</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Cero a mil&quot;</span>, <span class="st">&quot;Mil a dos mil&quot;</span>, <span class="st">&quot;Dos mil a tres mil&quot;</span>, <span class="st">&quot;Tres mil a cuatro mil&quot;</span>))</span>
+<span id="cb15-2"><a href="leyendo-y-manejando-datos-en-r.html#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="leyendo-y-manejando-datos-en-r.html#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(dat<span class="sc">$</span>cut)</span>
+<span id="cb15-4"><a href="leyendo-y-manejando-datos-en-r.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="st">&quot;Cero a mil&quot;</span>            <span class="st">&quot;Mil a dos mil&quot;</span>         <span class="st">&quot;Dos mil a tres mil&quot;</span>   </span>
+<span id="cb15-5"><a href="leyendo-y-manejando-datos-en-r.html#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">4</span>] <span class="st">&quot;Tres mil a cuatro mil&quot;</span></span></code></pre></div>
+<div class="warning" style="padding:0.1em; background-color:#D6EAF8; color:#21618C">
+<span>
+<p style="margin-top:1em; text-align:center">
+<b>Ejercicio 2</b>
+</p>
+<p style="margin-left:1em;">
+<ol style="list-style-type: decimal">
+<li>Calcular el número de registros por cada rango de altura</li>
+</ol>
+<ul>
+<li>Elevacion máxima y mínima de los registros en SantanderBIO</li>
+<li>Elevación máxima y mínima de los registros de aves</li>
+<li>Número de localidades únicas</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Calcular el número de especies por cada rango de altura</p></li>
+<li><p>Calcular el número de especies de plantas por cada rango de altura</p></li>
+</ol>
+</p>
+</div>
+</div>
+</div>
+<div id="indexar-y-reemplazar" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Indexar y reemplazar</h2>
+<p>En R podemos preguntar por una condición en específico y el resultado será la posición de este en el data frame. Esto se hace mediante la función which().</p>
+<p>?which</p>
+<p>Podemos preguntar por ejemplo por los registros que se encuentren a una altura menor de 80 metros</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="leyendo-y-manejando-datos-en-r.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(dat<span class="sc">$</span>elevation<span class="sc">&lt;</span><span class="dv">80</span>) <span class="co">#Existen 6 registros que se encuentran a una altura menor de 80 metros</span></span>
+<span id="cb16-2"><a href="leyendo-y-manejando-datos-en-r.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> [<span class="dv">1</span>] <span class="dv">1144</span> <span class="dv">1147</span> <span class="dv">1165</span> <span class="dv">1173</span> <span class="dv">1179</span> <span class="dv">1180</span></span>
+<span id="cb16-3"><a href="leyendo-y-manejando-datos-en-r.html#cb16-3" aria-hidden="true" tabindex="-1"></a>dat[<span class="dv">1144</span>,] <span class="co">#El resultado de la fila 1144 corresponde la especie Curimata mivartii registrada a 74 metros de altura</span></span>
+<span id="cb16-4"><a href="leyendo-y-manejando-datos-en-r.html#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>                species            locality municipality  kingdom   phylum</span>
+<span id="cb16-5"><a href="leyendo-y-manejando-datos-en-r.html#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="dv">1144</span> Curimata mivartii Riveras de San Juan    Cimitarra Animalia Chordata</span>
+<span id="cb16-6"><a href="leyendo-y-manejando-datos-en-r.html#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>               class         order      family taxonRank elevation        cut</span>
+<span id="cb16-7"><a href="leyendo-y-manejando-datos-en-r.html#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="dv">1144</span> Actinopterygii Characiformes Curimatidae   SPECIES        <span class="dv">74</span> Cero a mil</span></code></pre></div>
+<p>Si guardamos las posiciones del resultado anterior, podemos obtener todos los resultados en un nuevo data frame de manera rápida:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="leyendo-y-manejando-datos-en-r.html#cb17-1" aria-hidden="true" tabindex="-1"></a>posiciones <span class="ot">&lt;-</span> <span class="fu">which</span>(dat<span class="sc">$</span>elevation<span class="sc">&lt;</span><span class="dv">80</span>)</span>
+<span id="cb17-2"><a href="leyendo-y-manejando-datos-en-r.html#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="leyendo-y-manejando-datos-en-r.html#cb17-3" aria-hidden="true" tabindex="-1"></a>nuevo_dat <span class="ot">&lt;-</span> dat[posiciones,] <span class="co">#Podemos escribir el nombre del vector que contiene los valores de las posiciones para no escribirlas una por una</span></span>
+<span id="cb17-4"><a href="leyendo-y-manejando-datos-en-r.html#cb17-4" aria-hidden="true" tabindex="-1"></a>nuevo_dat</span>
+<span id="cb17-5"><a href="leyendo-y-manejando-datos-en-r.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>                             species            locality municipality  kingdom</span>
+<span id="cb17-6"><a href="leyendo-y-manejando-datos-en-r.html#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="dv">1144</span>              Curimata mivartii Riveras de San Juan    Cimitarra Animalia</span>
+<span id="cb17-7"><a href="leyendo-y-manejando-datos-en-r.html#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="dv">1147</span>      Dasyloricaria filamentosa Riveras de San Juan    Cimitarra Animalia</span>
+<span id="cb17-8"><a href="leyendo-y-manejando-datos-en-r.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="dv">1165</span>        Megaleporinus muyscorum Riveras de San Juan    Cimitarra Animalia</span>
+<span id="cb17-9"><a href="leyendo-y-manejando-datos-en-r.html#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="dv">1173</span> Pimelodella floridablancaensis Riveras de San Juan    Cimitarra Animalia</span>
+<span id="cb17-10"><a href="leyendo-y-manejando-datos-en-r.html#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="dv">1179</span>      Rhinoclemmys melanosterna Riveras de San Juan    Cimitarra Animalia</span>
+<span id="cb17-11"><a href="leyendo-y-manejando-datos-en-r.html#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="dv">1180</span>       Rineloricaria magdalenae Riveras de San Juan    Cimitarra Animalia</span>
+<span id="cb17-12"><a href="leyendo-y-manejando-datos-en-r.html#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>        phylum          class         order        family taxonRank elevation</span>
+<span id="cb17-13"><a href="leyendo-y-manejando-datos-en-r.html#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="dv">1144</span> Chordata Actinopterygii Characiformes   Curimatidae   SPECIES        <span class="dv">74</span></span>
+<span id="cb17-14"><a href="leyendo-y-manejando-datos-en-r.html#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="dv">1147</span> Chordata Actinopterygii  Siluriformes  Loricariidae   SPECIES        <span class="dv">74</span></span>
+<span id="cb17-15"><a href="leyendo-y-manejando-datos-en-r.html#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="dv">1165</span> Chordata Actinopterygii Characiformes   Anostomidae   SPECIES        <span class="dv">74</span></span>
+<span id="cb17-16"><a href="leyendo-y-manejando-datos-en-r.html#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="dv">1173</span> Chordata Actinopterygii  Siluriformes Heptapteridae   SPECIES        <span class="dv">74</span></span>
+<span id="cb17-17"><a href="leyendo-y-manejando-datos-en-r.html#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="dv">1179</span> Chordata       Reptilia    Testudines   Geoemydidae   SPECIES        <span class="dv">74</span></span>
+<span id="cb17-18"><a href="leyendo-y-manejando-datos-en-r.html#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="dv">1180</span> Chordata Actinopterygii  Siluriformes  Loricariidae   SPECIES        <span class="dv">74</span></span>
+<span id="cb17-19"><a href="leyendo-y-manejando-datos-en-r.html#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>             cut</span>
+<span id="cb17-20"><a href="leyendo-y-manejando-datos-en-r.html#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="dv">1144</span> Cero a mil</span>
+<span id="cb17-21"><a href="leyendo-y-manejando-datos-en-r.html#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="dv">1147</span> Cero a mil</span>
+<span id="cb17-22"><a href="leyendo-y-manejando-datos-en-r.html#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="dv">1165</span> Cero a mil</span>
+<span id="cb17-23"><a href="leyendo-y-manejando-datos-en-r.html#cb17-23" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="dv">1173</span> Cero a mil</span>
+<span id="cb17-24"><a href="leyendo-y-manejando-datos-en-r.html#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="dv">1179</span> Cero a mil</span>
+<span id="cb17-25"><a href="leyendo-y-manejando-datos-en-r.html#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="dv">1180</span> Cero a mil</span></code></pre></div>
+<p>Ademas de extraer información de un data frame, podemos editarlo de forma sencilla. Supongamos que encontramos un error asociado a un dato en específico, como el nombre de una familia. En nuestro caso hipotético, supongamos que nuestros datos tienen un error de digitación, y el nombre de la familia Acanthaceae está mal escrito, por lo que necesitamos modificarlo.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="leyendo-y-manejando-datos-en-r.html#cb18-1" aria-hidden="true" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> dat <span class="co">#Copiamos el data frame en un nuevo vector</span></span>
+<span id="cb18-2"><a href="leyendo-y-manejando-datos-en-r.html#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="leyendo-y-manejando-datos-en-r.html#cb18-3" aria-hidden="true" tabindex="-1"></a>nombre_incorrecto <span class="ot">&lt;-</span> <span class="fu">which</span>(dat2<span class="sc">$</span>family<span class="sc">==</span><span class="st">&quot;Acanthaceae&quot;</span>) <span class="co">#Guardamos la posición de las filas en las que esta el nombre de la familia mal escrito</span></span>
+<span id="cb18-4"><a href="leyendo-y-manejando-datos-en-r.html#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="leyendo-y-manejando-datos-en-r.html#cb18-5" aria-hidden="true" tabindex="-1"></a>dat2[nombre_incorrecto, <span class="dv">8</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Nombre correcto&quot;</span> <span class="co">#Cambiamos el nombre por el que deseamos</span></span></code></pre></div>
+<p>Otra alternativa: Utilice la siguiente función para cambiar el nombre de la familia Viperidae a “Notviperidae” y verifique que el cambio se hizo correctamente</p>
+<p>?replace</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="leyendo-y-manejando-datos-en-r.html#cb19-1" aria-hidden="true" tabindex="-1"></a>dat2<span class="sc">$</span>family <span class="ot">&lt;-</span> <span class="fu">replace</span>(dat2<span class="sc">$</span>family ,<span class="fu">c</span>(dat2<span class="sc">$</span>family<span class="sc">==</span><span class="st">&quot;Viperidae&quot;</span>), <span class="st">&quot;Notviperidae&quot;</span>)</span>
+<span id="cb19-2"><a href="leyendo-y-manejando-datos-en-r.html#cb19-2" aria-hidden="true" tabindex="-1"></a>verificacion <span class="ot">&lt;-</span> dat2[dat2<span class="sc">$</span>family<span class="sc">==</span><span class="st">&quot;Notviperidae&quot;</span>,] <span class="co">#Y finalmente verificamos que el cambio fue realizado</span></span></code></pre></div>
+<div class="warning" style="padding:0.1em; background-color:#D6EAF8; color:#21618C">
+<span>
+<p style="margin-top:1em; text-align:center">
+<b>Ejercicio 3</b>
+</p>
+<p style="margin-left:1em;">
+<ol style="list-style-type: decimal">
+<li><p>Realizar un gráfico de barras del número de registros totales por cada municipio</p></li>
+<li><p>Realizar un gráfico del número de registros de insectos en cada localidad</p></li>
+<li><p>Realizar un boxplot de la elevación por clases</p></li>
+<li><p>Realizar un histograma de la elevación</p></li>
+</ol>
+</p>
+</div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="visualización-de-datos-en-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="manejando-datos-utilizando-tidyverse.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/04_sesion_3.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
