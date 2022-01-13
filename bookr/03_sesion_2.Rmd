@@ -122,7 +122,7 @@ plot(1:100, 1:100, pch = 19, cex = 3, col = rainbow(100))
 Los símbolos del 21 al 25 (?points) pueden tener diferentes colores de relleno
 
 ```{r collapse=TRUE, comment="-"}
-plot (1:25, cex=2, pch=1:25, col="blue", bg="red")
+plot (1:25, cex=2, pch=1:25, col="blue", bg="yellow")
 ```
 
 <div class="warning" style='padding:0.1em; background-color:#D6EAF8; color:#21618C'>
@@ -216,15 +216,14 @@ Visualizaremos dos gráficas en el mismo espacio mediante el argumento "mfrow".
 ```{r collapse=TRUE, comment="-"}
 par(mfrow = c(1,2))
 barplot(dat_dias$ganancias, main = "Barras", names.arg = dat_dias$dias)
-pie(dat_dias$ganancias, labels = dat_dias$dias, main = "Torta", clockwise = T)
+pie(dat_dias$ganancias, labels = dat_dias$dias, main = "Torta", clockwise = T, col = c("blue", "white", "yellow", "brown", "black"))
 ```
 
 *Ejercicio:* Utilice el argumento "bg" para cambiar el color de fondo del siguiente plot
 
 ```{r collapse=TRUE, comment="-"}
 plot(x = c(1:10), y = c(11:20))
-
-par(mfrow = c(1,1), bg = "green")
+par(mfrow = c(1,1), bg = "blue")
 plot(x = c(1:10), y = c(11:20))
 ```
 
@@ -238,7 +237,7 @@ plot(x = c(1:10), y = c(11:20))
 Podemos agregar colores a los diferentes elementos del gráfico
 
 ```{r collapse=TRUE, comment="-"}
-par(mfrow = c(1,1), bg = "white", col.axis = "blue", col.lab = "green", col.main = "red", fg = "yellow") 
+par(mfrow = c(1,1), bg = "white", col.axis = "blue", col.lab = "gray", col.main = "black", fg = "yellow") 
 plot(x = c(1:10), y = c(11:20), main = "Dispersion")
 ```
 

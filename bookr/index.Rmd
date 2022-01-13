@@ -2,14 +2,17 @@
 title: "Introducción al análisis de datos utilizando R"
 author: "Björn Reu, Yovanny Duran, Zarith Villamizar, Silvia Ardila y Sergio Bolivar"
 date: "`r Sys.Date()`"
-site: bookdown::bookdown_site
+output:
+  html_document:
+    df_print: paged
 documentclass: book
 bibliography: book.bib
 biblio-style: apalike
 link-citations: yes
-github-repo: seankross/bookdown-start
-url: http\://seankross.com/bookdown-start/
-description: Everything you need (and nothing more) to start a bookdown book.
+github-repo: breu78/bookdown_DataAnalysisR
+url: https://github.com/breu78/bookdown_DataAnalysisR
+description: Introducción al análisis de datos utilizando R.
+site: bookdown::bookdown_site
 ---
 
 # Preface {-}

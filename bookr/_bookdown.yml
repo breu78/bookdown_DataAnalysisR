@@ -1,5 +1,5 @@
 delete_merged_file: true
 language:
   ui:
-    chapter_name: "Chapter "
+    chapter_name: "Capítulo "
     rmd_files: ["index.Rmd","01_Introduction.Rmd","02_sesion_1.Rmd", "03_sesion_2.Rmd","04_sesion_3.Rmd", "05_sesion_4.Rmd","06_sesion_5.Rmd","07_sesion_6.Rmd","08_sesion_7.Rmd","09_sesion_8.Rmd","10_sesion_9.Rmd","11_sesion_10.Rmd"]

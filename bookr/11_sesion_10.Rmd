@@ -8,7 +8,7 @@ En la sesión pasada, vimos como ajustabamos la ecuación de la recta para obser
 
 Cargamos nuevamente de la fundación COLTREE
 
-```{r collapse=TRUE, comment="-"}
+```{r message=FALSE, warning=FALSE, collapse=TRUE, comment="-"}
 library(tidyverse)
 
 dat_spec <- read_csv("Species_Coltree.csv")
@@ -95,7 +95,7 @@ pairs(dat_env[,3:10])
 Podemos hacer uso del Factor de Inflacion de la Varianza (VIF) para estimar cuanta varianza de un coeficiente de regresion es inflada debido a la colinearidad del modelo.
 
 install.packages("car")
-```{r collapse=TRUE, comment="-"}
+```{r message=FALSE, warning=FALSE, collapse=TRUE, comment="-"}
 library(car)
 ?vif
 

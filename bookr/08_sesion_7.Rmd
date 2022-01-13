@@ -69,7 +69,6 @@ Distribución normal estándar
 ```{r collapse=TRUE, comment="-"}
 rn<-rnorm(n = 100)
 rn<-rnorm(n = 1000, mean = 0, sd = 1)
-rn
 hist(rn)
 mean(rn)
 sd(rn)

@@ -134,7 +134,7 @@ En adición al set de datos taxonómicos, trabajaremos con datos medioambientale
 
 Cargamos los datos
 
-```{r collapse=TRUE, comment="-"}
+```{r message=FALSE, warning=FALSE, collapse=TRUE, comment="-"}
 library(tidyverse)
 dat_spec <- read_csv("Species_Coltree.csv")
 dat_env <- read_csv("Env_Coltree.csv")
@@ -188,15 +188,13 @@ Reemplazamos los NA por 0
 ```{r collapse=TRUE, comment="-"}
 dat_abun <- dat_abun %>%
   replace(is.na(dat_abun), 0) 
-
-str(dat_abun) # Revisamos la matriz de abundancia creada
 ```
 
 ### Paquete vegan
 
 install.packages("vegan")
 
-```{r collapse=TRUE, comment="-"}
+```{r message=FALSE, warning=FALSE, collapse=TRUE, comment="-"}
 library(vegan)
 ```
 
@@ -304,7 +302,7 @@ Podemos observar que es probable que los datos no se relacionan linealmente y aj
 
 + *Independencia de los residuos:* Los residuos deben ser independientes entre sí y representan una variable aleatoria, es decir, que la predicción de un valor los residuos no es afectada por los residuos cercanos. Podemos probar este supuesto mediante el test de durbin-watson:
 
-```{r collapse=TRUE, comment="-"}
+```{r message=FALSE, warning=FALSE, collapse=TRUE, comment="-"}
 library(lmtest)
 
 dwtest(lm) # En esta prueba, valores de DW alrededor de 2 y p significativos significan que los residuos son independientes (normalmente se considenran valores entre 1.5 y 2.5)

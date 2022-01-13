@@ -114,9 +114,7 @@ arrange() Cambia el orden de las observaciones
 
 La forma simple para seleccionar una variable en un data frame común es mediante el símbolo $
 
-```{r collapse=TRUE, comment="-"}
 dat$species
-```
 
 ***
 
@@ -246,13 +244,13 @@ Podemos extraer las variables mediante $
 
 ```{r collapse=TRUE, comment="-"}
 clase_datos$class
-clase_datos$data
+#clase_datos$data
 ```
 
 Para acceder a los elementos de una variable, usamos corchetes dobles. Y finalmente, usamos nuevamente $ para acceder a una variable ya que estamos dentro de otro data.frame
 
 ```{r collapse=TRUE, comment="-"}
-clase_datos$data[[1]]$species #Seleccionamos el la columna "species" del tible de la primera clase contenido en el vector clase_datos
+#clase_datos$data[[1]]$species Seleccionamos el la columna "species" del tible de la primera clase contenido en el vector clase_datos
 ```
 
 Para especificar una clase, las funciones de dplyr:
@@ -389,8 +387,8 @@ separado <- dat %>% separate(species, c("specie", "genus", "otro"))
 
 Si usamos NA en vez del nombre de la nueva columna omitiremos esa columna
 
-```{r eval=FALSE, collapse=TRUE, comment="-", include=FALSE}
-separado <- dat %>% separate(genus, c(NA, "species"))
+```{r collapse=TRUE, comment="-"}
+# separado <- dat %>% separate(genus, c(NA, "species"))
 ```
 
 O podemos especificar el comportamiento de la separación
@@ -514,15 +512,16 @@ sum(str_count(dat$municipality, "Cimitarra"))
 En stringr podemos hacer busquedas mas generalizadas que no veremos en esta sesión, pero esto es un ejemplo de lo que podemos hacer conociendo algunas clases de caracteres
 
 ```{r collapse=TRUE, comment="-"}
-str_subset(dat$species, "[:space:][aeiou]") #Extraemos todas las especies en la que su epíteto específico comienza con una vocal. Observe que [:space:] es una clase de caracter que se utiliza para indicar que antes de las vocales debe haber un espacio, de otra manera se obtendrían todos los registros que tuviesen alguna vocal en cualquier posición.
+# str_subset(dat$species, "[:space:][aeiou]") 
+#Extraemos todas las especies en la que su epíteto específico comienza con una vocal. Observe que [:space:] es una clase de caracter que se utiliza para indicar que antes de las vocales debe haber un espacio, de otra manera se obtendrían todos los registros que tuviesen alguna vocal en cualquier posición.
 ```
 
 ¿Cómo podemos averiguar si hay un número en los nombres de especies?
 
 ```{r collapse=TRUE, comment="-"}
-which(str_detect(dat$species, "123456789"))
-which(str_detect(dat$species, "[:digit:]")) #La clase de caracter para encontrar cualquier número es [:digit:]
-str_detect(dat$elevation, "[:digit:]")
+#which(str_detect(dat$species, "123456789"))
+#which(str_detect(dat$species, "[:digit:]")) La clase de caracter para encontrar cualquier número es [:digit:]
+#str_detect(dat$elevation, "[:digit:]")
 ```
 
 Explore las clases de caracteres pre-creados

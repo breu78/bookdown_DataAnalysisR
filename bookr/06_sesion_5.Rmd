@@ -1,8 +1,8 @@
 # Visualización de datos utilizando ggplot2   
 
-l paquete ggplot2 ofrece herramientas que ayudan a visualizar datos tidy en data frames
+El paquete ggplot2 ofrece herramientas que ayudan a visualizar datos tidy en data frames
 
-```{r collapse=TRUE, comment="-", echo=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, collapse=TRUE, comment="-"}
 library(ggplot2)
 library(tidyverse)
 ```
@@ -72,14 +72,6 @@ dat %>%
 ```
 
 *Ejercicio:* Grafique los registros del orden coleoptera en las diferentes localidades de cada municipio. Para diferenciar a que municipio pertenece cada localidad, usel el argumento fill de aes()
-
-```{r collapse=TRUE, comment="-"}
-dat %>% 
-  filter(order == "Coleoptera") %>% 
-  group_by(locality) %>% 
-  ggplot(aes(x = locality, fill = municipality)) + 
-  geom_bar()
-```
 
 Podemos agrupar las barras
 
@@ -236,11 +228,10 @@ ggplot(data = dat) +
 Todas las características de un tema pueden ser guardadas en un vector para evitar escribir el tema cada vez que se grafique
 
 ```{r collapse=TRUE, comment="-"}
-mitema <- theme(panel.grid.major = element_line(colour = "green"), 
+mitema <- theme(panel.grid.major = element_line(colour = "yellow"), 
                 panel.grid.minor = element_line(colour = "pink"),
                 panel.background = element_rect(fill = "blue"),
                 panel.border = element_blank(),axis.line = element_line(size = 0.9, linetype = "solid", colour = "black"))
-
 ggplot(data = dat, aes(x = elevation, y = elevation))+
   mitema
 ```
@@ -262,7 +253,6 @@ Finalmente, con el sistema de coordenadas "x" y "y" es posible hacer increíbles
 
 ```{r collapse=TRUE, comment="-"}
 nz <- map_data("nz") #Cargamos un set de datos que contienede coordenadas longitud y latitud, y columnas que indican a que región corresponden esas coordenadas
-
 ggplot(nz, aes(long, lat, group = group)) +
   geom_polygon(fill = "white", colour = "black")
 ```
@@ -275,9 +265,7 @@ Convirtamos una variable en un factor
 
 ```{r collapse=TRUE, comment="-"}
 dat$class <- as.factor(dat$class)
-
 levels(dat$class) #Revisamos las categorías
-
 dat %>% 
   ggplot(aes(x = class)) + 
   geom_bar() + 
@@ -298,12 +286,10 @@ dat %>%
 Podemos ordenar un factor por otra variable
 
 ```{r collapse=TRUE, comment="-"}
-
 dat %>% 
   ggplot(aes(x = class, y = elevation)) + 
   geom_boxplot() 
 #Bloxplot de la distribución del a altura por cada clase
-
 dat %>% 
   mutate(class = fct_reorder(class, elevation)) %>% 
   ggplot(aes(x = class, y = elevation)) + 
@@ -319,7 +305,6 @@ dat %>%
   ggplot(aes(x = class)) + 
   geom_bar() + 
   coord_flip()
-
 dat %>% 
   mutate(class = fct_lump(class, n = -5)) %>% 
   ggplot(aes(x = class)) + 
@@ -332,5 +317,5 @@ forcats tambien nos permite ordenar las categorias a mano
 ```{r collapse=TRUE, comment="-"}
 f <- as.factor(dat$phylum)
 levels(f)
-fct_relevel(f, "Tracheophyta", "Arthropoda", "Chordata")
+# fct_relevel(f, "Tracheophyta", "Arthropoda", "Chordata")
 ```

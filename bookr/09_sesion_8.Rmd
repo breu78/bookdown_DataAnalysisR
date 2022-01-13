@@ -39,8 +39,8 @@ abline(tot.mean, 0, col="grey")
 
 g1.mean <- mean(g1)
 g2.mean <- mean(g2) 
-lines(c(0, 30), c(g1.mean, g1.mean) , col = "red") # media del grupo 1
-lines(c(30, 60), c(g2.mean, g2.mean) , col = "green") # media del grupo 2
+lines(c(0, 30), c(g1.mean, g1.mean) , col = "blue") # media del grupo 1
+lines(c(30, 60), c(g2.mean, g2.mean) , col = "yellow") # media del grupo 2
 ```
 
 Calculamos la suma de cuadrados de los residuos, los cuales se dividen en suma de cuadrados totales (SST); el error de la suma de cuadrados (SSE), que se refiere a la varianza dentro de cada grupo que no se puede explicar; y la suma de cuadrados del tratamiento (SSA) o varianza entre grupos.
@@ -73,12 +73,12 @@ Se dibujan los residuos en vez de las sumas de los cuadrados:
 ```{r collapse=TRUE, comment="-"}
 plot(y, pch=19, col="grey", cex=0.5) 
 abline(tot.mean, 0, col="grey")
-lines(c(0, 30), c(g1.mean, g1.mean) , col = "red") # media del grupo 1
-lines(c(30, 60), c(g2.mean, g2.mean) , col = "green") # media del grupo 2
+lines(c(0, 30), c(g1.mean, g1.mean) , col = "blue") # media del grupo 1
+lines(c(30, 60), c(g2.mean, g2.mean) , col = "yellow") # media del grupo 2
 
 segments(1:60, tot.mean, 1:60, y, col="lightgrey")
-segments(1:30, g1.mean, 1:30, g1, col="red")
-segments(31:60, g2.mean, 31:60, g2, col="green")
+segments(1:30, g1.mean, 1:30, g1, col="blue")
+segments(31:60, g2.mean, 31:60, g2, col="yellow")
 ```
 
 A partir de acá, vamos a calcular el estadístico F, el promedio de los cuadrados (MSA Y MSE), los grados de libertad y el valor de p (valor de significancia) para determinar si nuestros grupos son estadísticamente diferentes
@@ -155,7 +155,7 @@ summary(lm(y ~ x))
 
 ### Anova con datos reales
 
-```{r collapse=TRUE, comment="-"}
+```{r message=FALSE, warning=FALSE, collapse=TRUE, comment="-"}
 library(tidyverse)
 ```
 

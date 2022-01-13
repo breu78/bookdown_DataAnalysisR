@@ -41,7 +41,7 @@ dim(dat) # Dimensiones de los datos: 1255 filas (observaciones) y 11 columnas (v
 
 colnames(dat) #Nombre de las columnas
 
-str(dat) #Estructura de los datos
+#str(dat) Estructura de los datos
 ```
 
 Tambien es posible preguntar por otras condiciones en nuestro data frame que no sean necesariamente numéricas o que su resultado no sea una posición. Por ejemplo, un resultado tipo lógico, mediante la función is.numeric/character()
